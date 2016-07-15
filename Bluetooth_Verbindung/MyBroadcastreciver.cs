@@ -17,11 +17,13 @@ namespace Bluetooth_Verbindung
     {
         private SearchDevices main;
         private List<String> liste;
+        private List<String> compareList;
 
         public MyBroadcastreciver(SearchDevices main)
         {
             this.main = main;
             this.liste = new List<string>();
+            this.compareList = new List<string>();
         }
 
         public void setListNeu()
@@ -65,13 +67,23 @@ namespace Bluetooth_Verbindung
                 Console.WriteLine("///////////////////////////////Device: " + device.Name + " " + device.Address);
                 for (int i = 0; i < uuidExtra.Length; i++)
                 {
-                    if (i == 0)
+                    Console.WriteLine("///////////////////////////////" + uuidExtra[i].ToString());
+                    if (i == 0 )
                     {
-                        Console.WriteLine("///////////////////////////////" + uuidExtra[i].ToString());
-                        main.AddUUid(uuidExtra[i].ToString());
+                        if (!compareList.Contains(uuidExtra[i].ToString())) {
+                            compareList.Add(uuidExtra[i].ToString());
+                            main.AddUUid(uuidExtra[i].ToString());
+                        }
+
                     }
                 }
-
+                if (liste.Count > 0)
+                {
+                    String address = liste.ElementAt(0).Split('\n')[1];
+                    liste.RemoveAt(0);
+                    BluetoothDevice device2 = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+                    bool result = device2.FetchUuidsWithSdp();
+                }
             }
         }
     }

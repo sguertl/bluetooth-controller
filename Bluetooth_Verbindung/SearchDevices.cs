@@ -17,8 +17,7 @@ namespace Bluetooth_Verbindung
 {
     [Activity(Label = "SearchDevices" , ScreenOrientation = Android.Content.PM.ScreenOrientation.UserLandscape)]
     public class SearchDevices : Activity
-    {
-
+   {
         private BluetoothAdapter btAdapter;
         private IntentFilter filter;
         private MyBroadcastreciver receiver;
@@ -129,7 +128,7 @@ namespace Bluetooth_Verbindung
             Console.WriteLine("////////////////  "+ "Device : " + btDevice.Name +"  "+uuids[e.Position]);
             ConnectedThread connect = new ConnectedThread(btDevice, uuids[e.Position]);
             Console.ReadLine();
-            // connect.Start();
+            connect.Start();
 
             //  Toast.MakeText(ApplicationContext, btDevice.GetUuids(), 0).Show();
 
