@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectedThread.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyHandler.cs" />
     <Compile Include="MyPairBroadcastReceiver.cs" />

@@ -37,6 +37,7 @@ namespace Bluetooth_Verbindung
             init();
         }
 
+        // Kopiert
         public void init()
         {
             uuids = new List<string>();
@@ -93,11 +94,13 @@ namespace Bluetooth_Verbindung
             */
         }
 
+        //Kopiert
         public void GiveAMessage(String s)
         {
             Toast.MakeText(ApplicationContext, s, 0).Show();
         }
 
+        //Kopiert
         public void onSearch()
         {
             listView.SetAdapter(null);
@@ -107,6 +110,7 @@ namespace Bluetooth_Verbindung
             Console.ReadLine();
         }
 
+        // Kopiert
         public void setAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
@@ -115,6 +119,7 @@ namespace Bluetooth_Verbindung
         }
 
 
+        // kopiert
         public void onItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
             TextView view = (TextView)e.View;
@@ -134,6 +139,7 @@ namespace Bluetooth_Verbindung
 
         }
 
+        // Kopiert
         public void AddUUid(String uuid)
         {
             uuids.Add(uuid);
