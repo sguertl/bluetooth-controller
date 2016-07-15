@@ -62,10 +62,14 @@ namespace Bluetooth_Verbindung
                 // So get the uuids and call fetchUuidsWithSdp on another device in list
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 IParcelable[] uuidExtra = intent.GetParcelableArrayExtra(BluetoothDevice.ExtraUuid);
-                Console.WriteLine("Device: " + device.Name + " " + device.Address);
+                Console.WriteLine("///////////////////////////////Device: " + device.Name + " " + device.Address);
                 for (int i = 0; i < uuidExtra.Length; i++)
                 {
-                    Console.WriteLine(uuidExtra[i].ToString()); 
+                    if (i == 0)
+                    {
+                        Console.WriteLine("///////////////////////////////" + uuidExtra[i].ToString());
+                        main.AddUUid(uuidExtra[i].ToString());
+                    }
                 }
 
             }

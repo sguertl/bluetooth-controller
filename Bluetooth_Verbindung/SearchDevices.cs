@@ -25,6 +25,7 @@ namespace Bluetooth_Verbindung
         private Button btSearch;
         private LinearLayout linear;
         private ListView listView;
+        private List<String> uuids;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,6 +40,8 @@ namespace Bluetooth_Verbindung
 
         public void init()
         {
+            uuids = new List<string>();
+
             listView = FindViewById<ListView>(Resource.Id.listViewSearched);
             listView.SetBackgroundColor(Android.Graphics.Color.Black);
 
@@ -118,12 +121,24 @@ namespace Bluetooth_Verbindung
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            ConnectedThread connect = new ConnectedThread(btDevice, "");
-            connect.Start();
-         
-    //  Toast.MakeText(ApplicationContext, btDevice.GetUuids(), 0).Show();
+            for (int i = 0; i < uuids.Count; i++)
+            {
+                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + uuids.ElementAt(i));
+            }
 
-}
+            Console.WriteLine("////////////////  "+ "Device : " + btDevice.Name +"  "+uuids[e.Position]);
+            ConnectedThread connect = new ConnectedThread(btDevice, uuids[e.Position]);
+            Console.ReadLine();
+            // connect.Start();
+
+            //  Toast.MakeText(ApplicationContext, btDevice.GetUuids(), 0).Show();
+
+        }
+
+        public void AddUUid(String uuid)
+        {
+            uuids.Add(uuid);
+        }
 
     }
 }
