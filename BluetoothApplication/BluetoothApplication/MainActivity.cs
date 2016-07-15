@@ -13,7 +13,7 @@ namespace BluetoothApplication
     [Activity(Label = "BluetoothApplication", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        private BluetoothAdapter btAdapter;
+        private BluetoothAdapter mBluetoothAdapter;
         private Button btPairedDevices;
         private Button btSearchDevices;
 
@@ -24,22 +24,26 @@ namespace BluetoothApplication
 
             init();
 
-            if (btAdapter == null)
+            //Check wether the device supports Bluetooth
+            if (mBluetoothAdapter == null)
             {
                 Toast.MakeText(ApplicationContext, "Bluetooth is not supported", 0).Show();
             }
             else
             {
-                if (!btAdapter.IsEnabled)
+                if (!mBluetoothAdapter.IsEnabled)
                 {
-                    turnBTOn();
+                    turnBluetoothOn();
                 }
             }
         }
 
-        public void init()
+        /// <summary>
+        /// Intializes members and makes the style for ui
+        /// </summary>
+        private void init()
         {
-            btAdapter = BluetoothAdapter.DefaultAdapter;
+            mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
             btPairedDevices = FindViewById<Button>(Resource.Id.btPairedDevices);
             btSearchDevices = FindViewById<Button>(Resource.Id.btSearchDevices);
 
@@ -72,7 +76,7 @@ namespace BluetoothApplication
             };
         }
 
-        public void turnBTOn()
+        private void turnBluetoothOn()
         {
             Intent intent = new Intent(BluetoothAdapter.ActionRequestEnable);
             StartActivityForResult(intent, 1);

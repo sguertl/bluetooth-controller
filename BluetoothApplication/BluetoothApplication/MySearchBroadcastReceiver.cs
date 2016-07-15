@@ -13,36 +13,37 @@ using Android.Bluetooth;
 
 namespace BluetoothApplication
 {
-    public class MyBroadcastReceiver : BroadcastReceiver
+    /// <summary>
+    /// BroadcastReceiver for searching other Bluetooth devices
+    /// </summary>
+    public class MySearchBroadcastReceiver : BroadcastReceiver
     {
-        private SearchDevices main;
-        private List<String> liste;
+        private SearchDevices mMain;
+        private List<String> mDeviceList;
 
-        public MyBroadcastReceiver(SearchDevices main)
+        public MySearchBroadcastReceiver(SearchDevices main)
         {
-            this.main = main;
-            this.liste = new List<string>();
+            mMain = main;
+            mDeviceList = new List<String>();
         }
 
         public override void OnReceive(Context context, Intent intent)
         {
-            // Gibt einmal Started und dann Finished
             String action = intent.Action;
 
-            main.GiveAMessage(action);
-
+            mMain.GiveAMessage(action);
+            //Checks if the device was found and if it finished searching
             if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
-                main.setAdapterToListView(liste);
+                mMain.setAdapterToListView(mDeviceList);
             }
             else if ((BluetoothDevice.ActionFound.Equals(action)))
             {
-                //  BluetoothDevice device = intent.ParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 // Add the name and address to an array adapter to show in a Toast
-                liste.Add(device.Name + "\n" + device.Address);
-                String derp = device.Name + " - " + device.Address;
-                main.GiveAMessage(derp);
+                mDeviceList.Add(device.Name + "\n" + device.Address);
+                String deviceInfo = device.Name + " - " + device.Address;
+                mMain.GiveAMessage(deviceInfo);
             }
         }
     }

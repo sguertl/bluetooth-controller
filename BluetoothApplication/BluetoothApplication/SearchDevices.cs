@@ -15,16 +15,19 @@ using Java.Lang.Reflect;
 
 namespace BluetoothApplication
 {
+    /// <summary>
+    /// Searches and shows all Bluetooth devices close by
+    /// </summary>
     [Activity(Label = "SearchDevices")]
     public class SearchDevices : Activity
     {
-        private BluetoothAdapter btAdapter;
-        private IntentFilter filter;
-        private MyBroadcastReceiver receiver;
-        private MyPairBroadcastReceiver pairreceiver;
+        private BluetoothAdapter mBluetoothAdapter;
+        private MySearchBroadcastReceiver mSearchreceiver;
+        private MyPairBroadcastReceiver mPairreceiver;
         private Button btSearch;
-        private LinearLayout linear;
+        private LinearLayout linearLayout;
         private ListView listView;
+        private ProgressDialog mProgressDialog;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,6 +37,9 @@ namespace BluetoothApplication
             init();
         }
 
+        /// <summary>
+        /// Click event for ListViewItem
+        /// </summary>
         private void OnClickListView(Object sender, AdapterView.ItemClickEventArgs e)
         {
             TextView view = (TextView)e.View;
@@ -42,6 +48,9 @@ namespace BluetoothApplication
             PairDevice(device);
         }
 
+        /// <summary>
+        /// Pairing Device
+        /// </summary>
         private void PairDevice(BluetoothDevice device)
         {
             try
@@ -55,32 +64,10 @@ namespace BluetoothApplication
             }
         }
 
-        public class MyPairBroadcastReceiver : BroadcastReceiver
-        {
-            // Bond_bonded = 12
-            // Bond_bonding = 11
-            // Bond_none = 10
-            public override void OnReceive(Context context, Intent intent)
-            {
-                string action = intent.Action;
-                if(BluetoothDevice.ActionBondStateChanged == action)
-                {
-                    int state = intent.GetIntExtra(BluetoothDevice.ExtraBondState, BluetoothDevice.Error);
-                    int prevstate = intent.GetIntExtra(BluetoothDevice.ExtraPreviousBondState, BluetoothDevice.Error);
-
-                    if(state == 12 && prevstate == 11)
-                    {
-                        Console.WriteLine("Paired");
-                    }
-                    else if(state == 10 && prevstate == 12)
-                    {
-                        Console.WriteLine("Unpaired");
-                    }
-                }
-            }
-        }
-
-        public void init()
+        /// <summary>
+        /// Intializes members and makes the style for ui
+        /// </summary>
+        private void init()
         {
             listView = FindViewById<ListView>(Resource.Id.listViewSearched);
             listView.SetBackgroundColor(Android.Graphics.Color.Black);
@@ -102,44 +89,50 @@ namespace BluetoothApplication
                 onSearch();
             };
 
-            linear = FindViewById<LinearLayout>(Resource.Id.linear3);
+            linearLayout = FindViewById<LinearLayout>(Resource.Id.linear3);
 
-            linear.SetBackgroundColor(Android.Graphics.Color.White);
+            linearLayout.SetBackgroundColor(Android.Graphics.Color.White);
 
-            btAdapter = BluetoothAdapter.DefaultAdapter;
+            mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
 
-            filter = new IntentFilter();
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.SetMessage("Scanning for Devices...");
+            mProgressDialog.SetCancelable(false);
+            mProgressDialog.CancelEvent += delegate { mProgressDialog.Dismiss(); mBluetoothAdapter.CancelDiscovery(); };
 
-            // filter = new IntentFilter(BluetoothDevice.ActionFound);
-
-            receiver = new MyBroadcastReceiver(this);
+            mSearchreceiver = new MySearchBroadcastReceiver(this);
+            IntentFilter filter = new IntentFilter();
             filter.AddAction(BluetoothDevice.ActionFound);
             filter.AddAction(BluetoothAdapter.ActionDiscoveryStarted);
             filter.AddAction(BluetoothAdapter.ActionDiscoveryFinished);
 
-            RegisterReceiver(receiver, filter);
+            RegisterReceiver(mSearchreceiver, filter);
 
-            pairreceiver = new MyPairBroadcastReceiver();
+            mPairreceiver = new MyPairBroadcastReceiver(this);
             IntentFilter pairFilter = new IntentFilter(BluetoothDevice.ActionBondStateChanged);
-            RegisterReceiver(pairreceiver, pairFilter);
+            RegisterReceiver(mPairreceiver, pairFilter);
         }
 
+        /// <summary>
+        /// Prints message in Toast
+        /// </summary>
         public void GiveAMessage(String s)
         {
             Toast.MakeText(ApplicationContext, s, 0).Show();
         }
 
-        public void onSearch()
+        private void onSearch()
         {
-            btAdapter.CancelDiscovery();
-            btAdapter.StartDiscovery();
+            mBluetoothAdapter.CancelDiscovery();
+            mProgressDialog.Show();
+            mBluetoothAdapter.StartDiscovery();
         }
 
         public void setAdapterToListView(List<String> l)
         {
-            ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
-            //listView.Adapter = adapter;
-            listView.SetAdapter(adapter);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, l);
+            listView.Adapter = adapter;
+            mProgressDialog.Dismiss();
         }
     }
 }

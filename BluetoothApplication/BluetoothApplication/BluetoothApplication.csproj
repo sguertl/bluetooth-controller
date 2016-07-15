@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
-    <Compile Include="MyBroadcastReceiver.cs" />
+    <Compile Include="MyPairBroadcastReceiver.cs" />
+    <Compile Include="MySearchBroadcastReceiver.cs" />
     <Compile Include="PairedDevices.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
