@@ -74,6 +74,11 @@ namespace Controller
             Console.WriteLine("Current Position: x=" + m_XPosition + " / y=" + m_YPosition);
         }
 
+        public float[] GetPosition()
+        {
+            return new float[] { m_XPosition, m_YPosition };
+        }
+
         /// <summary>
         /// Calculates the angle of the moved joystick
         /// </summary>

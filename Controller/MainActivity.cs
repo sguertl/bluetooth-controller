@@ -9,7 +9,7 @@ using Android.OS;
 namespace Controller
 {
     [Activity(Label = "Controller", MainLauncher = true, Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen",
-        ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape, Icon = "@drawable/icon")]
+        ScreenOrientation = Android.Content.PM.ScreenOrientation.UserLandscape, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
 

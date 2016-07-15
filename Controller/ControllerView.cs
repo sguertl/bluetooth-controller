@@ -18,8 +18,8 @@ namespace Controller
     public class ControllerView : View, View.IOnTouchListener
     {
         // Screen metrics in px
-        private readonly float SCREEN_WIDTH;
-        private readonly float SCREEN_HEIGHT;
+        public readonly float SCREEN_WIDTH;
+        public readonly float SCREEN_HEIGHT;
 
         // Joystick ovals
         private ShapeDrawable m_ShapeStickLeft;
@@ -27,7 +27,7 @@ namespace Controller
 
         // Displacement ovals
         private ShapeDrawable m_ShapeRadiusLeft;
-        private ShapeDrawable m_ShapeRadiusRight;   
+        private ShapeDrawable m_ShapeRadiusRight;
 
         // Joystick controllers
         private Joystick m_LeftJS;
@@ -54,11 +54,9 @@ namespace Controller
             var paintStick = new Paint();
             paintStick.SetARGB(255, 78, 78, 78);
             paintStick.SetStyle(Paint.Style.Fill);
-
             // Shape for left joystick
             m_ShapeStickLeft = new ShapeDrawable(new OvalShape());
             m_ShapeStickLeft.Paint.Set(paintStick);
-
             // Shape for right joystick
             m_ShapeStickRight = new ShapeDrawable(new OvalShape());
             m_ShapeStickRight.Paint.Set(paintStick);
@@ -67,11 +65,9 @@ namespace Controller
             var paintRadius = new Paint();
             paintRadius.SetARGB(255, 230, 230, 230);
             paintRadius.SetStyle(Paint.Style.Fill);
-
             // Shape for left displacement 
             m_ShapeRadiusLeft = new ShapeDrawable(new OvalShape());
             m_ShapeRadiusLeft.Paint.Set(paintRadius);
-
             // Shape for right displacement
             m_ShapeRadiusRight = new ShapeDrawable(new OvalShape());
             m_ShapeRadiusRight.Paint.Set(paintRadius);
@@ -118,6 +114,12 @@ namespace Controller
         /// <returns></returns>
         public bool OnTouch(View v, MotionEvent e)
         {
+
+            switch(e.Action)
+            {
+                case MotionEventActions.Up:  Toast.MakeText(this.Context, "Touched", ToastLength.Short).Show(); break;
+            }
+
             if(e.PointerCount == 2)
             {
                 //switch (e.Action)
@@ -183,12 +185,10 @@ namespace Controller
                 m_LeftJS.SetPosition(xPosition, yPosition);
                 m_LeftJS.GetPower();
                 // Check if touch was inside the displacement radius
-                float abs = m_LeftJS.GetAbs();
-                Console.WriteLine("Abs=" + abs);
-                if ((abs) <= m_LeftJS.m_DisplacementRadius) // if((abs + m_LeftJS.m_StickRadius...
+                if ((m_LeftJS.GetAbs()) <= m_LeftJS.m_DisplacementRadius) // if((abs + m_LeftJS.m_StickRadius...
                 {
                     // Draw left joystick with original coordinates
-                    m_ShapeStickLeft.SetBounds(
+                    SetBoundsForLeftStick(
                     (int)xPosition - (int)m_LeftJS.m_StickRadius,
                     (int)yPosition - (int)m_LeftJS.m_StickRadius,
                     (int)xPosition + (int)m_LeftJS.m_StickRadius,
@@ -197,7 +197,7 @@ namespace Controller
                 else
                 {
                     // Draw left joystick with maximum coordinates
-                    m_ShapeStickLeft.SetBounds(
+                    SetBoundsForLeftStick(
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) - (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_X,
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) - (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_Y,
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_X,
@@ -208,14 +208,11 @@ namespace Controller
             {
                 // Handle touch in the right half
                 m_RightJS.SetPosition(xPosition, yPosition);
-                m_RightJS.GetPower();
                 // Check if touch was inside the displacement radius
-                float abs = m_RightJS.GetAbs();
-                Console.WriteLine("Abs=" + abs);
-                if ((abs) <= m_RightJS.m_DisplacementRadius)
+                if ((m_RightJS.GetAbs()) <= m_RightJS.m_DisplacementRadius)
                 {
                     // Draw right joystick with original coordinates
-                    m_ShapeStickRight.SetBounds(
+                   SetBoundsForRightStick(
                     (int)xPosition - (int)m_RightJS.m_StickRadius,
                     (int)yPosition - (int)m_RightJS.m_StickRadius,
                     (int)xPosition + (int)m_RightJS.m_StickRadius,
@@ -224,13 +221,23 @@ namespace Controller
                 else
                 {
                     // Draw left joystick with maximum coordinates
-                    m_ShapeStickRight.SetBounds(
+                    SetBoundsForRightStick(
                     (int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) - (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_X,
                     (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) - (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_Y,
                     (int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_X,
                     (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_Y);
                 }
             }
+        }
+
+        private void SetBoundsForLeftStick(int left, int top, int right, int bottom)
+        {
+            m_ShapeStickLeft.SetBounds(left, top, right, bottom);
+        }
+
+        private void SetBoundsForRightStick(int left, int top, int right, int bottom)
+        {
+            m_ShapeStickRight.SetBounds(left, top, right, bottom);
         }
 
         protected override void OnDraw(Canvas canvas)
@@ -246,6 +253,7 @@ namespace Controller
             paint.SetARGB(255, 0, 0, 0);
             paint.TextSize = 20;
             paint.TextAlign = Paint.Align.Center;
+            paint.StrokeWidth = 5;
 
             // Draw data text for left joystick
             canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
@@ -260,6 +268,8 @@ namespace Controller
             canvas.DrawText("Abs is " + m_RightJS.GetAbs(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
             canvas.DrawText("Angle is " + m_RightJS.GetAngle() + " °", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
             canvas.DrawText("Direction is " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 90, paint);
+
+
         }
 
         /// <summary>
