@@ -117,11 +117,31 @@ namespace Controller
 
             switch(e.Action)
             {
-                case MotionEventActions.Up:  Toast.MakeText(this.Context, "Touched", ToastLength.Short).Show(); break;
+                case MotionEventActions.Up:
+                    if (e.GetX() > SCREEN_WIDTH / 2)
+                    {
+                        SetBoundsForRightStick(
+                            (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius,
+                            (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
+                            (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius,
+                            (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
+                    }
+                    break;
+                default:
+                    if (e.PointerCount == 2)
+                    {
+                        UpdateOvals(e.GetX(0), e.GetY(0));
+                        UpdateOvals(e.GetX(1), e.GetY(1));
+                    }
+                    else
+                    {
+                        UpdateOvals(e.GetX(), e.GetY());
+                    }
+                    break;
             }
 
-            if(e.PointerCount == 2)
-            {
+            //if(e.PointerCount == 2)
+            //{
                 //switch (e.Action)
                 //{
                 //    case MotionEventActions.Pointer1Down:
@@ -147,11 +167,11 @@ namespace Controller
 
                 //        break; 
                 //}
-                UpdateOvals(e.GetX(0), e.GetY(0));
-                UpdateOvals(e.GetX(1), e.GetY(1));
-            }
-            else
-            {
+            //    UpdateOvals(e.GetX(0), e.GetY(0));
+            //    UpdateOvals(e.GetX(1), e.GetY(1));
+            //}
+            //else
+            //{
                 //switch (e.Action & e.ActionMasked)
                 //{
                 //    case MotionEventActions.ButtonPress:
@@ -164,8 +184,8 @@ namespace Controller
                 //            UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                 //        break;
                 //}
-                UpdateOvals(e.GetX(), e.GetY());
-            }
+            //    UpdateOvals(e.GetX(), e.GetY());
+            //}
             
             this.Invalidate();
             return true;
@@ -230,16 +250,9 @@ namespace Controller
             }
         }
 
-        private void SetBoundsForLeftStick(int left, int top, int right, int bottom)
-        {
-            m_ShapeStickLeft.SetBounds(left, top, right, bottom);
-        }
-
-        private void SetBoundsForRightStick(int left, int top, int right, int bottom)
-        {
-            m_ShapeStickRight.SetBounds(left, top, right, bottom);
-        }
-
+        /// <summary>
+        /// Draws the shapes onto the canvas, which is displayed afterwards
+        /// </summary>
         protected override void OnDraw(Canvas canvas)
         {
             // Draw shapes
@@ -270,6 +283,30 @@ namespace Controller
             canvas.DrawText("Direction is " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 90, paint);
 
 
+        }
+
+        /// <summary>
+        /// Helper method for setting the bounds of the left joystick
+        /// </summary>
+        /// <param name="left">Position of left bound</param>
+        /// <param name="top">Position of top bound</param>
+        /// <param name="right">Position of right bound</param>
+        /// <param name="bottom">Position of bottom bound</param>
+        private void SetBoundsForLeftStick(int left, int top, int right, int bottom)
+        {
+            m_ShapeStickLeft.SetBounds(left, top, right, bottom);
+        }
+
+        /// <summary>
+        /// Helper method for setting the bounds of the right joystick
+        /// </summary>
+        /// <param name="left">Position of left bound</param>
+        /// <param name="top">Position of top bound</param>
+        /// <param name="right">Position of right bound</param>
+        /// <param name="bottom">Position of bottom bound</param>
+        private void SetBoundsForRightStick(int left, int top, int right, int bottom)
+        {
+            m_ShapeStickRight.SetBounds(left, top, right, bottom);
         }
 
         /// <summary>
