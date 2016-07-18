@@ -47,14 +47,7 @@ namespace BluetoothApplication
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            for (int i = 0; i < m_Uuids.Count; i++)
-            {
-                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + m_Uuids.ElementAt(i));
-            }
-
-            Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + m_Uuids[e.Position]);
             ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
-            Console.ReadLine();
             connect.Start();
             // PairDevice(device);
         }

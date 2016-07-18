@@ -32,6 +32,7 @@ namespace BluetoothApplication
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
+            this.Name = "ConnectionThread";
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
             // Der übergebene UUID String wird in ein UUID Objekt konvertiert
@@ -58,32 +59,28 @@ namespace BluetoothApplication
 
         public override void Run()
         {
-            base.Run();
             // Cancel discovery because it will slow down the connection
             m_BtAdapter.CancelDiscovery();
             //
 
             try
             {
-                // Test
-                Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + m_Socket.RemoteDevice.Name);
-                Console.ReadLine();
-                //
-
                 // Connect the device through the socket. This will block
                 // until it succeeds or throws an exception
-                m_Socket.Connect();
+                if (!m_Socket.IsConnected)
+                {
+                    m_Socket.Connect();
+                }
                 //
             }
             catch (Java.Lang.Exception connectException)
             {
-                // Unable to connect; close the socket and get out
-                Console.WriteLine(connectException.Message);
+                Console.WriteLine("fail1");
                 try
                 {
                     Cancel();
                 }
-                catch (Java.Lang.Exception closeException) { }
+                catch (Java.Lang.Exception closeException) { Console.WriteLine("fail2"); }
                 return;
             }
 
@@ -98,7 +95,8 @@ namespace BluetoothApplication
         {
             Sender sender = new Sender(mmSocket, m_Handler);
             sender.Start();
-            sender.Write(Encoding.UTF8.GetBytes("#Hallo"));
+            string test = "lala";
+            sender.Write(Convert.FromBase64String(test));
         }
 
         /// <summary>
@@ -110,7 +108,7 @@ namespace BluetoothApplication
             {
                 m_Socket.Close();
             }
-            catch (Java.Lang.Exception e) { }
+            catch (Java.Lang.Exception e) { Console.WriteLine("fail3"); }
         }
     }
 }
