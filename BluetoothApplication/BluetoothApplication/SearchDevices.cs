@@ -53,7 +53,7 @@ namespace BluetoothApplication
             }
 
             Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + m_Uuids[e.Position]);
-            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
+            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position], this);
             Console.ReadLine();
             connect.Start();
             // PairDevice(device);
