@@ -17,6 +17,20 @@ namespace BluetoothApplication
     /// </summary>
     public class MyHandler : Handler
     {
+        private string m_Message;
+        private SearchDevices m_SearchDevice;
+
+        public string Message
+        {
+            get { return m_Message; }
+            set { m_Message = value;  }
+        }
+
+        public MyHandler(SearchDevices searchDevice)
+        {
+            m_SearchDevice = searchDevice;
+        }
+
         public override void HandleMessage(Message msg)
         {
             byte[] writeBuffer = (byte[])msg.Obj;
@@ -25,8 +39,9 @@ namespace BluetoothApplication
 
             if(msg.What == 1)
             {
-                string message = System.Text.Encoding.UTF8.GetString(writeBuffer);
-                message = message.Substring(begin, end);
+                m_Message = System.Text.Encoding.UTF8.GetString(writeBuffer);
+                m_Message = m_Message.Substring(begin, end);
+                m_SearchDevice.GiveAMessage(m_Message);
             }
         }
     }

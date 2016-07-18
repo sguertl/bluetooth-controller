@@ -25,7 +25,7 @@ namespace BluetoothApplication
         private MyHandler m_Handler;
         //
 
-        public Sender(BluetoothSocket socket)
+        public Sender(BluetoothSocket socket, SearchDevices searchDevice)
         {
             m_Socket = socket;
             try
@@ -38,7 +38,7 @@ namespace BluetoothApplication
                 System.Console.WriteLine(ex.Message);
             }
 
-            m_Handler = new MyHandler();
+            m_Handler = new MyHandler(searchDevice);
         }
 
         public override void Run()
@@ -54,7 +54,7 @@ namespace BluetoothApplication
                     bytes += m_InputStream.Read(buffer, bytes, buffer.Length - bytes);
                     for (int i = begin; i < bytes; i++)
                     {
-                        if (buffer[i] == System.Text.Encoding.UTF8.GetBytes("#")[0])
+                        if (buffer[i] == Encoding.UTF8.GetBytes("#")[0])
                         {
                             m_Handler.ObtainMessage(1, begin, i, buffer).SendToTarget();
                             begin = i + 1;

@@ -23,19 +23,20 @@ namespace BluetoothApplication
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;
-        private MainActivity _Main;
+        private SearchDevices m_SearchDevice
         private UUID m_MY_UUID;
         private int m_SUCCESS_CONNECT = 0;
         private string m_UuidString;
         //
 
 
-        public ConnectedThread(BluetoothDevice device, string UUIDString)
+        public ConnectedThread(BluetoothDevice device, string UUIDString, SearchDevices searchDevice)
         {
-            this.m_BtAdapter = BluetoothAdapter.DefaultAdapter;
-            this.m_UuidString = UUIDString;
+            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            m_UuidString = UUIDString;
+            m_SearchDevice = searchDevice;
             // Der übergebene UUID String wird in ein UUID Objekt konvertiert
-            this.m_MY_UUID = UUID.FromString(m_UuidString);
+            m_MY_UUID = UUID.FromString(m_UuidString);
             //
 
             BluetoothSocket tmp = null;
@@ -94,10 +95,14 @@ namespace BluetoothApplication
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-
+            Sender sender = new Sender(mmSocket, m_SearchDevice);
+            sender.Start();
+            sender.Write(Encoding.UTF8.GetBytes("Hallo"));
         }
 
-        /** Will cancel an in-progress connection, and close the socket */
+        /// <summary>
+        /// Will cancel an in-progress connection, and close the socket
+        /// </summary>
         public void Cancel()
         {
             try
