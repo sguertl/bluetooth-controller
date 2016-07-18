@@ -26,6 +26,7 @@ namespace BluetoothApplication
         private UUID m_MY_UUID;
         private int m_SUCCESS_CONNECT = 0;
         private string m_UuidString;
+        private MyHandler m_Handler;
         //
 
 
@@ -50,6 +51,8 @@ namespace BluetoothApplication
             Java.Lang.Object[] param = new Java.Lang.Object[] { Integer.ValueOf(1) };
 
             m_Socket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
+
+            m_Handler = new MyHandler();
             //
         }
 
@@ -93,7 +96,7 @@ namespace BluetoothApplication
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-            Sender sender = new Sender(mmSocket);
+            Sender sender = new Sender(mmSocket, m_Handler);
             sender.Start();
             sender.Write(Encoding.UTF8.GetBytes("#Hallo"));
         }
