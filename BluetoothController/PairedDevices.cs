@@ -13,17 +13,18 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
+    // ---------------------- DOKUMENTATION ----------------------------
+
     [Activity(Label = "PairedDevices")]
     public class PairedDevices : Activity
     {
-   
-            // Create your application here
 
-        private ListView listView;
-        private BluetoothAdapter btAdapter;
-        private ICollection<BluetoothDevice> pairedDevice;
-        private ArrayAdapter<String> adapter;
-        private LinearLayout linear;
+        private ListView m_ListView;
+        private BluetoothAdapter m_BtAdapter;
+        private ICollection<BluetoothDevice> m_PairedDevice;
+        private ArrayAdapter<String> m_Adapter;
+        private LinearLayout m_Linear;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,32 +32,31 @@ namespace BluetoothController
             SetContentView(Resource.Layout.PairedLayout);
             // Create your application here
 
-            init();
+            Init();
 
-            linear.SetBackgroundColor(Android.Graphics.Color.White);
-            listView.SetBackgroundColor(Android.Graphics.Color.Black);
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
 
-            getPairedDevices();
+            GetPairedDevices();
         }
 
-        private void getPairedDevices()
+        private void GetPairedDevices()
         {
-            List<String> liste = new List<string>();
-            foreach (BluetoothDevice device in pairedDevice)
+            List<String> list = new List<string>();
+            foreach (BluetoothDevice device in m_PairedDevice)
             {
-                liste.Add(device.Name + "\n" + device.Address);
+                list.Add(device.Name + "\n" + device.Address);
             }
-            adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, liste);
-            listView.Adapter = adapter;
+            m_Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, list);
+            m_ListView.Adapter = m_Adapter;
         }
 
-        public void init()
+        public void Init()
         {
-            btAdapter = BluetoothAdapter.DefaultAdapter;
-            listView = FindViewById<ListView>(Resource.Id.listView);
-            pairedDevice = btAdapter.BondedDevices;
-            linear = FindViewById<LinearLayout>(Resource.Id.linear2);
+            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            m_ListView = FindViewById<ListView>(Resource.Id.listView);
+            m_PairedDevice = m_BtAdapter.BondedDevices;
+            m_Linear = FindViewById<LinearLayout>(Resource.Id.linear2);
         }
-    }
     }
 }

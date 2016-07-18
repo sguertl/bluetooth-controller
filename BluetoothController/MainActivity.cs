@@ -10,12 +10,15 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
+
+    // ------------- DOKUMENTATION, FORMATIERUNG -------------------
+
     [Activity(Label = "BluetoothController", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        private BluetoothAdapter btAdapter;
-        private Button btPairedDevices;
-        private Button btSearchDevices;
+        private BluetoothAdapter m_BtAdapter;
+        private Button m_BtPairedDevices;
+        private Button m_BtSearchDevices;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -24,31 +27,31 @@ namespace BluetoothController
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            init();
+            Init();
 
-            if (btAdapter == null)
+            if (m_BtAdapter == null)
             {
                 Toast.MakeText(ApplicationContext, "Bluetooth is not supported", 0).Show();
             }
             else
             {
-                if (!btAdapter.IsEnabled)
+                if (!m_BtAdapter.IsEnabled)
                 {
-                    turnBTOn();
+                    TurnBTOn();
                 }
             }
 
         }
 
-        public void init()
+        public void Init()
         {
-            btAdapter = BluetoothAdapter.DefaultAdapter;
-            btPairedDevices = FindViewById<Button>(Resource.Id.btPairedDevices);
-            btSearchDevices = FindViewById<Button>(Resource.Id.btSearchDevices);
+            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            m_BtPairedDevices = FindViewById<Button>(Resource.Id.btPairedDevices);
+            m_BtSearchDevices = FindViewById<Button>(Resource.Id.btSearchDevices);
 
             // Text Color
-            btPairedDevices.SetTextColor(Android.Graphics.Color.Black);
-            btSearchDevices.SetTextColor(Android.Graphics.Color.Black);
+            m_BtPairedDevices.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
 
             // Border
             GradientDrawable drawable = new GradientDrawable();
@@ -56,27 +59,27 @@ namespace BluetoothController
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
             drawable.SetColor(Android.Graphics.Color.White);
-            btPairedDevices.SetBackgroundDrawable(drawable);
-            btSearchDevices.SetBackgroundDrawable(drawable);
+            m_BtPairedDevices.SetBackgroundDrawable(drawable);
+            m_BtSearchDevices.SetBackgroundDrawable(drawable);
 
             // Main Background
             LinearLayout line = FindViewById<LinearLayout>(Resource.Id.linear);
             line.SetBackgroundColor(Android.Graphics.Color.White);
 
             // Add mouse Clicked
-            btPairedDevices.Click += delegate
+            m_BtPairedDevices.Click += delegate
             {
                 StartActivity(typeof(PairedDevices));
             };
 
-            btSearchDevices.Click += delegate
+            m_BtSearchDevices.Click += delegate
             {
                 StartActivity(typeof(SearchedDevices));
             };
 
         }
 
-        public void turnBTOn()
+        public void TurnBTOn()
         {
             Intent intent = new Intent(BluetoothAdapter.ActionRequestEnable);
             StartActivityForResult(intent, 1);

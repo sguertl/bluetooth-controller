@@ -13,22 +13,25 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
+
+    // ---------------- DOKUMENTATION, FORMATIERUNG ----------------------
+
    public class MyBroadcastreciver : BroadcastReceiver
     {
-        private SearchDevices main;
-        private List<String> liste;
-        private List<String> compareList;
+        private SearchDevices m_Main;
+        private List<String> m_List;
+        private List<String> m_CompareList;
 
         public MyBroadcastreciver(SearchDevices main)
         {
-            this.main = main;
-            this.liste = new List<string>();
-            this.compareList = new List<string>();
+            m_Main = main;
+            m_List = new List<string>();
+            m_CompareList = new List<string>();
         }
 
-        public void setListNeu()
+        public void ResetList()
         {
-            liste = new List<string>();
+            m_List = new List<string>();
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -36,15 +39,15 @@ namespace BluetoothController
             // Gibt einmal Started und dann Finished
             String action = intent.Action;
 
-            main.GiveAMessage(action);
+            m_Main.GiveAMessage(action);
 
             if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
-                main.setAdapterToListView(liste);
-                if (liste.Count > 0)
+                m_Main.setAdapterToListView(m_List);
+                if (m_List.Count > 0)
                 {
-                    String address = liste.ElementAt(0).Split('\n')[1];
-                    liste.RemoveAt(0);
+                    String address = m_List.ElementAt(0).Split('\n')[1];
+                    m_List.RemoveAt(0);
                     BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
                     bool result = device.FetchUuidsWithSdp();
                 }
@@ -54,9 +57,9 @@ namespace BluetoothController
                 //  BluetoothDevice device = intent.ParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 // Add the name and address to an array adapter to show in a Toast
-                liste.Add(device.Name + "\n" + device.Address);
+                m_List.Add(device.Name + "\n" + device.Address);
                 String derp = device.Name + " - " + device.Address;
-                main.GiveAMessage(derp);
+                m_Main.GiveAMessage(derp);
             }
             else if (BluetoothDevice.ActionUuid.Equals(action))
             {
@@ -70,18 +73,18 @@ namespace BluetoothController
                     Console.WriteLine("///////////////////////////////" + uuidExtra[i].ToString());
                     if (i == 0)
                     {
-                        if (!compareList.Contains(uuidExtra[i].ToString()))
+                        if (!m_CompareList.Contains(uuidExtra[i].ToString()))
                         {
-                            compareList.Add(uuidExtra[i].ToString());
-                            main.AddUUid(uuidExtra[i].ToString());
+                            m_CompareList.Add(uuidExtra[i].ToString());
+                            m_Main.AddUuid(uuidExtra[i].ToString());
                         }
 
                     }
                 }
-                if (liste.Count > 0)
+                if (m_List.Count > 0)
                 {
-                    String address = liste.ElementAt(0).Split('\n')[1];
-                    liste.RemoveAt(0);
+                    String address = m_List.ElementAt(0).Split('\n')[1];
+                    m_List.RemoveAt(0);
                     BluetoothDevice device2 = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
                     bool result = device2.FetchUuidsWithSdp();
                 }

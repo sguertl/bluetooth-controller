@@ -14,16 +14,20 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
+
+    // --------------- DOKUMENTATION, FORMATIERUNG --------------------
+    // --------------- 140-145 ? --------------------------------------
+
     [Activity(Label = "SearchedDevices")]
     public class SearchDevices : Activity
     {
-        private BluetoothAdapter btAdapter;
-        private IntentFilter filter;
-        private MyBroadcastreciver receiver;
-        private Button btSearch;
-        private LinearLayout linear;
-        private ListView listView;
-        private List<String> uuids;
+        private BluetoothAdapter m_BtAdapter;
+        private IntentFilter m_Filter;
+        private MyBroadcastreciver m_Receiver;
+        private Button m_BtSearch;
+        private LinearLayout m_Linear;
+        private ListView m_ListView;
+        private List<String> m_Uuids;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,55 +37,55 @@ namespace BluetoothController
             SetContentView(Resource.Layout.SearchedLayout);
 
 
-            init();
+            Init();
         }
 
         // Kopiert
-        public void init()
+        public void Init()
         {
-            uuids = new List<string>();
+            m_Uuids = new List<string>();
 
-            listView = FindViewById<ListView>(Resource.Id.listViewSearched);
-            listView.SetBackgroundColor(Android.Graphics.Color.Black);
+            m_ListView = FindViewById<ListView>(Resource.Id.listViewSearched);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
 
-            listView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) =>
+            m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) =>
             {
                 onItemClick(sender, e);
             };
 
-            btSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
+            m_BtSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
 
-            btSearch.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSearch.SetTextColor(Android.Graphics.Color.Black);
 
             GradientDrawable drawable = new GradientDrawable();
             drawable.SetShape(ShapeType.Rectangle);
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
             drawable.SetColor(Android.Graphics.Color.White);
-            btSearch.SetBackgroundDrawable(drawable);
+            m_BtSearch.SetBackgroundDrawable(drawable);
 
-            btSearch.Click += delegate
+            m_BtSearch.Click += delegate
             {
-                onSearch();
+                OnSearch();
             };
 
-            linear = FindViewById<LinearLayout>(Resource.Id.linear3);
+            m_Linear = FindViewById<LinearLayout>(Resource.Id.linear3);
 
-            linear.SetBackgroundColor(Android.Graphics.Color.White);
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
-            btAdapter = BluetoothAdapter.DefaultAdapter;
+            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
 
-            filter = new IntentFilter();
+            m_Filter = new IntentFilter();
 
             // filter = new IntentFilter(BluetoothDevice.ActionFound);
 
-            receiver = new MyBroadcastreciver(this);
-            filter.AddAction(BluetoothDevice.ActionFound);
-            filter.AddAction(BluetoothAdapter.ActionDiscoveryStarted);
-            filter.AddAction(BluetoothAdapter.ActionDiscoveryFinished);
-            filter.AddAction(BluetoothDevice.ActionUuid);
+            m_Receiver = new MyBroadcastreciver(this);
+            m_Filter.AddAction(BluetoothDevice.ActionFound);
+            m_Filter.AddAction(BluetoothAdapter.ActionDiscoveryStarted);
+            m_Filter.AddAction(BluetoothAdapter.ActionDiscoveryFinished);
+            m_Filter.AddAction(BluetoothDevice.ActionUuid);
 
-            RegisterReceiver(receiver, filter);
+            RegisterReceiver(m_Receiver, m_Filter);
 
             /*
             filter = new IntentFilter(BluetoothAdapter.ActionDiscoveryStarted);
@@ -100,12 +104,12 @@ namespace BluetoothController
         }
 
         //Kopiert
-        public void onSearch()
+        public void OnSearch()
         {
-            listView.SetAdapter(null);
-            receiver.setListNeu();
-            btAdapter.CancelDiscovery();
-            btAdapter.StartDiscovery();
+            m_ListView.SetAdapter(null);
+            m_Receiver.ResetList();
+            m_BtAdapter.CancelDiscovery();
+            m_BtAdapter.StartDiscovery();
             Console.ReadLine();
         }
 
@@ -114,7 +118,7 @@ namespace BluetoothController
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
             //listView.Adapter = adapter;
-            listView.SetAdapter(adapter);
+            m_ListView.SetAdapter(adapter);
         }
 
 
@@ -124,13 +128,13 @@ namespace BluetoothController
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            for (int i = 0; i < uuids.Count; i++)
+            for (int i = 0; i < m_Uuids.Count; i++)
             {
-                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + uuids.ElementAt(i));
+                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + m_Uuids.ElementAt(i));
             }
 
-            Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + uuids[e.Position]);
-            ConnectedThread connect = new ConnectedThread(btDevice, uuids[e.Position]);
+            Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + m_Uuids[e.Position]);
+            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
             Console.ReadLine();
             connect.Start();
 
@@ -149,9 +153,9 @@ namespace BluetoothController
         }
 
         // Kopiert
-        public void AddUUid(String uuid)
+        public void AddUuid(String uuid)
         {
-            uuids.Add(uuid);
+            m_Uuids.Add(uuid);
         }
 
     }
