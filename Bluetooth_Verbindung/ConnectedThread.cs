@@ -101,7 +101,8 @@ namespace Bluetooth_Verbindung
 
         private void manageConnectedSocket(BluetoothSocket mmSocket)
     {
-
+            ManagingConnection mc = new ManagingConnection(mmSocket);
+            mc.Start();
     }
 
     /** Will cancel an in-progress connection, and close the socket */

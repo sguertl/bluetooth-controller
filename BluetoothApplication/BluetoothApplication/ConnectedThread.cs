@@ -66,8 +66,8 @@ namespace BluetoothApplication
             try
             {
                 // Test
-                Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + m_Socket.RemoteDevice.Name);
-                Console.ReadLine();
+                //  Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + m_Socket.RemoteDevice.Name);
+                //  Console.ReadLine();
                 //
 
                 // Connect the device through the socket. This will block
