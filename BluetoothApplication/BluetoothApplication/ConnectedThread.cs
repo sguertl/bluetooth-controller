@@ -23,7 +23,7 @@ namespace BluetoothApplication
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;
-        private SearchDevices m_SearchDevice
+        private SearchDevices m_SearchDevice;
         private UUID m_MY_UUID;
         private int m_SUCCESS_CONNECT = 0;
         private string m_UuidString;
@@ -90,7 +90,7 @@ namespace BluetoothApplication
             ManageConnectedSocket(m_Socket);
             //  main.getHandler().ObtainMessage(SUCCESS_CONNECT);
         }
-        //lalala
+
 
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
