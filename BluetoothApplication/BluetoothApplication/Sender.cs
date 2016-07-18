@@ -12,17 +12,16 @@ using Android.Widget;
 using Android.Bluetooth;
 using System.IO;
 using Java.IO;
-using System.Threading;
+using Java.Lang;
 
 namespace BluetoothApplication
 {
-    public class Sender
+    public class Sender : Thread
     {
         // Member Variablen
         private BluetoothSocket m_Socket;
         private Stream m_InputStream;
         private Stream m_OutputStream;
-        private Thread m_Thread;
         private MyHandler m_Handler;
         //
 
@@ -34,51 +33,44 @@ namespace BluetoothApplication
                 m_InputStream = socket.InputStream;
                 m_OutputStream = socket.OutputStream;
             }
-            catch(Exception ex)
+            catch(System.Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
             }
 
             m_Handler = new MyHandler();
-
-            m_Thread = new Thread(() =>
-            {
-                byte[] buffer = new byte[1024];
-                int bytes = 0;
-                int begin = 0;
-
-                while (true)
-                {
-                    try
-                    {
-                        bytes += m_InputStream.Read(buffer, bytes, buffer.Length - bytes);
-                        for(int i = begin; i < bytes; i++)
-                        {
-                            if(buffer[i] == System.Text.Encoding.UTF8.GetBytes("#")[0])
-                            {
-                                m_Handler.ObtainMessage(1, begin, i, buffer).SendToTarget();
-                                begin = i + 1;
-                                if(i == bytes - 1)
-                                {
-                                    bytes = 0;
-                                    begin = 0;
-                                }
-                            }
-                        }
-                    }catch(Exception ex)
-                    {
-                        System.Console.WriteLine(ex.Message);
-                    }
-                }
-            });
         }
 
-        /// <summary>
-        /// Starts to read incoming data. (Has to be closed with cancel())
-        /// </summary>
-        public void Read()
+        public override void Run()
         {
-            m_Thread.Start();
+            byte[] buffer = new byte[1024];
+            int bytes = 0;
+            int begin = 0;
+
+            while (true)
+            {
+                try
+                {
+                    bytes += m_InputStream.Read(buffer, bytes, buffer.Length - bytes);
+                    for (int i = begin; i < bytes; i++)
+                    {
+                        if (buffer[i] == System.Text.Encoding.UTF8.GetBytes("#")[0])
+                        {
+                            m_Handler.ObtainMessage(1, begin, i, buffer).SendToTarget();
+                            begin = i + 1;
+                            if (i == bytes - 1)
+                            {
+                                bytes = 0;
+                                begin = 0;
+                            }
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         /// <summary>
@@ -90,7 +82,7 @@ namespace BluetoothApplication
             {
                 m_OutputStream.Write(bytes, 0, bytes.Length - 1);
             }
-            catch(Exception ex)
+            catch(System.Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
             }
@@ -105,7 +97,7 @@ namespace BluetoothApplication
             {
                 m_Socket.Close();
             }
-            catch(Exception ex)
+            catch(System.Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
             }
