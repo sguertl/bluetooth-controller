@@ -97,7 +97,7 @@ namespace BluetoothApplication
         {
             Sender sender = new Sender(mmSocket, m_SearchDevice);
             sender.Start();
-            sender.Write(Encoding.UTF8.GetBytes("Hallo"));
+            sender.Write(Encoding.UTF8.GetBytes("#Hallo"));
         }
 
         /// <summary>
