@@ -38,6 +38,7 @@ namespace BluetoothApplication
 
         public override void OnReceive(Context context, Intent intent)
         {
+            // Gibt einmal Started und dann Finished
             String action = intent.Action;
 
             m_Main.GiveAMessage(action);
