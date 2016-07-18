@@ -25,7 +25,7 @@ namespace BluetoothApplication
         private MyHandler m_Handler;
         //
 
-        public Sender(BluetoothSocket socket, SearchDevices searchDevice)
+        public Sender(BluetoothSocket socket)
         {
             m_Socket = socket;
             try
@@ -38,7 +38,7 @@ namespace BluetoothApplication
                 System.Console.WriteLine(ex.Message);
             }
 
-            m_Handler = new MyHandler(searchDevice);
+            m_Handler = new MyHandler();
         }
 
         public override void Run()
