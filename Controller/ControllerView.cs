@@ -115,9 +115,6 @@ namespace Controller
         /// <summary>
         /// Checks single or multitouch and sets new bounds
         /// </summary>
-        /// <param name="v"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
         public bool OnTouch(View v, MotionEvent e)
         {
 
@@ -162,53 +159,6 @@ namespace Controller
                     }
                     break;
             }
-
-            //if(e.PointerCount == 2)
-            //{
-                //switch (e.Action)
-                //{
-                //    case MotionEventActions.Pointer1Down:
-                //        UpdateOvals(e.GetX(0), e.GetY(0));
-                //        break;
-
-                //    case MotionEventActions.Pointer2Down:
-                //        UpdateOvals(e.GetX(1), e.GetY(1));
-                //        break;
-
-                //    case MotionEventActions.Pointer1Up:
-                //        if(e.GetX(0) <= SCREEN_WIDTH / 2)
-                //            UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
-                //        else
-                //            UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                //        break;
-
-                //    case MotionEventActions.Pointer2Up:
-                //        if (e.GetX(1) <= SCREEN_WIDTH / 2)
-                //            UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
-                //        else
-                //            UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-
-                //        break; 
-                //}
-            //    UpdateOvals(e.GetX(0), e.GetY(0));
-            //    UpdateOvals(e.GetX(1), e.GetY(1));
-            //}
-            //else
-            //{
-                //switch (e.Action & e.ActionMasked)
-                //{
-                //    case MotionEventActions.ButtonPress:
-                //        UpdateOvals(e.GetX(), e.GetY());
-                //        break;
-                //    case MotionEventActions.ButtonRelease:
-                //        if (e.GetX() <= SCREEN_WIDTH / 2)
-                //            UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
-                //        else
-                //            UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                //        break;
-                //}
-            //    UpdateOvals(e.GetX(), e.GetY());
-            //}
             
             this.Invalidate();
             return true;

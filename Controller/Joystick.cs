@@ -77,7 +77,6 @@ namespace Controller
         {
             m_XPosition = xPosition;
             m_YPosition = yPosition;
-            Console.WriteLine("Current Position: x=" + m_XPosition + " / y=" + m_YPosition);
         }
 
         /// <summary>
@@ -203,7 +202,6 @@ namespace Controller
             m_Power = (int)(100 * Math.Sqrt(
                 (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + 
                 (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementRadius));
-            Console.WriteLine("Current Power: " + m_Power + " %");
             m_Power = Math.Min(m_Power, 100);
             return m_Power;
         }
