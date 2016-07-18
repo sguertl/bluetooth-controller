@@ -17,6 +17,7 @@ namespace Controller
         // Constants
         private readonly double RAD = 1 / (2 * Math.PI) * 360; // 1 rad in degrees
 
+        public static readonly int CENTER = 0;
         public static readonly int BOTTOM = 1;
         public static readonly int BOTTOM_RIGHT = 2;
         public static readonly int RIGHT = 3;
@@ -43,6 +44,8 @@ namespace Controller
 
         private int m_Angle; // Current angle of the joystick
 
+        private int m_Direction; // Current direction of the joystick
+
         public Joystick(float width, float height, bool isLeftStick)
         {
             m_StickDiameter = (width / 8 + width / 2) / 2 - width / 5;
@@ -59,7 +62,10 @@ namespace Controller
             {
                 CENTER_X = width - width / 5 - m_StickRadius / 2;
             }
+            m_XPosition = CENTER_X;
+
             CENTER_Y = height / 16 + height / 2 + m_StickRadius / 2;
+            m_YPosition = CENTER_Y;
         }
 
         /// <summary>
@@ -74,6 +80,10 @@ namespace Controller
             Console.WriteLine("Current Position: x=" + m_XPosition + " / y=" + m_YPosition);
         }
 
+        /// <summary>
+        /// Returns the current position of the joystick
+        /// </summary>
+        /// <returns>An array containing the x and y position of the joystick</returns>
         public float[] GetPosition()
         {
             return new float[] { m_XPosition, m_YPosition };
@@ -89,19 +99,13 @@ namespace Controller
             {
                 if (m_YPosition < CENTER_Y)
                 {
-                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                    //        / (m_XPosition - CENTER_X))
-                     //       * RAD + 90);
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                            / (m_XPosition - CENTER_X))
-                            * RAD + 90) - 90;
+                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD + 90);
+                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD + 90) - 90;
                 }
                 else if (m_YPosition > CENTER_Y)
                 {
-                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                    //        / (m_XPosition - CENTER_X)) * RAD) + 90;
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                            / (m_XPosition - CENTER_X)) * RAD);
+                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) + 90;
+                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD);
                 }
                 else
                 {
@@ -113,19 +117,13 @@ namespace Controller
             {
                 if (m_YPosition < CENTER_Y)
                 {
-                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                    //        / (m_XPosition - CENTER_X))
-                    //        * RAD - 90);
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                            / (m_XPosition - CENTER_X))
-                            * RAD - 90) - 90;
+                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD - 90);
+                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD - 90) - 90;
                 }
                 else if (m_YPosition > CENTER_Y)
                 {
-                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                    //       / (m_XPosition - CENTER_X)) * RAD) - 90;
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y)
-                            / (m_XPosition - CENTER_X)) * RAD) - 180;
+                    //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) - 90;
+                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) - 180;
                 }
                 else
                 {
@@ -162,9 +160,13 @@ namespace Controller
         /// <returns>Direction of the joystick</returns>
         public int GetDirection()
         {
+            if(CENTER_X == m_XPosition && CENTER_Y == m_YPosition)
+            {
+                return m_Direction = 0;
+            }
             if (m_Power == 0 && m_Angle == 0)
             {
-                return 0;
+                return m_Direction = 0;
             }
             int a = 0;
             if (m_Angle <= 0)
@@ -183,13 +185,13 @@ namespace Controller
                 }
             }
 
-            int direction = (int)(((a + 22) / 45) + 1);
+            m_Direction = (int)(((a + 22) / 45) + 1);
 
-            if (direction > 8)
+            if (m_Direction > 8)
             {
-                direction = 1;
+                m_Direction = 1;
             }
-            return direction;
+            return m_Direction;
         }
 
         /// <summary>

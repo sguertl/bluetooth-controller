@@ -93,11 +93,17 @@ namespace Controller
                 (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius, 
                 (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
 
+            //m_ShapeRadiusLeft.SetBounds(
+            //    (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius, 
+            //    (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius,
+            //    (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius, 
+            //    (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius);
+
             m_ShapeRadiusLeft.SetBounds(
-                (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius,
-                (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius);
+                (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius,
+                (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_DisplacementRadius,
+                (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_DisplacementRadius,
+                (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_DisplacementRadius);
 
             m_ShapeRadiusRight.SetBounds(
                 (int)m_RightJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius, 
@@ -118,24 +124,41 @@ namespace Controller
             switch(e.Action)
             {
                 case MotionEventActions.Up:
-                    if (e.GetX() > SCREEN_WIDTH / 2)
-                    {
-                        SetBoundsForRightStick(
-                            (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius,
-                            (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
-                            (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius,
-                            (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
-                    }
+                    //if(e.PointerCount == 2)
+                    //{
+                    //    if(e.GetX(0) > SCREEN_WIDTH / 2)
+                    //    {
+                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    //    }
+                    //    if(e.GetX(1) > SCREEN_WIDTH / 2)
+                    //    {
+                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    //    }
+                    //}
+                    //if(e.GetX() > SCREEN_WIDTH / 2)
+                    //{
+                    //    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    //}
+                    //else
+                    //{
+                    //    if(e.GetX() > SCREEN_WIDTH / 2)
+                    //    {
+                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    //    }
+                    //}
+                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    break;
+                case MotionEventActions.Pointer1Up:
+                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    break;
+                case MotionEventActions.Pointer2Up:
+                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                     break;
                 default:
+                    UpdateOvals(e.GetX(0), e.GetY(0));
                     if (e.PointerCount == 2)
                     {
-                        UpdateOvals(e.GetX(0), e.GetY(0));
                         UpdateOvals(e.GetX(1), e.GetY(1));
-                    }
-                    else
-                    {
-                        UpdateOvals(e.GetX(), e.GetY());
                     }
                     break;
             }
@@ -260,6 +283,7 @@ namespace Controller
             m_ShapeRadiusRight.Draw(canvas);
             m_ShapeStickLeft.Draw(canvas);
             m_ShapeStickRight.Draw(canvas);
+            
 
             // Set paint for data text
             Paint paint = new Paint();
