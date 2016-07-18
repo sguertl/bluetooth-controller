@@ -30,6 +30,13 @@ namespace BluetoothApplication
             if (m_BluetoothAdapter == null)
             {
                 Toast.MakeText(ApplicationContext, "Bluetooth is not supported", 0).Show();
+                AlertDialog alertMessage = new AlertDialog.Builder(this).Create();
+                alertMessage.SetTitle("Bluetooth not supported");
+                alertMessage.SetMessage("Bluetooth is not supported on this device. Please ... ");
+                alertMessage.SetButton("Ok", (s, ev) => { Finish(); });
+                alertMessage.Show();
+                m_BtPairedDevices.Enabled = false;
+                m_BtSearchDevices.Enabled = false;
             }
             else
             {
