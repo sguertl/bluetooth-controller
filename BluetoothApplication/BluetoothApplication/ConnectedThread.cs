@@ -23,16 +23,18 @@ namespace BluetoothApplication
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;
+        private SearchDevices m_SearchDevice;
         private UUID m_MY_UUID;
         private int m_SUCCESS_CONNECT = 0;
         private string m_UuidString;
         //
 
 
-        public ConnectedThread(BluetoothDevice device, string UUIDString)
+        public ConnectedThread(BluetoothDevice device, string UUIDString, SearchDevices searchDevice)
         {
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
+            m_SearchDevice = searchDevice;
             // Der übergebene UUID String wird in ein UUID Objekt konvertiert
             m_MY_UUID = UUID.FromString(m_UuidString);
             //
@@ -93,7 +95,7 @@ namespace BluetoothApplication
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-            Sender sender = new Sender(mmSocket);
+            Sender sender = new Sender(mmSocket, m_SearchDevice);
             sender.Start();
             sender.Write(Encoding.UTF8.GetBytes("#Hallo"));
         }
