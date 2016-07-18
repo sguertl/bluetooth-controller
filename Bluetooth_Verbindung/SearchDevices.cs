@@ -138,7 +138,10 @@ namespace Bluetooth_Verbindung
             connect.Start();
 
             var activity2 = new Intent(this, typeof(ConnectedDevices));
-            activity2.PutExtra(m_Device.Name, m_Device.Address);
+            IList<String> ll = new List<string>();
+            ll.Add(m_Device.Name);
+            ll.Add(m_Device.Address);
+            activity2.PutStringArrayListExtra("MyData" , ll);
             StartActivity(activity2);
 
 

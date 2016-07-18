@@ -8,8 +8,9 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
+
 using Android.Graphics.Drawables;
+using Android.Widget;
 
 namespace Bluetooth_Verbindung
 {
@@ -54,8 +55,12 @@ namespace Bluetooth_Verbindung
 
             linear.SetBackgroundColor(Android.Graphics.Color.White);
 
-            string text = Intent.GetStringExtra("MyData") ?? "Data not available";
-            Console.WriteLine(text);
+            IList<String> text = Intent.GetStringArrayListExtra("MyData");
+            viewName.Text = text.ElementAt(0);
+            viewAdresse.Text = text.ElementAt(1);
+
+            viewName.SetTextColor(Android.Graphics.Color.Black);
+            viewAdresse.SetTextColor(Android.Graphics.Color.Black);
         }
 
     }
