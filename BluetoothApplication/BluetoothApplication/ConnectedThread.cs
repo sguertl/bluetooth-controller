@@ -90,7 +90,7 @@ namespace BluetoothApplication
             ManageConnectedSocket(m_Socket);
             //  main.getHandler().ObtainMessage(SUCCESS_CONNECT);
         }
-
+        //lalala
 
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
