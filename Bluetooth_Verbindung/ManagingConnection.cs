@@ -51,13 +51,12 @@ namespace Bluetooth_Verbindung
             {
                 try
                 {
-                    /*
                     while (!mmInStream.CanRead || !mmInStream.IsDataAvailable())
                     {
                         System.Console.WriteLine("Can Read: " + mmInStream.CanRead + " Available: " + mmInStream.IsDataAvailable() );
                         Thread.Sleep(5000);
                     }
-                    */
+                    
                     bytes = mmInStream.Read(buffer, 0, buffer.Length);
 
                     //mHandler.obtainMessage(1, bytes, -1, buffer).sendToTarget();
