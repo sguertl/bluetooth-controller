@@ -18,67 +18,60 @@ namespace BluetoothApplication
 {
     public class ConnectedThread : Thread
     {
-        private BluetoothAdapter btAdapter;
-        private BluetoothSocket mmSocket;
-        private BluetoothDevice mmDevice;
-        private MainActivity main;
-        private UUID MY_UUID;
-        private int SUCCESS_CONNECT = 0;
-        private string uuidString;
+
+        // Member Variablen
+        private BluetoothAdapter m_BtAdapter;
+        private BluetoothSocket m_Socket;
+        private BluetoothDevice m_Device;
+        private MainActivity _Main;
+        private UUID m_MY_UUID;
+        private int m_SUCCESS_CONNECT = 0;
+        private string m_UuidString;
+        //
 
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
-            this.btAdapter = BluetoothAdapter.DefaultAdapter;
-            this.uuidString = UUIDString;
-            MY_UUID = UUID.FromString(uuidString);
-            // Use a temporary object that is later assigned to mmSocket,
-            // because mmSocket is final
+            this.m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            this.m_UuidString = UUIDString;
+            // Der übergebene UUID String wird in ein UUID Objekt konvertiert
+            this.m_MY_UUID = UUID.FromString(m_UuidString);
+            //
+
             BluetoothSocket tmp = null;
-            mmDevice = device;
+            m_Device = device;
 
-            // Get a BluetoothSocket to connect with the given BluetoothDevice
-            /*  try
-              {
-                  // MY_UUID is the app's UUID string, also used by the server code
-                  tmp = device.CreateRfcommSocketToServiceRecord(MY_UUID);
-              }
-              catch (Java.Lang.Exception e)
-                  { }
+            tmp = device.CreateRfcommSocketToServiceRecord(m_MY_UUID);
 
-      */
-
-            tmp = device.CreateRfcommSocketToServiceRecord(MY_UUID);
-            Class clazz = tmp.RemoteDevice.Class;
+            // Workaround, damit der Verbindungsaufbau zum Socket funktioniert
+            Class testClass = tmp.RemoteDevice.Class;
             Class[] paramTypes = new Class[] { Integer.Type };
 
-            Method m = clazz.GetMethod("createRfcommSocket", paramTypes);
+            Method m = testClass.GetMethod("createRfcommSocket", paramTypes);
             Java.Lang.Object[] param = new Java.Lang.Object[] { Integer.ValueOf(1) };
 
-            mmSocket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
-            // mmSocket.Connect();
-
-
-            //   mmSocket = tmp;
+            m_Socket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
+            //
         }
 
         public override void Run()
         {
             base.Run();
             // Cancel discovery because it will slow down the connection
-            btAdapter.CancelDiscovery();
+            m_BtAdapter.CancelDiscovery();
+            //
 
             try
             {
+                // Test
+                Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + m_Socket.RemoteDevice.Name);
+                Console.ReadLine();
+                //
+
                 // Connect the device through the socket. This will block
                 // until it succeeds or throws an exception
-                Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + mmSocket.RemoteDevice.Name);
-
-
-
-                Console.ReadLine();
-
-                mmSocket.Connect();
+                m_Socket.Connect();
+                //
             }
             catch (Java.Lang.Exception connectException)
             {
@@ -86,30 +79,30 @@ namespace BluetoothApplication
                 Console.WriteLine(connectException.Message);
                 try
                 {
-                    mmSocket.Close();
+                    Cancel();
                 }
                 catch (Java.Lang.Exception closeException) { }
                 return;
             }
 
             // Do work to manage the connection (in a separate thread)
-            manageConnectedSocket(mmSocket);
+            ManageConnectedSocket(m_Socket);
             //  main.getHandler().ObtainMessage(SUCCESS_CONNECT);
         }
 
 
 
-        private void manageConnectedSocket(BluetoothSocket mmSocket)
+        private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
 
         }
 
         /** Will cancel an in-progress connection, and close the socket */
-        public void cancel()
+        public void Cancel()
         {
             try
             {
-                mmSocket.Close();
+                m_Socket.Close();
             }
             catch (Java.Lang.Exception e) { }
         }

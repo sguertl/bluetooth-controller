@@ -18,28 +18,30 @@ namespace BluetoothApplication
 {
     public class Sender
     {
-        private BluetoothSocket mSocket;
-        private Stream mInputStream;
-        private Stream mOutputStream;
-        private Thread mThread;
-        private MyHandler mHandler;
+        // Member Variablen
+        private BluetoothSocket m_Socket;
+        private Stream m_InputStream;
+        private Stream m_OutputStream;
+        private Thread m_Thread;
+        private MyHandler m_Handler;
+        //
 
         public Sender(BluetoothSocket socket)
         {
-            mSocket = socket;
+            m_Socket = socket;
             try
             {
-                mInputStream = socket.InputStream;
-                mOutputStream = socket.OutputStream;
+                m_InputStream = socket.InputStream;
+                m_OutputStream = socket.OutputStream;
             }
             catch(Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
             }
 
-            mHandler = new MyHandler();
+            m_Handler = new MyHandler();
 
-            mThread = new Thread(() =>
+            m_Thread = new Thread(() =>
             {
                 byte[] buffer = new byte[1024];
                 int bytes = 0;
@@ -49,12 +51,12 @@ namespace BluetoothApplication
                 {
                     try
                     {
-                        bytes += mInputStream.Read(buffer, bytes, buffer.Length - bytes);
+                        bytes += m_InputStream.Read(buffer, bytes, buffer.Length - bytes);
                         for(int i = begin; i < bytes; i++)
                         {
                             if(buffer[i] == System.Text.Encoding.UTF8.GetBytes("#")[0])
                             {
-                                mHandler.ObtainMessage(1, begin, i, buffer).SendToTarget();
+                                m_Handler.ObtainMessage(1, begin, i, buffer).SendToTarget();
                                 begin = i + 1;
                                 if(i == bytes - 1)
                                 {
@@ -76,7 +78,7 @@ namespace BluetoothApplication
         /// </summary>
         public void Read()
         {
-            mThread.Start();
+            m_Thread.Start();
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace BluetoothApplication
         {
             try
             {
-                mOutputStream.Write(bytes, 0, bytes.Length - 1);
+                m_OutputStream.Write(bytes, 0, bytes.Length - 1);
             }
             catch(Exception ex)
             {
@@ -101,7 +103,7 @@ namespace BluetoothApplication
         {
             try
             {
-                mSocket.Close();
+                m_Socket.Close();
             }
             catch(Exception ex)
             {

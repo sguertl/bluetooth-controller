@@ -21,20 +21,21 @@ namespace BluetoothApplication
     [Activity(Label = "SearchDevices")]
     public class SearchDevices : Activity
     {
-        private BluetoothAdapter mBluetoothAdapter;
-        private MySearchBroadcastReceiver mSearchreceiver;
-        private MyPairBroadcastReceiver mPairreceiver;
-        private Button btSearch;
-        private LinearLayout linearLayout;
-        private ListView listView;
-        private ProgressDialog mProgressDialog;
-        private List<String> mUuids;
+        // Member Variablen
+        private BluetoothAdapter m_BluetoothAdapter;
+        private MySearchBroadcastReceiver m_Searchreceiver;
+        private MyPairBroadcastReceiver m_Pairreceiver;
+        private Button m_BtSearch;
+        private LinearLayout m_LinearLayout;
+        private ListView m_ListView;
+        private ProgressDialog m_ProgressDialog;
+        private List<String> m_Uuids;
+        //
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SearchLayout);
-
             init();
         }
 
@@ -46,13 +47,13 @@ namespace BluetoothApplication
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            for (int i = 0; i < mUuids.Count; i++)
+            for (int i = 0; i < m_Uuids.Count; i++)
             {
-                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + mUuids.ElementAt(i));
+                Console.WriteLine("For Schleife |||||||||||||||||||||||||" + m_Uuids.ElementAt(i));
             }
 
-            Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + mUuids[e.Position]);
-            ConnectedThread connect = new ConnectedThread(btDevice, mUuids[e.Position]);
+            Console.WriteLine("////////////////  " + "Device : " + btDevice.Name + "  " + m_Uuids[e.Position]);
+            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
             Console.ReadLine();
             connect.Start();
             // PairDevice(device);
@@ -79,51 +80,51 @@ namespace BluetoothApplication
         /// </summary>
         private void init()
         {
-            mUuids = new List<string>();
+            m_Uuids = new List<string>();
 
-            listView = FindViewById<ListView>(Resource.Id.listViewSearched);
-            listView.SetBackgroundColor(Android.Graphics.Color.Black);
-            listView.ItemClick += OnClickListView;
+            m_ListView = FindViewById<ListView>(Resource.Id.listViewSearched);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
+            m_ListView.ItemClick += OnClickListView;
 
-            btSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
+            m_BtSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
 
-            btSearch.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSearch.SetTextColor(Android.Graphics.Color.Black);
 
             GradientDrawable drawable = new GradientDrawable();
             drawable.SetShape(ShapeType.Rectangle);
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
             drawable.SetColor(Android.Graphics.Color.White);
-            btSearch.SetBackgroundDrawable(drawable);
+            m_BtSearch.SetBackgroundDrawable(drawable);
 
-            btSearch.Click += delegate
+            m_BtSearch.Click += delegate
             {
                 onSearch();
             };
 
-            linearLayout = FindViewById<LinearLayout>(Resource.Id.linear3);
+            m_LinearLayout = FindViewById<LinearLayout>(Resource.Id.linear3);
 
-            linearLayout.SetBackgroundColor(Android.Graphics.Color.White);
+            m_LinearLayout.SetBackgroundColor(Android.Graphics.Color.White);
 
-            mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
+            m_BluetoothAdapter = BluetoothAdapter.DefaultAdapter;
 
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.SetMessage("Scanning for Devices...");
-            mProgressDialog.SetCancelable(false);
-            mProgressDialog.CancelEvent += delegate { mProgressDialog.Dismiss(); mBluetoothAdapter.CancelDiscovery(); };
+            m_ProgressDialog = new ProgressDialog(this);
+            m_ProgressDialog.SetMessage("Scanning for Devices...");
+            m_ProgressDialog.SetCancelable(false);
+            m_ProgressDialog.CancelEvent += delegate { m_ProgressDialog.Dismiss(); m_BluetoothAdapter.CancelDiscovery(); };
 
-            mSearchreceiver = new MySearchBroadcastReceiver(this);
+            m_Searchreceiver = new MySearchBroadcastReceiver(this);
             IntentFilter filter = new IntentFilter();
             filter.AddAction(BluetoothDevice.ActionFound);
             filter.AddAction(BluetoothAdapter.ActionDiscoveryStarted);
             filter.AddAction(BluetoothAdapter.ActionDiscoveryFinished);
             filter.AddAction(BluetoothDevice.ActionUuid);
 
-            RegisterReceiver(mSearchreceiver, filter);
+            RegisterReceiver(m_Searchreceiver, filter);
 
-            mPairreceiver = new MyPairBroadcastReceiver(this);
+            m_Pairreceiver = new MyPairBroadcastReceiver(this);
             IntentFilter pairFilter = new IntentFilter(BluetoothDevice.ActionBondStateChanged);
-            RegisterReceiver(mPairreceiver, pairFilter);
+            RegisterReceiver(m_Pairreceiver, pairFilter);
         }
 
         /// <summary>
@@ -139,22 +140,22 @@ namespace BluetoothApplication
         /// </summary>
         private void onSearch()
         {
-            listView.SetAdapter(null);
-            mSearchreceiver.setListNeu();
-            mBluetoothAdapter.CancelDiscovery();
-            mProgressDialog.Show();
-            mBluetoothAdapter.StartDiscovery();
+            m_ListView.SetAdapter(null);
+            m_Searchreceiver.setListNeu();
+            m_BluetoothAdapter.CancelDiscovery();
+            m_ProgressDialog.Show();
+            m_BluetoothAdapter.StartDiscovery();
         }
 
         public void setAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, l);
-            listView.Adapter = adapter;
-            mProgressDialog.Dismiss();
+            m_ListView.Adapter = adapter;
+            m_ProgressDialog.Dismiss();
         }
         public void AddUUid(String uuid)
         {
-            mUuids.Add(uuid);
+            m_Uuids.Add(uuid);
         }
 
     }
