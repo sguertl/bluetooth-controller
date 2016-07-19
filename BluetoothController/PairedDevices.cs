@@ -31,6 +31,7 @@ namespace BluetoothController
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.PairedLayout);
 
+  
             Init();
 
             // Zeigt die bereits gekoppelten Devices an

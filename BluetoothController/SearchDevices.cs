@@ -37,6 +37,7 @@ namespace BluetoothController
             SetContentView(Resource.Layout.SearchedLayout);
 
             Init();
+
             m_BtAdapter.StartDiscovery(); // Startet die Suche nach Devices in der Nähe
         }
 
