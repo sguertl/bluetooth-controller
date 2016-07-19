@@ -30,6 +30,7 @@ namespace BluetoothController
         private BluetoothDevice m_Device;
         private MainActivity m_Main;            
         private string m_UuidString;
+        private Sender m_Sender;
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
@@ -83,10 +84,16 @@ namespace BluetoothController
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-            Sender sender = new Sender(mmSocket);
-            sender.Start();
+            m_Sender = new Sender(mmSocket);
+            m_Sender.Start();
             //Java.Lang.String test = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
             //sender.Write(test.GetBytes());
+        }
+
+        public void Write(int PowerLeft, int DirectionLeft, int PowerRight, int DirectionRight)
+        {
+            Java.Lang.String power = new Java.Lang.String(PowerLeft+":"+DirectionLeft+":"+PowerRight+":"+DirectionRight);
+            m_Sender.Write(power.GetBytes());
         }
 
         // Will cancel an in-progress connection, and close the socket
