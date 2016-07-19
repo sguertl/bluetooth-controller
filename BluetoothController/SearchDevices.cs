@@ -82,7 +82,7 @@ namespace BluetoothController
             RegisterReceiver(m_Receiver, m_Filter);
         }
 
-        // Gibt einen Toast, der vom Parameter  abhängt, aus
+        // Gibt einen Toast, der vom Parameter (message) abhängt, aus
         public void GiveAMessage(String message)
         {
             Toast.MakeText(ApplicationContext, message, 0).Show();

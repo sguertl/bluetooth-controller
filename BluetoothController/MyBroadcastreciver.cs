@@ -91,7 +91,7 @@ namespace BluetoothController
                 }
                 else
                 {
-                    m_Main.setAdapterToListView(m_CopyList);
+                    m_Main.SetAdapterToListView(m_CopyList);
                 }
             }
         }
