@@ -14,7 +14,7 @@ using Android.Bluetooth;
 namespace BluetoothController
 {
 
-    // ---------------- DOKUMENTATION, FORMATIERUNG ----------------------
+    // ---------------- DOKUMENTATION ----------------------
 
    public class MyBroadcastreciver : BroadcastReceiver
     {
@@ -44,7 +44,7 @@ namespace BluetoothController
             if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
                 m_CopyList = new List<string>(m_List);
-          //      m_Main.setAdapterToListView(m_CopyList);
+                //m_Main.setAdapterToListView(m_CopyList);
                 if (m_List.Count > 0)
                 {
                     String address = m_List.ElementAt(0).Split('\n')[1];
@@ -55,7 +55,7 @@ namespace BluetoothController
             }
             else if ((BluetoothDevice.ActionFound.Equals(action)))
             {
-                //  BluetoothDevice device = intent.ParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //BluetoothDevice device = intent.ParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
               
                 // Add the name and address to an array adapter to show in a Toast
@@ -79,7 +79,6 @@ namespace BluetoothController
                             m_CompareList.Add(uuidExtra[i].ToString());
                             m_Main.AddUuid(uuidExtra[i].ToString());
                         }
-
                     }
                 }
 
@@ -94,7 +93,6 @@ namespace BluetoothController
                 {
                     m_Main.setAdapterToListView(m_CopyList);
                 }
-
             }
         }
     }

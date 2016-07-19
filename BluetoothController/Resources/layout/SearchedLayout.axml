@@ -3,16 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  android:id="@+id/linear3">
-  <Button
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/btSearchDevices"
-      android:layout_margin="10dp"
-      android:text="Search" />
-  <ListView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/listViewSearched" />
-
+    android:id="@+id/linear3">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btSearchDevices"
+        android:layout_margin="10dp"
+        android:text="Search" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewSearched" />
 </LinearLayout>

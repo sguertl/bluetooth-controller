@@ -28,9 +28,7 @@ namespace BluetoothController
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
             SetContentView(Resource.Layout.PairedLayout);
-            // Create your application here
 
             Init();
 

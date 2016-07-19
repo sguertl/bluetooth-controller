@@ -69,11 +69,11 @@ namespace BluetoothController
 			// aapt resource value: 0x7f050004
 			public const int btDisconnect = 2131034116;
 			
-			// aapt resource value: 0x7f050006
-			public const int btPairedDevices = 2131034118;
-			
 			// aapt resource value: 0x7f050007
-			public const int btSearchDevices = 2131034119;
+			public const int btPairedDevices = 2131034119;
+			
+			// aapt resource value: 0x7f050006
+			public const int btSearchDevices = 2131034118;
 			
 			// aapt resource value: 0x7f050003
 			public const int btSteueren = 2131034115;

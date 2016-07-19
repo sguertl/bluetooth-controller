@@ -82,7 +82,6 @@ namespace BluetoothController
         }
 
 
-
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
 

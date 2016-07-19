@@ -15,7 +15,7 @@ using Android.Graphics.Drawables;
 namespace BluetoothController
 {
 
-    // --------------- DOKUMENTATION, FORMATIERUNG --------------------
+    // --------------- DOKUMENTATION --------------------
 
     [Activity(Label = "SearchedDevices")]
     public class SearchDevices : Activity
@@ -32,8 +32,6 @@ namespace BluetoothController
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your application here
             SetContentView(Resource.Layout.SearchedLayout);
 
             Init();
@@ -48,7 +46,7 @@ namespace BluetoothController
 
             m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) =>
             {
-                onItemClick(sender, e);
+                OnItemClick(sender, e);
             };
 
             m_BtSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
@@ -101,7 +99,7 @@ namespace BluetoothController
         }
 
         // Kopiert
-        public void setAdapterToListView(List<String> l)
+        public void SetAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
             //listView.Adapter = adapter;
@@ -110,7 +108,7 @@ namespace BluetoothController
 
 
         // kopiert
-        public void onItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
+        public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];

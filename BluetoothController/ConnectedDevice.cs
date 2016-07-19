@@ -13,6 +13,9 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
+
+    // ----------------- DOKUMENTATION ------------------
+
     public class ConnectedDevices : Activity
     {
 
@@ -25,20 +28,18 @@ namespace BluetoothController
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
             SetContentView(Resource.Layout.ConnectedDevicesLayout);
 
-            // Create your application here
             Init();
         }
 
         public void Init()
         {
-            this.m_ViewName = FindViewById<TextView>(Resource.Id.DeviceName);
-            this.m_ViewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
-            this.m_BtSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
-            this.m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
-            this.m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
+            m_ViewName = FindViewById<TextView>(Resource.Id.DeviceName);
+            m_ViewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
+            m_BtSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
+            m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
+            m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
 
             m_BtSteuerung.SetTextColor(Android.Graphics.Color.Black);
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
@@ -60,8 +61,5 @@ namespace BluetoothController
             m_ViewName.SetTextColor(Android.Graphics.Color.Black);
             m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black);
         }
-
-
-
     }
 }
