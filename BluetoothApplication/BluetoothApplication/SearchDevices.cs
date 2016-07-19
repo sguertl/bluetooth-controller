@@ -24,7 +24,6 @@ namespace BluetoothApplication
         // Member Variablen
         private BluetoothAdapter m_BluetoothAdapter;
         private MySearchBroadcastReceiver m_Searchreceiver;
-        private MyPairBroadcastReceiver m_Pairreceiver;
         private Button m_BtSearch;
         private LinearLayout m_LinearLayout;
         private ListView m_ListView;
@@ -49,23 +48,6 @@ namespace BluetoothApplication
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
             ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
             connect.Start();
-            // PairDevice(device);
-        }
-
-        /// <summary>
-        /// Pairing Device
-        /// </summary>
-        private void PairDevice(BluetoothDevice device)
-        {
-            try
-            {
-                Method method = device.Class.GetMethod("createBond", (Java.Lang.Class[])null);
-                method.Invoke(device, (Java.Lang.Object[])null);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
         /// <summary>
@@ -114,10 +96,12 @@ namespace BluetoothApplication
             filter.AddAction(BluetoothDevice.ActionUuid);
 
             RegisterReceiver(m_Searchreceiver, filter);
+        }
 
-            m_Pairreceiver = new MyPairBroadcastReceiver(this);
-            IntentFilter pairFilter = new IntentFilter(BluetoothDevice.ActionBondStateChanged);
-            RegisterReceiver(m_Pairreceiver, pairFilter);
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            UnregisterReceiver(m_Searchreceiver);
         }
 
         /// <summary>
@@ -150,6 +134,5 @@ namespace BluetoothApplication
         {
             m_Uuids.Add(uuid);
         }
-
     }
 }

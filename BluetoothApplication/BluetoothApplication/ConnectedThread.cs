@@ -70,12 +70,12 @@ namespace BluetoothApplication
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
+                    //ManageConnectedSocket(m_Socket);
                 }
                 //
             }
             catch (Java.Lang.Exception connectException)
             {
-                Console.WriteLine("fail1");
                 try
                 {
                     Cancel();
@@ -84,19 +84,15 @@ namespace BluetoothApplication
                 return;
             }
 
-            // Do work to manage the connection (in a separate thread)
             ManageConnectedSocket(m_Socket);
-            //  main.getHandler().ObtainMessage(SUCCESS_CONNECT);
         }
-        //lalala
-
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
             Sender sender = new Sender(mmSocket, m_Handler);
             sender.Start();
-            string test = "lala";
-            sender.Write(Convert.FromBase64String(test));
+            Java.Lang.String test = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
+            sender.Write(test.GetBytes());
         }
 
         /// <summary>

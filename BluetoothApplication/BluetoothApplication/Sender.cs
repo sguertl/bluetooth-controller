@@ -21,10 +21,18 @@ namespace BluetoothApplication
         private BluetoothSocket m_Socket;
         private Stream m_InputStream;
         private Stream m_OutputStream;
-        private MyHandler m_Handler;
+        private string m_Message;
         //
 
-        public Sender(BluetoothSocket socket, MyHandler handler)
+        /// <summary>
+        /// Last Message received
+        /// </summary>
+        public string Message
+        {
+            get { return m_Message; }
+        }
+
+        public Sender(BluetoothSocket socket)
         {
             m_Socket = socket;
             Stream tempInStream = null;
@@ -37,39 +45,46 @@ namespace BluetoothApplication
             }
             catch(System.Exception ex)
             {
+                Cancel();             
                 Console.WriteLine(ex.Message);
-                Console.WriteLine("fehler beim erstellen des inputstream");
             }
-            m_InputStream = new MemoryStream();
-            m_OutputStream = tempOutStream;
 
-            this.Name = "SenderThread";
-            m_Handler = handler;
+            m_InputStream = tempInStream;
+            m_OutputStream = tempOutStream;
         }
 
         public override void Run()
         {
             byte[] buffer = new byte[1024];
-            int bytes = 0;
-            Console.WriteLine("fehler1");
             while (true)
             {
-                Console.WriteLine("fehler2");
+                int bytes = 0;
+                m_InputStream.Position = 0;
                 try
                 {
-                    //while (!m_InputStream.IsDataAvailable() || !m_InputStream.CanRead) ;
-                    Console.WriteLine("----------- Can read " + m_InputStream.CanRead + " isdataavaiable " + m_InputStream.IsDataAvailable());
-                    Console.WriteLine("fehler3");
-                    bytes = m_InputStream.Read(buffer, 0, buffer.Length);
-                    Console.WriteLine("fehler4");
-                    m_Handler.ObtainMessage(1, bytes, -1, buffer);
+                    while (bytes == 0)
+                    {
+                        bytes += m_InputStream.Read(buffer, 0, buffer.Length);
+                    }
+
+                    m_Message = CreateStringFromBuffer(buffer, bytes);
                 }
-                catch (Java.Lang.Exception ex)
+                catch (System.Exception ex)
                 {
+                    Cancel();
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Fehler beim lesen");
                 }
             }
+        }
+
+        private string CreateStringFromBuffer(byte[] buffer, int bytes)
+        {
+            string returnString = "";
+            for(int i = 0; i < bytes * 8; i++)
+            {
+                returnString += (char)buffer[i];
+            }
+            return returnString;
         }
 
         /// <summary>
@@ -79,11 +94,11 @@ namespace BluetoothApplication
         {
             try
             {
-                //!!! m_OutputStream.Write(bytes, 0, bytes.Length);
-                m_InputStream.Write(bytes, 0, bytes.Length);
+                m_OutputStream.Write(bytes, 0, bytes.Length);              
             }
-            catch(Java.Lang.Exception ex)
+            catch(System.Exception ex)
             {
+                Cancel();
                 Console.WriteLine(ex.Message);
             }
         }
@@ -100,6 +115,11 @@ namespace BluetoothApplication
             catch(System.Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Activity activity = new Activity();
+                activity.StartActivity(typeof(SearchDevices));
             }
         }
     }
