@@ -141,7 +141,6 @@ namespace BluetoothController
             view.SetBackgroundColor(Android.Graphics.Color.Blue);
             String address = view.Text.Split('\n')[1];
 
-<<<<<<< HEAD
             // Creating a BluetoothDevice and a ConnectionThread object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
             ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
@@ -153,10 +152,8 @@ namespace BluetoothController
             ll.Add(btDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
-=======
-            BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);  // Erstellt ein BluetoothDevice Objekt mithilfe der Device-Adresse
+
             BuildConnection(btDevice, m_Uuids[e.Position]);
->>>>>>> 2869c89bf08f731fe838f20f950e835bdd95afbb
         }
 
         /// <summary>
