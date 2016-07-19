@@ -70,11 +70,11 @@ namespace BluetoothController
             m_BtPairedDevices.Click += delegate
             {
                 StartActivity(typeof(PairedDevices));
-            };
+            };        
 
             m_BtSearchDevices.Click += delegate
             {
-                StartActivity(typeof(SearchedDevices));
+                StartActivity(typeof(SearchDevices));
             };
 
         }
