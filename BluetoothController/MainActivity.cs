@@ -10,13 +10,10 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
-
-    // ------------- DOKUMENTATION, FORMATIERUNG -------------------
-
     [Activity(Label = "BluetoothController", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        // Member Variablen
+        // Members
         private BluetoothAdapter m_BtAdapter;
         private Button m_BtPairedDevices;
         private Button m_BtSearchDevices;
@@ -31,8 +28,7 @@ namespace BluetoothController
             //ಠ_ಠ
             Init();
 
-            // Fragt ab ob der BluetoothAdapter null ist
-            // Wenn dies zutrifft wird Bluetooth am jeweiligen Device nicht unterstützt
+            // Checking if bluetooth is supported
             if (m_BtAdapter == null)
             {
                 Toast.MakeText(ApplicationContext, "Bluetooth is not supported", 0).Show();
@@ -41,7 +37,7 @@ namespace BluetoothController
                 m_BtPairedDevices.Enabled = false;
                 m_BtPairedDevices.SetTextColor(Android.Graphics.Color.LightGray);
 
-                // Gibt ein Dialogfenster aus
+                // Displaying an alert to inform the user that bluetooth is not supported
                 AlertDialog alert = new AlertDialog.Builder(this).Create();
                 alert.SetTitle("Bluetooth not supported");
                 alert.SetMessage("Bluetooth is not supported!");
@@ -51,61 +47,73 @@ namespace BluetoothController
             }
             else
             {
-                // Fragt ab ob Bluetooth eingeschaltet ist
-                if (!m_BtAdapter.IsEnabled) { TurnBTOn(); } // Bluetoothaktievierungs Anfrage
+                // Checking if bluetooth is enabled
+                if (!m_BtAdapter.IsEnabled) { TurnBTOn(); }
             }
         }
 
+        /// <summary>
+        /// Initializing and modifies objects
+        /// </summary>
         public void Init()
         {
-            // Erzeugen der Objekte
+            // Initializing objects
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_BtPairedDevices = FindViewById<Button>(Resource.Id.btPairedDevices);
             m_BtSearchDevices = FindViewById<Button>(Resource.Id.btSearchDevices);
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear);
 
-            // Text Color [Button]
-            m_BtPairedDevices.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz
-            m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz
+            // Setting text color of the buttons
+            m_BtPairedDevices.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
 
-            // Border
+            // Setting border
             m_Drawable = new GradientDrawable();
-            m_Drawable.SetShape(ShapeType.Rectangle);               // Formt das Drawable Objekt in ein Rechteckt
-            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);  // Setzt die Border Stärke auf 2 und die Farbe Schwarz
-            m_Drawable.SetColor(Android.Graphics.Color.White);      // Setzt die Background auf Weiß
-            m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);    // Button übernimmt das Desgin des Drawable Objekt
-            m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);    // Button übernimmt das Desgin des Drawable Objekt
+            m_Drawable.SetShape(ShapeType.Rectangle);
+            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
+            m_Drawable.SetColor(Android.Graphics.Color.White);
+            m_BtPairedDevices.Background = m_Drawable;
+            m_BtSearchDevices.Background = m_Drawable;
 
-            // Activity Background
-            m_Linear.SetBackgroundColor(Android.Graphics.Color.White); // Setzt die Background Color Weiß
+            // Setting activity background
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
-            // On Touch Event
+            // Handling search devices button contact
             m_BtSearchDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
-        {
-            if (e2.Event.Action == MotionEventActions.Down)
-                m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine); // Setzt Button Background, wenn der Button berührt wird
-            else if (e2.Event.Action == MotionEventActions.Up)
             {
-                StartActivity(typeof(SearchDevices));                // Startet eine neue Activity
-                m_BtSearchDevices.SetBackgroundDrawable(m_Drawable); // Setzt das Standart Design vom Button zurück
-            }
-        };
-
-            // On Touch Event
-            m_BtPairedDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
-            {
+                // Setting background blue if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
-                    m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);  // Setzt Button Background, wenn der Button berührt wird
+                {
+                    m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine); // Setzt Button Background, wenn der Button berührt wird
+                }
+                // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    StartActivity(typeof(PairedDevices));                // Startet eine neue Activity
-                    m_BtPairedDevices.SetBackgroundDrawable(m_Drawable); // Setzt das Standart Design vom Button zurück
+                    StartActivity(typeof(SearchDevices));
+                    m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);
                 }
             };
 
+            // Handling paired devices button contact
+            m_BtPairedDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+            {
+                // Setting background blue if button was touched
+                if (e2.Event.Action == MotionEventActions.Down)
+                { 
+                    m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                }
+                // Starting a new activity if button was released
+                else if (e2.Event.Action == MotionEventActions.Up)
+                {
+                    StartActivity(typeof(PairedDevices));
+                    m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);
+                }
+            };
         }
 
-        // Schaltet Bluetooth ein
+        /// <summary>
+        /// Enables bluetooth on the device
+        /// </summary>
         public void TurnBTOn()
         {
             Intent intent = new Intent(BluetoothAdapter.ActionRequestEnable);
