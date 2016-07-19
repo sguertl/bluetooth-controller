@@ -25,6 +25,7 @@ namespace BluetoothController
         private readonly int SUCCESS_CONNECT = 0;
         private readonly UUID MY_UUID;
 
+        // Member Variablen
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;
@@ -34,17 +35,18 @@ namespace BluetoothController
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
+            // Erzeugen der Objekte
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
-            MY_UUID = UUID.FromString(m_UuidString);
 
-            // Use a temporary object that is later assigned to m_Socket,
-            // because m_Socket is final
+            
+            MY_UUID = UUID.FromString(m_UuidString); // Wandelt den UUID String in ein UUID Objekt um
+
+            // Use a temporary object that is later assigned to m_Socket
             BluetoothSocket tmp = null;
             m_Device = device;
 
-            // Get a BluetoothSocket to connect with the given BluetoothDevice
-         
+            // Get a BluetoothSocket to connect with the given BluetoothDevice      
             // Workaround to get the Bluetoothsocket
             tmp = device.CreateRfcommSocketToServiceRecord(MY_UUID);
             Class testClass = tmp.RemoteDevice.Class;
@@ -59,29 +61,30 @@ namespace BluetoothController
 
         public override void Run()
         {
-            base.Run();
-            // Cancel discovery because it will slow down the connection
-            m_BtAdapter.CancelDiscovery();
+            m_BtAdapter.CancelDiscovery(); // Beendet die Suche nach Devices, sonst würde sich der Verbindungaufbau verlangsamen
             try
             {
-                // Connect the device through the socket. This will block
-                // until it succeeds or throws an exception
+
+                // Prüft ob bereits das Device verbunden ist
                 if (!m_Socket.IsConnected) { m_Socket.Connect(); }      
             }
             catch (Java.Lang.Exception connectException)
             {
-                // Unable to connect; close the socket and get out
+                // Kann sich nicht mit dem Device Verbinden
                 Console.WriteLine(connectException.Message);
                 try { m_Socket.Close(); }
                 catch (Java.Lang.Exception e) { Console.WriteLine(e.Message); }
                 return;
             }
 
-            // Do work to manage the connection (in a separate thread)
+           
             ManageConnectedSocket(m_Socket);
         }
 
-
+        ´/// <summary>
+        /// Start der Datenübertragung
+        /// </summary>
+        /// <param name="mmSocket"></param>
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
             m_Sender = new Sender(mmSocket);
