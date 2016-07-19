@@ -88,8 +88,30 @@ namespace BluetoothApplication
         {
             Sender sender = new Sender(mmSocket);
             sender.Start();
-            Java.Lang.String test = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
+            Java.Lang.String test = new Java.Lang.String("1");
             sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+            test = new Java.Lang.String("2");
+            sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+            test = new Java.Lang.String("3");
+            sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+            //   Thread.Sleep(2000);
+            test = new Java.Lang.String("4");
+            sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+            test = new Java.Lang.String("5");
+            sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+            test = new Java.Lang.String("6");
+            sender.Write(test.GetBytes());
+            Thread.Sleep(100);
+
+            /*Java.Lang.String test1 = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
+            sender.Write(test1.GetBytes());
+            Java.Lang.String test2 = new Java.Lang.String("Dir1:8");
+            sender.Write(test2.GetBytes());*/
         }
 
         /// <summary>

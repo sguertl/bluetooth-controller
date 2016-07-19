@@ -49,52 +49,67 @@ namespace BluetoothApplication
                 Console.WriteLine(ex.Message);
             }
 
-            m_InputStream = tempInStream;
+            m_InputStream = new MemoryStream();
             m_OutputStream = tempOutStream;
         }
 
         public override void Run()
         {
             byte[] buffer = new byte[1024];
-            while (true)
+            int counter = 0;
+            while (counter <200)
             {
                 int bytes = 0;
                 m_InputStream.Position = 0;
                 try
                 {
-                    while (bytes == 0)
+                    while ((bytes = m_InputStream.ReadByte()) != -1)
                     {
-                        bytes += m_InputStream.Read(buffer, 0, buffer.Length);
+                        m_Message += (char)bytes;
+                        //bytes += m_InputStream.Read(buffer, 0, buffer.Length);
                     }
 
-                    m_Message = CreateStringFromBuffer(buffer, bytes);
+                    //m_Message = CreateStringFromBuffer(buffer, bytes);
+                    //Console.WriteLine("\nBytes: " + bytes);
+                    Console.WriteLine("Message: " + m_Message);
+                    Console.WriteLine(counter);
+                    m_Message = "";
+                    Thread.Sleep(10);
                 }
                 catch (System.Exception ex)
                 {
                     Cancel();
-                    Console.WriteLine(ex.Message);
+                    Console.Write(ex.Message);
                 }
+                counter++;
             }
         }
 
-        private string CreateStringFromBuffer(byte[] buffer, int bytes)
+        /*private string CreateStringFromBuffer(byte[] buffer, int bytes)
         {
-            string returnString = "";
-            for(int i = 0; i < bytes * 8; i++)
+            string returnString = Encoding.ASCII.GetString(buffer);
+            for(int i = 0; i < bytes + 1; i++)
             {
-                returnString += (char)buffer[i];
+                Console.WriteLine((char)buffer[i] + " ");
             }
             return returnString;
-        }
+        }*/
 
         /// <summary>
         /// Writes byte stream
         /// </summary>
         public void Write(byte[] bytes)
         {
+            //Console.WriteLine("In write");
             try
             {
-                m_OutputStream.Write(bytes, 0, bytes.Length);              
+                //m_OutputStream.Write(bytes, 0, bytes.Length);  
+                //Console.WriteLine("wird gesendet");   
+                //m_InputStream.Write(bytes, 0, bytes.Length);  
+                for(int i = 0; i < bytes.Length; i++)
+                {
+                    m_InputStream.WriteByte(bytes[i]);
+                }  
             }
             catch(System.Exception ex)
             {
