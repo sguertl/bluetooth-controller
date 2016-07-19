@@ -9,11 +9,12 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Bluetooth;
 
 namespace BluetoothController
 {
     interface IEstablishConnection
     {
-        void BuildConnection();
+        void BuildConnection(BluetoothDevice bluetoothDevice, String uuid);
     }
 }

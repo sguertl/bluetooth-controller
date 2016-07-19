@@ -140,17 +140,7 @@ namespace BluetoothController
             String address = view.Text.Split('\n')[1];               // Filter, durch eine Split-Anwendung, die Adresse des Devices
 
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);  // Erstellt ein BluetoothDevice Objekt mithilfe der Device-Adresse
-            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
-            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
-
-            var activity2 = new Intent(this, typeof(ConnectedDevices));
-            IList<String> ll = new List<string>();
-            ll.Add(btDevice.Name);
-            ll.Add(btDevice.Address);
-            activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);
-
-
+            BuildConnection(btDevice, m_Uuids[e.Position]);
         }
 
         /// <summary>
@@ -162,9 +152,17 @@ namespace BluetoothController
             m_Uuids.Add(uuid); // Hinzufügen einer UUID zur Liste
         }
 
-        public void BuildConnection()
+        public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
-            
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
+
+            var activity2 = new Intent(this, typeof(ConnectedDevices));
+            IList<String> ll = new List<string>();
+            ll.Add(bluetoothDevice.Name);
+            ll.Add(bluetoothDevice.Address);
+            activity2.PutStringArrayListExtra("MyData", ll);
+            StartActivity(activity2);
         }
     }
 }
