@@ -15,7 +15,7 @@ namespace BluetoothController
 {
    public class MyBroadcastreciver : BroadcastReceiver
     {
-        // Memebers
+        // Members
         private SearchDevices m_Main;
         private List<String> m_List;
         private List<String> m_CompareList;
@@ -23,13 +23,15 @@ namespace BluetoothController
 
         public MyBroadcastreciver(SearchDevices main)
         {
-            // Erzeugen der Objekte
+            // Initializing objects
             m_Main = main;
             m_List = new List<string>();
             m_CompareList = new List<string>();
         }
 
-        // Liste wird neu erstellt
+        /// <summary>
+        /// Clearing the list
+        /// </summary>
         public void ResetList()
         {
             m_List = new List<string>();
@@ -37,30 +39,35 @@ namespace BluetoothController
 
         public override void OnReceive(Context context, Intent intent)
         {
-            String action = intent.Action; // Gibt an welches Event er gefunden hat
+            // Getting specific event
+            String action = intent.Action;
 
             m_Main.GiveAMessage(action);
 
-            // Wenn das Event ActionDiscoveryFinished eintrifft, ist die Suche beendet
+            // Checking if search is stopped
             if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
-                m_CopyList = new List<string>(m_List); // Erstellt eine Kopie der Liste mit den Devices
-                // Fragt ab, ob sich Devices in der Liste befinden
+                // Creating a copy of the list
+                m_CopyList = new List<string>(m_List);
                 if (m_List.Count > 0)
                 {
-                    String address = m_List.ElementAt(0).Split('\n')[1];       // Holt sich die Adresse des Devices
-                    m_List.RemoveAt(0);                                        // Löscht dieses Device aus der Liste
+                    // Getting address of the device and removing it from the list
+                    String address = m_List.ElementAt(0).Split('\n')[1];
+                    m_List.RemoveAt(0);
 
-                    BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address); // Erstellt ein Bluetooth Objekt mithilfe der Adresse
-                    bool result = device.FetchUuidsWithSdp();                                          // Aktiviert das Event ActionUuid
+                    // Creating a BluetoothDevice by its address
+                    BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+                    bool result = device.FetchUuidsWithSdp();
                 }
             }
-            // Wenn das Event ActionFound eintrifft, ist ein Device gefunden worden
+            // Checking if device was found
             else if ((BluetoothDevice.ActionFound.Equals(action)))
             {
-                BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice); // Erhält über das intent das BluetoothDevice
+                // Getting the BluetoothDevice from intent
+                BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
 
-                m_List.Add(device.Name + "\n" + device.Address); // Fügt den Namen und die Adresse des Devices der List hinzu
+                // Adding name and address to device list
+                m_List.Add(device.Name + "\n" + device.Address);
 
                 // Add the name and address to an array adapter to show in a Toast
                 String derp = device.Name + " - " + device.Address;
@@ -68,8 +75,8 @@ namespace BluetoothController
             }
             else if (BluetoothDevice.ActionUuid.Equals(action))
             {
-                // This is when we can be assured that fetchUuidsWithSdp has completed.
-                // So get the uuids and call fetchUuidsWithSdp on another device in list
+                // This is when we can be assured that fetchUuidsWithSdp has completed
+                // So get the UUIDs and call fetchUuidsWithSdp on another device in list
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 IParcelable[] uuidExtra = intent.GetParcelableArrayExtra(BluetoothDevice.ExtraUuid);
                 try
