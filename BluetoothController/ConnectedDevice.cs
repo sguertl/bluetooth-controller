@@ -16,12 +16,12 @@ namespace BluetoothController
 
     // ----------------- DOKUMENTATION ------------------
 
-    [Activity(Label = "ConnectedDevices")]
+    [Activity(Label = "ConnectedDevice")]
     public class ConnectedDevices : Activity
     {
         private TextView m_ViewName;
         private TextView m_ViewAdresse;
-        private Button m_BtSteuerung;
+        private Button m_BtControl;
         private Button m_BtDisconnect;
         private LinearLayout m_Linear;
 
@@ -37,11 +37,11 @@ namespace BluetoothController
         {
             m_ViewName = FindViewById<TextView>(Resource.Id.DeviceName);
             m_ViewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
-            m_BtSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
+            m_BtControl = FindViewById<Button>(Resource.Id.btSteueren);
             m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
 
-            m_BtSteuerung.SetTextColor(Android.Graphics.Color.Black);
+            m_BtControl.SetTextColor(Android.Graphics.Color.Black);
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
             GradientDrawable drawable = new GradientDrawable();
@@ -49,7 +49,7 @@ namespace BluetoothController
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
             drawable.SetColor(Android.Graphics.Color.White);
-            m_BtSteuerung.SetBackgroundDrawable(drawable);
+            m_BtControl.SetBackgroundDrawable(drawable);
             m_BtDisconnect.SetBackgroundDrawable(drawable);
 
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
@@ -61,10 +61,10 @@ namespace BluetoothController
             m_ViewName.SetTextColor(Android.Graphics.Color.Black);
             m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black);
 
-            //m_BtSteuerung.Click += delegate
-            //{              
-            //    StartActivity(typeof(Controller.ControllerActivity));
-            //};
+            m_BtControl.Click += delegate
+            {              
+                StartActivity(typeof(ControllerActivity));
+            };
         }
     }
 }

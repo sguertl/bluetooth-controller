@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="ConnectedDevice.cs" />
     <Compile Include="ConnectedThread.cs" />
+    <Compile Include="ControllerActivity.cs" />
+    <Compile Include="ControllerView.cs" />
+    <Compile Include="Joystick.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyBroadcastreciver.cs" />
     <Compile Include="PairedDevices.cs" />
