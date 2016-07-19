@@ -90,7 +90,7 @@ namespace BluetoothController
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
                     StartActivity(typeof(SearchDevices));
-                    m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);
+                    m_BtSearchDevices.Background = m_Drawable;
                 }
             };
 
@@ -106,7 +106,7 @@ namespace BluetoothController
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
                     StartActivity(typeof(PairedDevices));
-                    m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);
+                    m_BtPairedDevices.Background = m_Drawable;
                 }
             };
         }

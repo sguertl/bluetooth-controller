@@ -19,7 +19,7 @@ namespace BluetoothController
     public class ConnectedThread : Thread
     {
         // Constants
-        private readonly int SUCCESS_CONNECT = 0;
+        //private readonly int SUCCESS_CONNECT = 0;
         private readonly UUID MY_UUID;
 
         // Members

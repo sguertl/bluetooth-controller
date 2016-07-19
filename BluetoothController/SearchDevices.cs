@@ -23,7 +23,6 @@ namespace BluetoothController
         private MyBroadcastreciver m_Receiver;
         private Button m_BtSearch;
         private LinearLayout m_Linear;
-        private BluetoothDevice m_Device;
         private ListView m_ListView;
         private List<string> m_Uuids; // List of UUIDs
         private GradientDrawable m_Drawable;
