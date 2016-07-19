@@ -60,6 +60,11 @@ namespace BluetoothController
 
             m_ViewName.SetTextColor(Android.Graphics.Color.Black);
             m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black);
+
+            m_BtSteuerung.Click += delegate
+            {
+                StartActivity(typeof(Joystick.MainActivity));
+            };
         }
     }
 }
