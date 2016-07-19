@@ -16,9 +16,9 @@ namespace BluetoothController
 
     // ----------------- DOKUMENTATION ------------------
 
+    [Activity(Label = "ConnectedDevices")]
     public class ConnectedDevices : Activity
     {
-
         private TextView m_ViewName;
         private TextView m_ViewAdresse;
         private Button m_BtSteuerung;
