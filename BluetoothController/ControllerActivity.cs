@@ -12,7 +12,8 @@ using Android.Widget;
 
 namespace BluetoothController
 {
-    [Activity(Label = "ControllerActivity")]
+    [Activity(Label = "ControllerActivity", Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen",
+        ScreenOrientation = Android.Content.PM.ScreenOrientation.SensorLandscape)]
     public class ControllerActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

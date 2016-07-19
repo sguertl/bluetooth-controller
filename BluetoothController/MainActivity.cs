@@ -19,7 +19,7 @@ namespace BluetoothController
         private BluetoothAdapter m_BtAdapter;
         private Button m_BtPairedDevices;
         private Button m_BtSearchDevices;
-        private GradientDrawable drawable;
+        private GradientDrawable m_Drawable;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -31,6 +31,20 @@ namespace BluetoothController
             if (m_BtAdapter == null)
             {
                 Toast.MakeText(ApplicationContext, "Bluetooth is not supported", 0).Show();
+                m_BtSearchDevices.Enabled = false;
+                m_BtSearchDevices.SetTextColor(Android.Graphics.Color.LightGray);
+                m_BtPairedDevices.Enabled = false;
+                m_BtPairedDevices.SetTextColor(Android.Graphics.Color.LightGray);
+
+                AlertDialog alert = new AlertDialog.Builder(this).Create();
+                alert.SetTitle("Bluetooth not supported");
+                alert.SetMessage("Bluetooth is not supported!");
+                alert.SetButton("Ok", (s, ev) =>
+                {
+                    Finish();
+                });
+                alert.Show();
+
             }
             else
             {
@@ -52,13 +66,13 @@ namespace BluetoothController
             m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
 
             // Border
-            drawable = new GradientDrawable();
-            drawable.SetShape(ShapeType.Rectangle);
-            drawable.SetStroke(2, Android.Graphics.Color.Black);
+            m_Drawable = new GradientDrawable();
+            m_Drawable.SetShape(ShapeType.Rectangle);
+            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
 
-            drawable.SetColor(Android.Graphics.Color.White);
-            m_BtPairedDevices.SetBackgroundDrawable(drawable);
-            m_BtSearchDevices.SetBackgroundDrawable(drawable);
+            m_Drawable.SetColor(Android.Graphics.Color.White);
+            m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);
+            m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);
 
             // Main Background
             LinearLayout line = FindViewById<LinearLayout>(Resource.Id.linear);
@@ -71,7 +85,7 @@ namespace BluetoothController
             else if (e2.Event.Action == MotionEventActions.Up)
             {
                 StartActivity(typeof(SearchDevices));
-                m_BtSearchDevices.SetBackgroundDrawable(drawable);
+                m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);
             }
         };
 
@@ -82,7 +96,7 @@ namespace BluetoothController
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
                     StartActivity(typeof(PairedDevices));
-                    m_BtPairedDevices.SetBackgroundDrawable(drawable);
+                    m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);
                 }
             };
 
