@@ -141,6 +141,7 @@ namespace BluetoothController
             view.SetBackgroundColor(Android.Graphics.Color.Blue);
             String address = view.Text.Split('\n')[1];
 
+<<<<<<< HEAD
             // Creating a BluetoothDevice and a ConnectionThread object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
             ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
@@ -152,6 +153,10 @@ namespace BluetoothController
             ll.Add(btDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
+=======
+            BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);  // Erstellt ein BluetoothDevice Objekt mithilfe der Device-Adresse
+            BuildConnection(btDevice, m_Uuids[e.Position]);
+>>>>>>> 2869c89bf08f731fe838f20f950e835bdd95afbb
         }
 
         /// <summary>
@@ -163,9 +168,17 @@ namespace BluetoothController
             m_Uuids.Add(uuid);
         }
 
-        public void BuildConnection()
+        public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
-            
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
+
+            var activity2 = new Intent(this, typeof(ConnectedDevices));
+            IList<String> ll = new List<string>();
+            ll.Add(bluetoothDevice.Name);
+            ll.Add(bluetoothDevice.Address);
+            activity2.PutStringArrayListExtra("MyData", ll);
+            StartActivity(activity2);
         }
     }
 }

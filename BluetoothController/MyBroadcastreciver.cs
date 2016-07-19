@@ -13,12 +13,9 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
-
-    // ---------------- DOKUMENTATION ----------------------
-
    public class MyBroadcastreciver : BroadcastReceiver
     {
-        // Memeber Variable
+        // Memebers
         private SearchDevices m_Main;
         private List<String> m_List;
         private List<String> m_CompareList;

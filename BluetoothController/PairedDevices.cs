@@ -25,6 +25,7 @@ namespace BluetoothController
         private ArrayAdapter<String> m_Adapter;
         private LinearLayout m_Linear;
         private List<String> m_List;
+        private List<String> m_UuidList;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -53,17 +54,37 @@ namespace BluetoothController
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_PairedDevice = m_BtAdapter.BondedDevices;
             m_List = new List<String>();
+            m_UuidList = new List<String>();
 
             // Activity Background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);   // Setzt die Background Color Weiß
 
             // Background Color [ListView]
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Black); // Setzt die Background Color auf Schwarz
+            m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) => { OnItemClick(sender, e); };
         }
 
-        public void BuildConnection()
+        private void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
-            
+            TextView view = (TextView)e.View;
+            string address = view.Text.Split('\n')[1];
+            BluetoothDevice bluetoothDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+            Console.WriteLine(bluetoothDevice.GetUuids()[0].Uuid.ToString());
+            Console.WriteLine(bluetoothDevice.GetUuids()[0].Uuid);
+            BuildConnection(bluetoothDevice, bluetoothDevice.GetUuids()[0].Uuid.ToString());
+        }
+
+        public void BuildConnection(BluetoothDevice bluetoothDevice, string uuid)
+        {
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
+
+            var activity2 = new Intent(this, typeof(ConnectedDevices));
+            IList<String> ll = new List<string>();
+            ll.Add(bluetoothDevice.Name);
+            ll.Add(bluetoothDevice.Address);
+            activity2.PutStringArrayListExtra("MyData", ll);
+            StartActivity(activity2);
         }
     }
 }
