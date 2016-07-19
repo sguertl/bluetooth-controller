@@ -64,7 +64,6 @@ namespace BluetoothController
             m_BtAdapter.CancelDiscovery(); // Beendet die Suche nach Devices, sonst würde sich der Verbindungaufbau verlangsamen
             try
             {
-
                 // Prüft ob bereits das Device verbunden ist
                 if (!m_Socket.IsConnected) { m_Socket.Connect(); }      
             }
@@ -81,7 +80,7 @@ namespace BluetoothController
             ManageConnectedSocket(m_Socket);
         }
 
-        ´/// <summary>
+        /// <summary>
         /// Start der Datenübertragung
         /// </summary>
         /// <param name="mmSocket"></param>

@@ -41,24 +41,18 @@ namespace BluetoothController
                 m_BtPairedDevices.Enabled = false;
                 m_BtPairedDevices.SetTextColor(Android.Graphics.Color.LightGray);
 
+                // Gibt ein Dialogfenster aus
                 AlertDialog alert = new AlertDialog.Builder(this).Create();
                 alert.SetTitle("Bluetooth not supported");
                 alert.SetMessage("Bluetooth is not supported!");
-                alert.SetButton("Ok", (s, ev) =>
-                {
-                    Finish();
-                });
+                alert.SetButton("Ok", (s, ev) => { Finish(); });
                 alert.Show();
 
             }
             else
             {
                 // Fragt ab ob Bluetooth eingeschaltet ist
-                if (!m_BtAdapter.IsEnabled)
-                {
-                    // Bluetoothaktievierungs Anfrage
-                    TurnBTOn();
-                }
+                if (!m_BtAdapter.IsEnabled) { TurnBTOn(); } // Bluetoothaktievierungs Anfrage
             }
         }
 

@@ -18,12 +18,13 @@ namespace BluetoothController
     [Activity(Label = "PairedDevices")]
     public class PairedDevices : Activity
     {
-
+        // Member Variablen
         private ListView m_ListView;
         private BluetoothAdapter m_BtAdapter;
         private ICollection<BluetoothDevice> m_PairedDevice;
         private ArrayAdapter<String> m_Adapter;
         private LinearLayout m_Linear;
+        private List<String> m_List;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,29 +33,31 @@ namespace BluetoothController
 
             Init();
 
-            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
-
+            // Zeigt die bereits gekoppelten Devices an
             GetPairedDevices();
         }
 
         private void GetPairedDevices()
         {
-            List<String> list = new List<string>();
-            foreach (BluetoothDevice device in m_PairedDevice)
-            {
-                list.Add(device.Name + "\n" + device.Address);
-            }
-            m_Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, list);
-            m_ListView.Adapter = m_Adapter;
+            foreach (BluetoothDevice device in m_PairedDevice) { m_List.Add(device.Name + "\n" + device.Address);}  // Durchl‰uft die alle gekoppelten Devices und schreibt sie auf eine Liste
+            m_Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, m_List);            // Wandelt die Liste in ein Adapter Array um
+            m_ListView.Adapter = m_Adapter;                                                                         // Setzt den Adapter der ListView 
         }
 
         public void Init()
         {
-            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            // Erzeugen der Objekte
             m_ListView = FindViewById<ListView>(Resource.Id.listView);
-            m_PairedDevice = m_BtAdapter.BondedDevices;
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear2);
+            m_BtAdapter = BluetoothAdapter.DefaultAdapter;
+            m_PairedDevice = m_BtAdapter.BondedDevices;
+            m_List = new List<String>();
+
+            // Activity Background
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);   // Setzt die Background Color Weiﬂ
+
+            // Background Color [ListView]
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black); // Setzt die Background Color auf Schwarz
         }
     }
 }
