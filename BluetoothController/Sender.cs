@@ -61,7 +61,7 @@ namespace BluetoothController
                 try
                 {
                     int bytes = 0;
-                    m_InputStream.Position = 0;
+                 //   m_InputStream.Position = 0;
                     while (bytes == 0)
                     {
                         bytes += m_InputStream.Read(buffer, 0, buffer.Length);
