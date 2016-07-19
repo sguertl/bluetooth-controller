@@ -61,9 +61,15 @@ namespace BluetoothController
             drawable.SetColor(Android.Graphics.Color.White);
             m_BtSearch.SetBackgroundDrawable(drawable);
 
-            m_BtSearch.Click += delegate
+            m_BtSearch.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
             {
-                OnSearch();
+                if (e2.Event.Action == MotionEventActions.Down)
+                    m_BtSearch.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                else if (e2.Event.Action == MotionEventActions.Up)
+                {
+                    OnSearch();
+                    m_BtSearch.SetBackgroundDrawable(drawable);
+                }
             };
 
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear3);
@@ -83,7 +89,7 @@ namespace BluetoothController
             RegisterReceiver(m_Receiver, m_Filter);
         }
 
-        // Gibt einen Toast, der vom Parameter (message) abhängt, aus
+        // Gibt einen Toast, der vom Parameter (message)ngt, a abhäus
         public void GiveAMessage(String message)
         {
             Toast.MakeText(ApplicationContext, message, 0).Show();
@@ -126,6 +132,8 @@ namespace BluetoothController
             ll.Add(m_Device.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
+
+
         }
 
         public void AddUuid(String uuid)
