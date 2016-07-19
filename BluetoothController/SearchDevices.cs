@@ -176,7 +176,7 @@ namespace BluetoothController
 
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
             connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
 
             var activity2 = new Intent(this, typeof(ConnectedDevices));

@@ -25,16 +25,17 @@ namespace BluetoothController
         // Members
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
-        private BluetoothDevice m_Device;
-        private MainActivity m_Main;            
+        private BluetoothDevice m_Device;            
         private string m_UuidString;
         private Sender m_Sender;
+        private Context m_Context;
 
-        public ConnectedThread(BluetoothDevice device, string UUIDString)
+        public ConnectedThread(BluetoothDevice device, string UUIDString, Context context)
         {
             // Initializing objects
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
+            m_Context = context;
 
             // Converting the UUID string into a UUID object
             MY_UUID = UUID.FromString(m_UuidString); // Wandelt den UUID String in ein UUID Objekt um
@@ -77,6 +78,7 @@ namespace BluetoothController
                 try
                 {
                     m_Socket.Close();
+                    Toast.MakeText(m_Context, "Could not connect to device", ToastLength.Short).Show();
                 }
                 catch (Java.Lang.Exception e)
                 {

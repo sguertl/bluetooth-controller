@@ -68,14 +68,12 @@ namespace BluetoothController
             TextView view = (TextView)e.View;
             string address = view.Text.Split('\n')[1];
             BluetoothDevice bluetoothDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            Console.WriteLine(bluetoothDevice.GetUuids()[0].Uuid.ToString());
-            Console.WriteLine(bluetoothDevice.GetUuids()[0].Uuid);
             BuildConnection(bluetoothDevice, bluetoothDevice.GetUuids()[0].Uuid.ToString());
         }
 
         public void BuildConnection(BluetoothDevice bluetoothDevice, string uuid)
         {
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
             connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
 
             var activity2 = new Intent(this, typeof(ConnectedDevices));
