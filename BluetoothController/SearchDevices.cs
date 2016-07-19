@@ -150,18 +150,8 @@ namespace BluetoothController
             view.SetBackgroundColor(Android.Graphics.Color.Blue);
             String address = view.Text.Split('\n')[1];
 
-            // Creating a BluetoothDevice and a ConnectionThread object
+            // Creating a BluetoothDevice object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
-            connect.Start();
-
-            var activity2 = new Intent(this, typeof(ConnectedDevices));
-            IList<String> ll = new List<string>();
-            ll.Add(btDevice.Name);
-            ll.Add(btDevice.Address);
-            activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);
-
             BuildConnection(btDevice, m_Uuids[e.Position]);
         }
 
@@ -174,11 +164,23 @@ namespace BluetoothController
             m_Uuids.Add(uuid);
         }
 
+        /// <summary>
+        /// Builds a connection and starts a new activity
+        /// </summary>
+        /// <param name="bluetoothDevice"></param>
+        /// <param name="uuid"></param>
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
+<<<<<<< HEAD
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
             connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
+=======
+            // Creating a ConnectionThread object
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);
+            connect.Start();
+>>>>>>> origin/master
 
+            // Starting new activity
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
             ll.Add(bluetoothDevice.Name);

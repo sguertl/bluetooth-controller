@@ -32,7 +32,9 @@ namespace BluetoothController
             Init();
         }
 
-        // Initializes and modifies the members
+        /// <summary>
+        /// Initializes and modifies the members
+        /// </summary>
         public void Init()
         {
             // Initializing objects
@@ -46,15 +48,15 @@ namespace BluetoothController
             m_BtControl.SetTextColor(Android.Graphics.Color.Black);
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
-            // Setting border for buttons
+            // Setting border of buttons
             GradientDrawable drawable = new GradientDrawable();
             drawable.SetShape(ShapeType.Rectangle);
             drawable.SetStroke(2, Android.Graphics.Color.Black);
             drawable.SetColor(Android.Graphics.Color.White);
-            m_BtControl.SetBackgroundDrawable(drawable);
-            m_BtDisconnect.SetBackgroundDrawable(drawable);
+            m_BtControl.Background = drawable;
+            m_BtDisconnect.Background = drawable;
 
-            // Setting background
+            // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
             // Receiving data from other activities
