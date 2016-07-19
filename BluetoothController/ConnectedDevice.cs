@@ -61,17 +61,10 @@ namespace BluetoothController
             m_ViewName.SetTextColor(Android.Graphics.Color.Black);
             m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black);
 
-<<<<<<< HEAD
-            m_BtSteuerung.Click += delegate
-            {              
-                StartActivity(typeof(Controller.ControllerActivity));
-            };
-=======
             //m_BtSteuerung.Click += delegate
             //{              
-            //    StartActivity(typeof(Controller.MainActivity));
+            //    StartActivity(typeof(Controller.ControllerActivity));
             //};
->>>>>>> origin/master
         }
     }
 }
