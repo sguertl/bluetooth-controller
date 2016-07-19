@@ -14,16 +14,14 @@ using Android.Graphics.Drawables;
 namespace BluetoothController
 {
 
-    // ----------------- DOKUMENTATION ------------------
-
     [Activity(Label = "ConnectedDevice")]
     public class ConnectedDevices : Activity
     {
-        // Member Variablen
-        private TextView m_ViewName; 
-        private TextView m_ViewAdresse;
-        private Button m_BtControl;
-        private Button m_BtDisconnect;
+        // Members
+        private TextView m_ViewName; // TextView for displaying the device's name
+        private TextView m_ViewAddress; // TextView for displaying the device's address
+        private Button m_BtControl; // Button for controlling the device
+        private Button m_BtDisconnect; // Button for disconnecting from the device
         private LinearLayout m_Linear;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -34,48 +32,55 @@ namespace BluetoothController
             Init();
         }
 
+        // Initializes and modifies the members
         public void Init()
         {
-            // Erzeugen der Objekte
+            // Initializing objects
             m_ViewName = FindViewById<TextView>(Resource.Id.DeviceName);
-            m_ViewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
+            m_ViewAddress = FindViewById<TextView>(Resource.Id.DeviceAdresse);
             m_BtControl = FindViewById<Button>(Resource.Id.btSteueren);
             m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
 
-            // Text Color [Buttons]
-            m_BtControl.SetTextColor(Android.Graphics.Color.Black);    // Setzt die Text Color Schwarz
-            m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz
+            // Setting text color of bzttons
+            m_BtControl.SetTextColor(Android.Graphics.Color.Black);
+            m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
-            // Border
+            // Setting border for buttons
             GradientDrawable drawable = new GradientDrawable();
-            drawable.SetShape(ShapeType.Rectangle);               // Formt das Drawable Objekt in ein Rechteckt
-            drawable.SetStroke(2, Android.Graphics.Color.Black);  // Setzt die Border Stärke auf 2 und die Farbe Schwarz
-            drawable.SetColor(Android.Graphics.Color.White);      // Setzt die Background auf Weiß
-            m_BtControl.SetBackgroundDrawable(drawable);          // Button übernimmt das Desgin des Drawable Objekt
-            m_BtDisconnect.SetBackgroundDrawable(drawable);       // Button übernimmt das Desgin des Drawable Objekt
+            drawable.SetShape(ShapeType.Rectangle);
+            drawable.SetStroke(2, Android.Graphics.Color.Black);
+            drawable.SetColor(Android.Graphics.Color.White);
+            m_BtControl.SetBackgroundDrawable(drawable);
+            m_BtDisconnect.SetBackgroundDrawable(drawable);
 
-            // Activity Background
-            m_Linear.SetBackgroundColor(Android.Graphics.Color.White); // Setzt die Background Color Weiß
+            // Setting background
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
-            // Erhält Daten von einer anderen Activity
+            // Receiving data from other activities
             IList<String> text = Intent.GetStringArrayListExtra("MyData");
-            m_ViewName.Text = text.ElementAt(0);    // Name des verbundenen Geräts
-            m_ViewAdresse.Text = text.ElementAt(1); // Adresse des verbundenen Geräts
+            m_ViewName.Text = text.ElementAt(0);
+            m_ViewAddress.Text = text.ElementAt(1);
 
-            // Text Color [Textview]
-            m_ViewName.SetTextColor(Android.Graphics.Color.Black);    // Setzt die Text Color Schwarz
-            m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz 
+            // Setting text color of textviews
+            m_ViewName.SetTextColor(Android.Graphics.Color.Black);
+            m_ViewAddress.SetTextColor(Android.Graphics.Color.Black);
 
-            // On Touch Event
+            // Handling button contact
             m_BtControl.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
             {
+                // Changing button background if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
-                    m_BtControl.SetBackgroundColor(Android.Graphics.Color.Aquamarine); // Setzt Button Background, wenn der Button berührt wird
+                {
+                    m_BtControl.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                }
+                // Starting a new activity and setting default button background if
+                // button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    StartActivity(typeof(ControllerActivity));   // Startet eine neue Activity
-                    m_BtControl.SetBackgroundDrawable(drawable); // Setzt das Standart Design vom Button zurück
+                    StartActivity(typeof(ControllerActivity));
+                    //m_BtControl.SetBackgroundDrawable(drawable);
+                    m_BtControl.Background = (Drawable)drawable;
                 }
             };
         }

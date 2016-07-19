@@ -16,16 +16,13 @@ using Java.Lang.Reflect;
 
 namespace BluetoothController
 {
-
-    // --------------- DOKUMENTATION, FORMATIERUNG --------------------
-
     public class ConnectedThread : Thread
     {
         // Constants
         private readonly int SUCCESS_CONNECT = 0;
         private readonly UUID MY_UUID;
 
-        // Member Variablen
+        // Members
         private BluetoothAdapter m_BtAdapter;
         private BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;
@@ -35,11 +32,11 @@ namespace BluetoothController
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
-            // Erzeugen der Objekte
+            // Initializing objects
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
 
-            
+            // Converting the UUID string into a UUID object
             MY_UUID = UUID.FromString(m_UuidString); // Wandelt den UUID String in ein UUID Objekt um
 
             // Use a temporary object that is later assigned to m_Socket
@@ -54,34 +51,35 @@ namespace BluetoothController
 
             Method m = testClass.GetMethod("createRfcommSocket", paramTypes);
             Java.Lang.Object[] param = new Java.Lang.Object[] { Integer.ValueOf(1) };
-            //
 
             m_Socket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
         }
 
+        /// <summary>
+        /// Tries to connect to a specific device
+        /// </summary>
         public override void Run()
         {
-            m_BtAdapter.CancelDiscovery(); // Beendet die Suche nach Devices, sonst würde sich der Verbindungaufbau verlangsamen
+            // Cancels the discovery due to better performance
+            m_BtAdapter.CancelDiscovery();
             try
             {
-                // Prüft ob bereits das Device verbunden ist
+                // Checks if device is already connected
                 if (!m_Socket.IsConnected) { m_Socket.Connect(); }      
             }
             catch (Java.Lang.Exception connectException)
             {
-                // Kann sich nicht mit dem Device Verbinden
+                // Could not connect to device
                 Console.WriteLine(connectException.Message);
                 try { m_Socket.Close(); }
                 catch (Java.Lang.Exception e) { Console.WriteLine(e.Message); }
                 return;
-            }
-
-           
+            }     
             ManageConnectedSocket(m_Socket);
         }
 
         /// <summary>
-        /// Start der Datenübertragung
+        /// Starts data transmission
         /// </summary>
         /// <param name="mmSocket"></param>
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
@@ -92,13 +90,22 @@ namespace BluetoothController
             //sender.Write(test.GetBytes());
         }
 
-        public void Write(int PowerLeft, int DirectionLeft, int PowerRight, int DirectionRight)
+        /// <summary>
+        /// Writes data got from controller 
+        /// </summary>
+        /// <param name="powerLeft">Power of the left joystick</param>
+        /// <param name="directionLeft">Direction of the left joystick</param>
+        /// <param name="powerRight">Power of the right joystick</param>
+        /// <param name="directionRight">Direction of the right joystick</param>
+        public void Write(int powerLeft, int directionLeft, int powerRight, int directionRight)
         {
-            Java.Lang.String power = new Java.Lang.String(PowerLeft+":"+DirectionLeft+":"+PowerRight+":"+DirectionRight);
+            Java.Lang.String power = new Java.Lang.String(powerLeft+":"+directionLeft+":"+powerRight+":"+directionRight);
             m_Sender.Write(power.GetBytes());
         }
 
-        // Will cancel an in-progress connection, and close the socket
+        /// <summary>
+        /// Cancels an in-progress connection and closes the socket
+        /// </summary>
         public void Cancel()
         {
             try { m_Socket.Close(); }
