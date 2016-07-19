@@ -18,7 +18,7 @@ namespace BluetoothController
     // --------------- DOKUMENTATION --------------------
 
     [Activity(Label = "SearchedDevices")]
-    public class SearchDevices : Activity
+    public class SearchDevices : Activity, IEstablishConnection
     {
         // Member Variablen
         private BluetoothAdapter m_BtAdapter;
@@ -162,5 +162,9 @@ namespace BluetoothController
             m_Uuids.Add(uuid); // Hinzufügen einer UUID zur Liste
         }
 
+        public void BuildConnection()
+        {
+            
+        }
     }
 }

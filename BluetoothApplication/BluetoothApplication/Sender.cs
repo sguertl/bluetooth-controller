@@ -60,7 +60,6 @@ namespace BluetoothApplication
             while (counter <200)
             {
                 int bytes = 0;
-                m_InputStream.Position = 0;
                 try
                 {
                     while ((bytes = m_InputStream.ReadByte()) != -1)

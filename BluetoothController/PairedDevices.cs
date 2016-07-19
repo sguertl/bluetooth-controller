@@ -16,7 +16,7 @@ namespace BluetoothController
     // ---------------------- DOKUMENTATION ----------------------------
 
     [Activity(Label = "PairedDevices")]
-    public class PairedDevices : Activity
+    public class PairedDevices : Activity, IEstablishConnection
     {
         // Member Variablen
         private ListView m_ListView;
@@ -59,6 +59,11 @@ namespace BluetoothController
 
             // Background Color [ListView]
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Black); // Setzt die Background Color auf Schwarz
+        }
+
+        public void BuildConnection()
+        {
+            
         }
     }
 }
