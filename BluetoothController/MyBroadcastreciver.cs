@@ -21,6 +21,7 @@ namespace BluetoothController
         private SearchDevices m_Main;
         private List<String> m_List;
         private List<String> m_CompareList;
+        private List<String> m_CopyList;
 
         public MyBroadcastreciver(SearchDevices main)
         {
@@ -36,14 +37,14 @@ namespace BluetoothController
 
         public override void OnReceive(Context context, Intent intent)
         {
-            // Gibt einmal Started und dann Finished
             String action = intent.Action;
 
             m_Main.GiveAMessage(action);
 
             if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
-                m_Main.setAdapterToListView(m_List);
+                m_CopyList = new List<string>(m_List);
+          //      m_Main.setAdapterToListView(m_CopyList);
                 if (m_List.Count > 0)
                 {
                     String address = m_List.ElementAt(0).Split('\n')[1];
@@ -56,6 +57,7 @@ namespace BluetoothController
             {
                 //  BluetoothDevice device = intent.ParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
+              
                 // Add the name and address to an array adapter to show in a Toast
                 m_List.Add(device.Name + "\n" + device.Address);
                 String derp = device.Name + " - " + device.Address;
@@ -67,10 +69,9 @@ namespace BluetoothController
                 // So get the uuids and call fetchUuidsWithSdp on another device in list
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 IParcelable[] uuidExtra = intent.GetParcelableArrayExtra(BluetoothDevice.ExtraUuid);
-                Console.WriteLine("///////////////////////////////Device: " + device.Name + " " + device.Address);
+              
                 for (int i = 0; i < uuidExtra.Length; i++)
-                {
-                    Console.WriteLine("///////////////////////////////" + uuidExtra[i].ToString());
+                {         
                     if (i == 0)
                     {
                         if (!m_CompareList.Contains(uuidExtra[i].ToString()))
@@ -81,6 +82,7 @@ namespace BluetoothController
 
                     }
                 }
+
                 if (m_List.Count > 0)
                 {
                     String address = m_List.ElementAt(0).Split('\n')[1];
@@ -88,6 +90,11 @@ namespace BluetoothController
                     BluetoothDevice device2 = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
                     bool result = device2.FetchUuidsWithSdp();
                 }
+                else
+                {
+                    m_Main.setAdapterToListView(m_CopyList);
+                }
+
             }
         }
     }

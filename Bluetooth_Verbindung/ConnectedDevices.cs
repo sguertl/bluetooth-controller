@@ -28,7 +28,7 @@ namespace Bluetooth_Verbindung
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.ConnectedDevicesLayout);
+         //   SetContentView(Resource.Layout.ConnectedDevicesLayout);
 
             // Create your application here
             Init();
@@ -36,12 +36,13 @@ namespace Bluetooth_Verbindung
 
         public void Init()
         {
+            /*
             this.viewName = FindViewById<TextView>(Resource.Id.DeviceName);
             this.viewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
             this.btSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
             this.btDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
             this.linear = FindViewById<LinearLayout>(Resource.Id.linear4);
-
+            */
             btSteuerung.SetTextColor(Android.Graphics.Color.Black);
             btDisconnect.SetTextColor(Android.Graphics.Color.Black);
 

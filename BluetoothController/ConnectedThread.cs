@@ -36,34 +36,24 @@ namespace BluetoothController
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
             MY_UUID = UUID.FromString(m_UuidString);
+
             // Use a temporary object that is later assigned to m_Socket,
             // because m_Socket is final
             BluetoothSocket tmp = null;
             m_Device = device;
 
             // Get a BluetoothSocket to connect with the given BluetoothDevice
-            /*  try
-              {
-                  // MY_UUID is the app's UUID string, also used by the server code
-                  tmp = device.CreateRfcommSocketToServiceRecord(MY_UUID);
-              }
-              catch (Java.Lang.Exception e)
-                  { }
-
-            */
-
+         
+            // Workaround to get the Bluetoothsocket
             tmp = device.CreateRfcommSocketToServiceRecord(MY_UUID);
-            Class clazz = tmp.RemoteDevice.Class;
+            Class testClass = tmp.RemoteDevice.Class;
             Class[] paramTypes = new Class[] { Integer.Type };
 
-            Method m = clazz.GetMethod("createRfcommSocket", paramTypes);
+            Method m = testClass.GetMethod("createRfcommSocket", paramTypes);
             Java.Lang.Object[] param = new Java.Lang.Object[] { Integer.ValueOf(1) };
+            //
 
             m_Socket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
-            // m_Socket.Connect();
-
-
-            //   m_Socket = tmp;
         }
 
         public override void Run()
@@ -71,14 +61,11 @@ namespace BluetoothController
             base.Run();
             // Cancel discovery because it will slow down the connection
             m_BtAdapter.CancelDiscovery();
-
             try
             {
                 // Connect the device through the socket. This will block
                 // until it succeeds or throws an exception
-                Console.WriteLine("++++++++++++++++++++++++++++++Socket: " + m_Socket.RemoteDevice.Name);
-                Console.ReadLine();
-                m_Socket.Connect();
+                if (!m_Socket.IsConnected) { m_Socket.Connect(); }      
             }
             catch (Java.Lang.Exception connectException)
             {

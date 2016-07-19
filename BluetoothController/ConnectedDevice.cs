@@ -16,11 +16,11 @@ namespace BluetoothController
     public class ConnectedDevices : Activity
     {
 
-        private TextView viewName;
-        private TextView viewAdresse;
-        private Button btSteuerung;
-        private Button btDisconnect;
-        private LinearLayout linear;
+        private TextView m_ViewName;
+        private TextView m_ViewAdresse;
+        private Button m_BtSteuerung;
+        private Button m_BtDisconnect;
+        private LinearLayout m_Linear;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,32 +34,34 @@ namespace BluetoothController
 
         public void Init()
         {
-            this.viewName = FindViewById<TextView>(Resource.Id.DeviceName);
-            this.viewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
-            this.btSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
-            this.btDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
-            this.linear = FindViewById<LinearLayout>(Resource.Id.linear4);
+            this.m_ViewName = FindViewById<TextView>(Resource.Id.DeviceName);
+            this.m_ViewAdresse = FindViewById<TextView>(Resource.Id.DeviceAdresse);
+            this.m_BtSteuerung = FindViewById<Button>(Resource.Id.btSteueren);
+            this.m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
+            this.m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
 
-            btSteuerung.SetTextColor(Android.Graphics.Color.Black);
-            btDisconnect.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSteuerung.SetTextColor(Android.Graphics.Color.Black);
+            m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
             GradientDrawable drawable = new GradientDrawable();
             drawable.SetShape(ShapeType.Rectangle);
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
             drawable.SetColor(Android.Graphics.Color.White);
-            btSteuerung.SetBackgroundDrawable(drawable);
-            btDisconnect.SetBackgroundDrawable(drawable);
+            m_BtSteuerung.SetBackgroundDrawable(drawable);
+            m_BtDisconnect.SetBackgroundDrawable(drawable);
 
-            linear.SetBackgroundColor(Android.Graphics.Color.White);
+            m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
             IList<String> text = Intent.GetStringArrayListExtra("MyData");
-            viewName.Text = text.ElementAt(0);
-            viewAdresse.Text = text.ElementAt(1);
+            m_ViewName.Text = text.ElementAt(0);
+            m_ViewAdresse.Text = text.ElementAt(1);
 
-            viewName.SetTextColor(Android.Graphics.Color.Black);
-            viewAdresse.SetTextColor(Android.Graphics.Color.Black);
+            m_ViewName.SetTextColor(Android.Graphics.Color.Black);
+            m_ViewAdresse.SetTextColor(Android.Graphics.Color.Black);
         }
+
+
 
     }
 }
