@@ -104,17 +104,24 @@ namespace BluetoothController
             Toast.MakeText(ApplicationContext, message, 0).Show();
         }
 
-        // Startet die Suche nach neuen Devices in der Nähe
+        /// <summary>
+        /// Startet die Suche nach neuen Devices in der Nähe
+        /// </summary>
         public void OnSearch()
         {
-            m_ListView.SetAdapter(null); // Setzt den Adapter der ListView auf Null, damit 
-            m_Receiver.ResetList();
-            m_BtAdapter.CancelDiscovery();
-            m_BtAdapter.StartDiscovery();
-            Console.ReadLine();
+            m_ListView.SetAdapter(null); // Setzt den Adapter der ListView auf Null, damit er die alten gefunden Devices löscht
+            m_Receiver.ResetList(); // Setzt die Liste mit den gefunden Devices auf null
+
+            // Die CancelDiscovery-Methode ist dafür da damit nicht beim Spammen des Buttons unnötige Suchvorgänge gestartet werden
+            m_BtAdapter.CancelDiscovery(); // Bricht die Suche nach Devices ab
+            m_BtAdapter.StartDiscovery(); // Startet die Suche nach Devices in de Nähe
         }
 
-        // Kopiert
+       
+        /// <summary>
+        /// Anzeigen der gefundenen Devices
+        /// </summary>
+        /// <param name="l"></param>
         public void SetAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
