@@ -28,7 +28,7 @@ namespace BluetoothController
         private LinearLayout m_Linear;
         private BluetoothDevice m_Device;
         private ListView m_ListView;
-        private List<String> m_Uuids; // enthält die UUID´s
+        private List<String> m_Uuids; // enthält die UUID´s (UUID = Universally Unique Identifier)
         private GradientDrawable m_Drawable;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -124,37 +124,43 @@ namespace BluetoothController
         /// <param name="l"></param>
         public void SetAdapterToListView(List<String> l)
         {
-            ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
-            m_ListView.SetAdapter(adapter);
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);         
+            ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l); // Wandelt die übergebene List<String> in ein Adapter Array um
+            m_ListView.SetAdapter(adapter); // Setzt den Adapter der ListView 
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray); // Setz den Background jedes Item auf Grau    
         }
 
 
-        // kopiert
+        /// <summary>
+        /// Click Event [ListView]
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
-            TextView view = (TextView)e.View;
-            view.SetBackgroundColor(Android.Graphics.Color.Blue);
-            String address = view.Text.Split('\n')[1];
-            BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            m_Device = btDevice;
-
-            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]);
-            connect.Start();
+            TextView view = (TextView)e.View; // Wandelt aus ausgewählte Item der ListView in eine TextView um
+            view.SetBackgroundColor(Android.Graphics.Color.Blue); // Setzt den Background der TextView auf Blau
+            String address = view.Text.Split('\n')[1]; // Filter, durch eine Split-Anwendung, die Adresse des Devices
+            BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address); // Erstellt ein BluetoothDevice Objekt mithilfe der Device-Adresse
+            ConnectedThread connect = new ConnectedThread(btDevice, m_Uuids[e.Position]); // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
+            connect.Start(); // Startet den Thread, um sich mit dem Device zu verbinden
 
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
-            ll.Add(m_Device.Name);
-            ll.Add(m_Device.Address);
+            ll.Add(btDevice.Name);
+            ll.Add(btDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
 
 
         }
 
+        /// <summary>
+        ///  Fügt eine UUID zur Liste hinzu
+        /// </summary>
+        /// <param name="uuid"></param>
         public void AddUuid(String uuid)
         {
-            m_Uuids.Add(uuid);
+            m_Uuids.Add(uuid); // Hinzufügen einer UUID zur Liste
         }
 
     }
