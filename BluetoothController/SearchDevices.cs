@@ -35,6 +35,7 @@ namespace BluetoothController
             SetContentView(Resource.Layout.SearchedLayout);
 
             Init();
+            m_BtAdapter.StartDiscovery();
         }
 
         public void Init()
@@ -102,8 +103,8 @@ namespace BluetoothController
         public void SetAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
-            //listView.Adapter = adapter;
             m_ListView.SetAdapter(adapter);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);         
         }
 
 
@@ -111,6 +112,7 @@ namespace BluetoothController
         public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
             TextView view = (TextView)e.View;
+            view.SetBackgroundColor(Android.Graphics.Color.Blue);
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
             m_Device = btDevice;
