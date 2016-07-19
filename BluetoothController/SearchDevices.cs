@@ -27,6 +27,7 @@ namespace BluetoothController
         private ListView m_ListView;
         private List<string> m_Uuids; // List of UUIDs
         private GradientDrawable m_Drawable;
+        private ProgressDialog m_ProgressDialog;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,7 +37,7 @@ namespace BluetoothController
             Init();
 
             // Starting to discover for devices nearby
-            m_BtAdapter.StartDiscovery();
+            OnSearch();
         }
 
         /// <summary>
@@ -53,6 +54,13 @@ namespace BluetoothController
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_Filter = new IntentFilter();
             m_Receiver = new MyBroadcastreciver(this);
+
+
+
+            m_ProgressDialog = new ProgressDialog(this);
+            m_ProgressDialog.SetMessage("Scanning for Devices...");
+            m_ProgressDialog.SetCancelable(false);
+            m_ProgressDialog.CancelEvent += delegate { m_ProgressDialog.Dismiss(); m_BtAdapter.CancelDiscovery(); };
 
             // Setting background color of ListView
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
@@ -115,7 +123,7 @@ namespace BluetoothController
             // Removing old devices
             m_ListView.SetAdapter(null);
             m_Receiver.ResetList();
-
+            m_ProgressDialog.Show();
             // Avoiding multiple searches
             m_BtAdapter.CancelDiscovery();
             m_BtAdapter.StartDiscovery();
@@ -131,6 +139,7 @@ namespace BluetoothController
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
             m_ListView.SetAdapter(adapter);
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
+            m_ProgressDialog.Dismiss();
         }
 
 
