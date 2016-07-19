@@ -28,6 +28,7 @@ namespace BluetoothController
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
 
+            //ಠ_ಠ
             Init();
 
             // Fragt ab ob der BluetoothAdapter null ist
