@@ -19,6 +19,7 @@ namespace BluetoothController
         private BluetoothAdapter m_BtAdapter;
         private Button m_BtPairedDevices;
         private Button m_BtSearchDevices;
+        private GradientDrawable drawable;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -51,7 +52,7 @@ namespace BluetoothController
             m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
 
             // Border
-            GradientDrawable drawable = new GradientDrawable();
+            drawable = new GradientDrawable();
             drawable.SetShape(ShapeType.Rectangle);
             drawable.SetStroke(2, Android.Graphics.Color.Black);
 
@@ -63,16 +64,26 @@ namespace BluetoothController
             LinearLayout line = FindViewById<LinearLayout>(Resource.Id.linear);
             line.SetBackgroundColor(Android.Graphics.Color.White);
 
-            // Add mouse Clicked
-            m_BtPairedDevices.Click += delegate
-            {
-                m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
-                StartActivity(typeof(PairedDevices));
-            };        
-
-            m_BtSearchDevices.Click += delegate
+        m_BtSearchDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+        {
+            if (e2.Event.Action == MotionEventActions.Down)
+                m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+            else if (e2.Event.Action == MotionEventActions.Up)
             {
                 StartActivity(typeof(SearchDevices));
+                m_BtSearchDevices.SetBackgroundDrawable(drawable);
+            }
+        };
+
+            m_BtPairedDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+            {
+                if (e2.Event.Action == MotionEventActions.Down)
+                    m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                else if (e2.Event.Action == MotionEventActions.Up)
+                {
+                    StartActivity(typeof(PairedDevices));
+                    m_BtPairedDevices.SetBackgroundDrawable(drawable);
+                }
             };
 
         }
