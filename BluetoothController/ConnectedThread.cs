@@ -78,13 +78,15 @@ namespace BluetoothController
 
             // Do work to manage the connection (in a separate thread)
             ManageConnectedSocket(m_Socket);
-            //  m_Main.getHandler().ObtainMessage(SUCCESS_CONNECT);
         }
 
 
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-
+            Sender sender = new Sender(mmSocket);
+            sender.Start();
+            //Java.Lang.String test = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
+            //sender.Write(test.GetBytes());
         }
 
         // Will cancel an in-progress connection, and close the socket
