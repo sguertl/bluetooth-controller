@@ -42,7 +42,7 @@ namespace BluetoothController
             m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
 
-            // Setting text color of bzttons
+            // Setting text color of buttons
             m_BtControl.SetTextColor(Android.Graphics.Color.Black);
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
