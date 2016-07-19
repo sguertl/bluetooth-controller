@@ -82,11 +82,7 @@ namespace BluetoothController
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+              
 
                 if (m_List.Count > 0)
                 {
@@ -98,6 +94,11 @@ namespace BluetoothController
                 else
                 {
                     m_Main.SetAdapterToListView(m_CopyList);
+                }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
