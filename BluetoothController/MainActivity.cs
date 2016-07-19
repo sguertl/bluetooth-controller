@@ -66,6 +66,7 @@ namespace BluetoothController
             // Add mouse Clicked
             m_BtPairedDevices.Click += delegate
             {
+                m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
                 StartActivity(typeof(PairedDevices));
             };        
 
