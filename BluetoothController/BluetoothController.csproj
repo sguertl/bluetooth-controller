@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectedDevice.cs" />
     <Compile Include="ConnectedThread.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyBroadcastreciver.cs" />
@@ -67,6 +68,7 @@
     <AndroidResource Include="Resources\layout\PairedLayout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\ConnectedDevicesLayout.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">

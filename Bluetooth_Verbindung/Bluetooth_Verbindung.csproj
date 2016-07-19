@@ -49,7 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectedDevices.cs" />
     <Compile Include="ConnectedThread.cs" />
+    <Compile Include="ManagingConnection.cs" />
     <Compile Include="MyBroadcastreciver.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PairedDevices.cs" />

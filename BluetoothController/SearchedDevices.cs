@@ -26,6 +26,7 @@ namespace BluetoothController
         private MyBroadcastreciver m_Receiver;
         private Button m_BtSearch;
         private LinearLayout m_Linear;
+        private BluetoothDevice m_Device;
         private ListView m_ListView;
         private List<String> m_Uuids;
 
@@ -128,6 +129,7 @@ namespace BluetoothController
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+            m_Device = btDevice;
             for (int i = 0; i < m_Uuids.Count; i++)
             {
                 Console.WriteLine("For Schleife |||||||||||||||||||||||||" + m_Uuids.ElementAt(i));

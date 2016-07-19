@@ -25,6 +25,7 @@ namespace Bluetooth_Verbindung
         private LinearLayout linear;
         private ListView listView;
         private List<String> uuids;
+        private BluetoothDevice m_Device;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -125,6 +126,7 @@ namespace Bluetooth_Verbindung
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
+            m_Device = btDevice;
             for (int i = 0; i < uuids.Count; i++)
             {
                 Console.WriteLine("For Schleife |||||||||||||||||||||||||" + uuids.ElementAt(i));
@@ -135,16 +137,16 @@ namespace Bluetooth_Verbindung
             Console.ReadLine();
             connect.Start();
 
-            //var activity2 = new Intent(this, typeof(ConnectedDevices));
-            //IList<String> ll = new List<string>();
-            //ll.Add(m_Device.Name);
-            //ll.Add(m_Device.Address);
-            //activity2.PutStringArrayListExtra("MyData" , ll);
-            //StartActivity(activity2);
+            var activity2 = new Intent(this, typeof(ConnectedDevices));
+            IList<String> ll = new List<string>();
+            ll.Add(m_Device.Name);
+            ll.Add(m_Device.Address);
+            activity2.PutStringArrayListExtra("MyData", ll);
+            StartActivity(activity2);
 
 
-           // StartActivity(typeof(ConnectedDevices));
-            
+            // StartActivity(typeof(ConnectedDevices));
+
             //  Toast.MakeText(ApplicationContext, btDevice.GetUuids(), 0).Show();
 
         }
