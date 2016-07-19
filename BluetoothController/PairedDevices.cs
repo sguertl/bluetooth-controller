@@ -83,14 +83,9 @@ namespace BluetoothController
         /// <param name="uuid"></param>
         public void BuildConnection(BluetoothDevice bluetoothDevice, string uuid)
         {
-<<<<<<< HEAD
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
-            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
-=======
             // Creating a ConnectionThread object
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
->>>>>>> origin/master
 
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();

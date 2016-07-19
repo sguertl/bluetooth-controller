@@ -121,7 +121,7 @@ namespace BluetoothController
         public void OnSearch()
         {
             // Removing old devices
-            m_ListView.SetAdapter(null);
+            m_ListView.Adapter = null;
             m_Receiver.ResetList();
             m_ProgressDialog.Show();
             // Avoiding multiple searches
@@ -137,7 +137,7 @@ namespace BluetoothController
         public void SetAdapterToListView(List<String> l)
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
-            m_ListView.SetAdapter(adapter);
+            m_ListView.Adapter = adapter;
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
             m_ProgressDialog.Dismiss();
         }
@@ -171,14 +171,9 @@ namespace BluetoothController
         /// <param name="uuid"></param>
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
-<<<<<<< HEAD
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);         // Erstellt ein Objekt von Connection Thread mit dem Bluetooth Device und mit der jeweiligen UUID
-            connect.Start();                                                                      // Startet den Thread, um sich mit dem Device zu verbinden
-=======
             // Creating a ConnectionThread object
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
->>>>>>> origin/master
 
             // Starting new activity
             var activity2 = new Intent(this, typeof(ConnectedDevices));
