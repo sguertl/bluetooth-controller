@@ -58,10 +58,10 @@ namespace BluetoothController
             byte[] buffer = new byte[1024];
             while (true)
             {
-                int bytes = 0;
-                m_InputStream.Position = 0;
                 try
                 {
+                    int bytes = 0;
+                    m_InputStream.Position = 0;
                     while (bytes == 0)
                     {
                         bytes += m_InputStream.Read(buffer, 0, buffer.Length);
@@ -118,8 +118,8 @@ namespace BluetoothController
             }
             finally
             {
-                Activity activity = new Activity();
-                activity.StartActivity(typeof(SearchDevices));
+                /*Activity activity = new Activity();
+                activity.StartActivity(typeof(SearchDevices));*/
             }
         }
     }
