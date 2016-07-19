@@ -65,14 +65,23 @@ namespace BluetoothController
             try
             {
                 // Checks if device is already connected
-                if (!m_Socket.IsConnected) { m_Socket.Connect(); }      
+                if (!m_Socket.IsConnected)
+                {
+                    m_Socket.Connect();
+                }      
             }
             catch (Java.Lang.Exception connectException)
             {
                 // Could not connect to device
                 Console.WriteLine(connectException.Message);
-                try { m_Socket.Close(); }
-                catch (Java.Lang.Exception e) { Console.WriteLine(e.Message); }
+                try
+                {
+                    m_Socket.Close();
+                }
+                catch (Java.Lang.Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
                 return;
             }     
             ManageConnectedSocket(m_Socket);

@@ -110,6 +110,8 @@ namespace BluetoothController
         {
             try
             {
+                m_InputStream.Close();
+                m_OutputStream.Close();
                 m_Socket.Close();
             }
             catch (System.Exception ex)
