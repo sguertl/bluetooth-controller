@@ -56,7 +56,7 @@
     <Compile Include="PairedDevices.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchedDevices.cs" />
+    <Compile Include="SearchDevices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
