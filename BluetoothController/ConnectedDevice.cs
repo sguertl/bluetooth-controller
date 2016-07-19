@@ -25,7 +25,6 @@ namespace BluetoothController
         private Button m_BtControl;
         private Button m_BtDisconnect;
         private LinearLayout m_Linear;
-        //
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,12 +42,10 @@ namespace BluetoothController
             m_BtControl = FindViewById<Button>(Resource.Id.btSteueren);
             m_BtDisconnect = FindViewById<Button>(Resource.Id.btDisconnect);
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear4);
-            // 
 
             // Text Color [Buttons]
             m_BtControl.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black); // Setzt die Text Color Schwarz
-            //
 
             // Border
             GradientDrawable drawable = new GradientDrawable();
@@ -57,11 +54,9 @@ namespace BluetoothController
             drawable.SetColor(Android.Graphics.Color.White); // Setzt die Background auf Weiß
             m_BtControl.SetBackgroundDrawable(drawable); // Button übernimmt das Desgin des Drawable Objekt
             m_BtDisconnect.SetBackgroundDrawable(drawable); // Button übernimmt das Desgin des Drawable Objekt
-            //
 
             // Activity Background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White); // Setzt die Background Color Weiß
-            //
 
             // Erhält Daten von einer anderen Activity
             IList<String> text = Intent.GetStringArrayListExtra("MyData");
@@ -80,7 +75,7 @@ namespace BluetoothController
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
                     StartActivity(typeof(ControllerActivity)); // Startet eine neue Activity
-                    m_BtControl.SetBackgroundDrawable(drawable); // Setzt den Standart Background vom Button zurück
+                    m_BtControl.SetBackgroundDrawable(drawable); // Setzt das Standart Design vom Button zurück
                 }
             };
         }
