@@ -63,7 +63,7 @@ namespace BluetoothController
 
             m_BtSteuerung.Click += delegate
             {              
-                StartActivity(typeof(Controller.MainActivity));
+                StartActivity(typeof(Controller.ControllerActivity));
             };
         }
     }
