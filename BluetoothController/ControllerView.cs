@@ -258,6 +258,13 @@ namespace Controller
             paint.TextAlign = Paint.Align.Center;
             paint.StrokeWidth = 5;
 
+            m_LeftJS.GetPower();
+            m_LeftJS.GetAngle();
+            m_LeftJS.GetAbs();
+            m_RightJS.GetPower();
+            m_RightJS.GetAngle();
+            m_RightJS.GetAbs();
+
             if(!m_Inverted)
             {
                 // Draw data text for left joystick
@@ -268,15 +275,17 @@ namespace Controller
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Power: " + m_RightJS.GetPower() + " %", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Direction: " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Forward/Backward: " + m_RightJS.GetForwardBackwardValue(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Left/Right: " + m_RightJS.GetLeftRightValue(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
             }
             else if(m_Inverted)
             {
                 // Draw data text for left joystick
                 canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Power: " + m_LeftJS.GetPower() + " %", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Direction: " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Forward/Backward: " + m_LeftJS.GetForwardBackwardValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Left/Right: " + m_LeftJS.GetLeftRightValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
