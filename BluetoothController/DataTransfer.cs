@@ -30,9 +30,9 @@ namespace BluetoothController
             m_Sender = new Sender(ConnectedThread.m_Socket);
         }
 
-        public void Write()
+        public void Write(params Int16[] args)
         {
-            // m_Bytes ist noch null
+            m_Bytes = BluetoothController.ByteConverter.ConvertToByte(args);
             m_Sender.Write(m_Bytes);
         }
 
