@@ -21,6 +21,7 @@ namespace BluetoothController
         private GradientDrawable m_Drawable;
         private LinearLayout m_Linear;
         private bool m_Outside = false;
+        private bool m_OutsideSearch = false;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -117,13 +118,13 @@ namespace BluetoothController
                     m_BtPairedDevices.Background = m_Drawable;
                 }else if(e2.Event.Action == MotionEventActions.Move)
                 {
-                    Console.WriteLine("++++++++++++++++++ Y: " + e2.Event.GetY());
+                    Console.WriteLine("++++ Y + " + e2.Event.GetY());
 
-                    if(e2.Event.GetY() + 134  >=  m_BtPairedDevices.Top && e2.Event.GetY() + 134 <= m_BtPairedDevices.Bottom &&
+                    if(e2.Event.GetY() + m_BtPairedDevices.GetY()  >=  m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
                        e2.Event.GetX() >= m_BtPairedDevices.Left && e2.Event.GetX() <= m_BtPairedDevices.Right)
                     {
                         m_Outside = false;
-                        m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                        m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aqua);
                     }
                     else
                     {
