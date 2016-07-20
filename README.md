@@ -6,4 +6,6 @@ The controller UI consists of two joysticks, which are responsible for piloting 
 ### Useful commands:
 Set screen orientiation in [Activity(...)]: *ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape*
 
-Set theme (e.g. no title bar) in [Activity(...)]: *Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen"*
+Set theme (e.g. no title bar) in [Activity(...)]: *Theme = "@android:style/Theme.Black.NoTitleBar"*
+
+Set fullscreen in [Activity(...)]: *Theme = "@android:style/Theme.Black.NoTitleBar.Fullscreen"*
