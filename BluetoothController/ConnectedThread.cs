@@ -69,7 +69,7 @@ namespace BluetoothController
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
-                }      
+                }
             }
             catch (Java.Lang.Exception connectException)
             {

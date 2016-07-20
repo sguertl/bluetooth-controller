@@ -180,7 +180,6 @@ namespace BluetoothController
             ll.Add(bluetoothDevice.Name);
             ll.Add(bluetoothDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);
-        }
+            StartActivity(activity2);        }
     }
 }
