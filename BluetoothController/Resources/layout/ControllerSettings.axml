@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Controller settings"
+        android:gravity="center_horizontal" />
+    <RadioGroup
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/rgControlMethod">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Throttle left"
+            android:textSize="16dp"
+            android:id="@+id/rbThrottleLeft" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Throttle right"
+            android:textSize="16dp"
+            android:id="@+id/rbThrottleRight" />
+    </RadioGroup>
+
+  <TextView
+    android:id="@+id/tvDescription"
+    android:textSize="14dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left."
+    android:layout_margin="10dp"
+    />
+
+  <Button
+    android:id="@+id/btStart"
+    android:textSize="20dp"
+    android:text="Start controller"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_margin="10dp"/>
+</LinearLayout>

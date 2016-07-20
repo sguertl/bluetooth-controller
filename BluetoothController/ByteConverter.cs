@@ -22,7 +22,7 @@ namespace BluetoothController
 
         public static byte[] ConvertToByte(params Int16[] args)
         {
-            byte[] bytes = new byte[4];
+            byte[] bytes = new byte[8];
             int posi = 0;
 
             //for (int i = 0; i < bytes.Length; i++)
@@ -46,7 +46,6 @@ namespace BluetoothController
                 byte x2 = (byte)s2;
                 bytes[posi++] = x2;
             }
-
             return bytes;
         }
 

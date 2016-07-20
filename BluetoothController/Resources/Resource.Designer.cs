@@ -69,32 +69,47 @@ namespace BluetoothController
 			// aapt resource value: 0x7f050004
 			public const int btDisconnect = 2131034116;
 			
-			// aapt resource value: 0x7f050007
-			public const int btPairedDevices = 2131034119;
+			// aapt resource value: 0x7f05000c
+			public const int btPairedDevices = 2131034124;
 			
-			// aapt resource value: 0x7f050006
-			public const int btSearchDevices = 2131034118;
+			// aapt resource value: 0x7f05000b
+			public const int btSearchDevices = 2131034123;
+			
+			// aapt resource value: 0x7f050009
+			public const int btStart = 2131034121;
 			
 			// aapt resource value: 0x7f050003
 			public const int btSteueren = 2131034115;
 			
-			// aapt resource value: 0x7f050005
-			public const int linear = 2131034117;
-			
-			// aapt resource value: 0x7f050008
-			public const int linear2 = 2131034120;
-			
 			// aapt resource value: 0x7f05000a
-			public const int linear3 = 2131034122;
+			public const int linear = 2131034122;
+			
+			// aapt resource value: 0x7f05000d
+			public const int linear2 = 2131034125;
+			
+			// aapt resource value: 0x7f05000f
+			public const int linear3 = 2131034127;
 			
 			// aapt resource value: 0x7f050000
 			public const int linear4 = 2131034112;
 			
-			// aapt resource value: 0x7f050009
-			public const int listView = 2131034121;
+			// aapt resource value: 0x7f05000e
+			public const int listView = 2131034126;
 			
-			// aapt resource value: 0x7f05000b
-			public const int listViewSearched = 2131034123;
+			// aapt resource value: 0x7f050010
+			public const int listViewSearched = 2131034128;
+			
+			// aapt resource value: 0x7f050006
+			public const int rbThrottleLeft = 2131034118;
+			
+			// aapt resource value: 0x7f050007
+			public const int rbThrottleRight = 2131034119;
+			
+			// aapt resource value: 0x7f050005
+			public const int rgControlMethod = 2131034117;
+			
+			// aapt resource value: 0x7f050008
+			public const int tvDescription = 2131034120;
 			
 			static Id()
 			{
@@ -113,13 +128,16 @@ namespace BluetoothController
 			public const int ConnectedDevicesLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Main = 2130903041;
+			public const int ControllerSettings = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int PairedLayout = 2130903042;
+			public const int Main = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int SearchedLayout = 2130903043;
+			public const int PairedLayout = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int SearchedLayout = 2130903044;
 			
 			static Layout()
 			{

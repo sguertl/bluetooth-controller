@@ -39,8 +39,10 @@ namespace Controller
         // Transfering data via bluetooth
         private BluetoothController.DataTransfer m_Transfer;
 
-        public ControllerView(Context context) : base(context)
+        public ControllerView(Context context, bool inverted) : base(context)
         {
+            m_Inverted = inverted;
+
             SetOnTouchListener(this);
             SetBackgroundColor(Color.White);
 
