@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     android:id="@+id/linear2">
     <TextView
-      android:textSize="24dp"
-      android:layout_marginTop="10dp"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Paired devices"
-      android:gravity="center_horizontal" />
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paired devices"
+        android:gravity="center_horizontal" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:id="@+id/listView" />
 </LinearLayout>
