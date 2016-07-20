@@ -34,9 +34,9 @@ namespace Controller
         private Joystick m_RightJS;
 
         // Controlling position
-        private bool m_InvertControl = false;
+        private bool m_Inverted = false;
 
-        //
+        // Transfering data via bluetooth
         private BluetoothController.DataTransfer m_Transfer;
 
         public ControllerView(Context context) : base(context)
@@ -86,26 +86,20 @@ namespace Controller
         /// </summary>
         private void InitJoysticks()
         {
-            m_LeftJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, true, m_InvertControl);
-            m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false, m_InvertControl);
+            m_LeftJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, true, m_Inverted);
+            m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false, m_Inverted);
 
             m_ShapeStickLeft.SetBounds(
-                (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_StickRadius, 
-                m_InvertControl ? (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_StickRadius, 
-                m_InvertControl ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + 3 * (int)m_LeftJS.m_StickRadius);
+                (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_StickRadius,
+                m_Inverted ? (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius, 
+                (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_StickRadius,
+                m_Inverted ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + 3 * (int)m_LeftJS.m_StickRadius);
 
             m_ShapeStickRight.SetBounds(
-                (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius, 
-                m_InvertControl ? (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
-                (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius, 
-                m_InvertControl ? (int)m_RightJS.CENTER_Y + 3 * (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
-
-            //m_ShapeRadiusLeft.SetBounds(
-            //    (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius, 
-            //    (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius,
-            //    (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius, 
-            //    (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_DisplacementRadius + (int)m_LeftJS.m_StickRadius);
+                (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius,
+                m_Inverted ? (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
+                (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius,
+                m_Inverted ? (int)m_RightJS.CENTER_Y + 3 * (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
 
             m_ShapeRadiusLeft.SetBounds(
                 (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius,
@@ -151,13 +145,22 @@ namespace Controller
                     //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                     //    }
                     //}
-                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    if (m_Inverted)
+                        UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
+                    else
+                        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                     break;
                 case MotionEventActions.Pointer1Up:
-                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    if (m_Inverted)
+                        UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
+                    else
+                        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                     break;
                 case MotionEventActions.Pointer2Up:
-                    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
+                    if (m_Inverted)
+                        UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
+                    else
+                        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
                     break;
                 default:
                     UpdateOvals(e.GetX(0), e.GetY(0));
@@ -241,7 +244,6 @@ namespace Controller
             m_ShapeRadiusRight.Draw(canvas);
             m_ShapeStickLeft.Draw(canvas);
             m_ShapeStickRight.Draw(canvas);
-            
 
             // Set paint for data text
             Paint paint = new Paint();
