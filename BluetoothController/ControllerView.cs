@@ -33,8 +33,11 @@ namespace Controller
         private Joystick m_LeftJS;
         private Joystick m_RightJS;
 
+<<<<<<< HEAD
         // Controlling position
         private bool m_InvertControl = true;
+=======
+>>>>>>> origin/master
 
         public ControllerView(Context context) : base(context)
         {
@@ -43,6 +46,7 @@ namespace Controller
 
             SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels; //ConvertPixelsToDp(metrics.WidthPixels);
             SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels; //ConvertPixelsToDp(metrics.HeightPixels);
+
 
             InitShapes();
             InitJoysticks();

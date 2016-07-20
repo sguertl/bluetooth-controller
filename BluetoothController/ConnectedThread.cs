@@ -24,7 +24,7 @@ namespace BluetoothController
 
         // Members
         private BluetoothAdapter m_BtAdapter;
-        private BluetoothSocket m_Socket;
+        public static BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;            
         private string m_UuidString;
         private Sender m_Sender;
@@ -92,11 +92,6 @@ namespace BluetoothController
                 catch (Java.Lang.Exception e)
                 {
                     Console.WriteLine(e.Message);
-                }
-
-                if(m_PairedDevices != null)
-                {
-                    m_PairedDevices.PrintMessage("Could not connect to device");
                 }
                 return;
             }

@@ -105,10 +105,5 @@ namespace BluetoothController
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
         }
-
-        public void PrintMessage(string message)
-        {
-            Toast.MakeText(this, message, ToastLength.Short).Show();
-        }
     }
 }
