@@ -118,6 +118,6 @@ namespace BluetoothController
             {
                 Console.WriteLine(ex.Message);
             }
-          }
+        }
     }
 }

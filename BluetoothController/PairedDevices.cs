@@ -87,15 +87,12 @@ namespace BluetoothController
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
 
-            var activity2 = new Intent(this,typeof(ConnectedDevices));
+            var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
             ll.Add(bluetoothDevice.Name);
             ll.Add(bluetoothDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
         }
-
-
-
     }
 }

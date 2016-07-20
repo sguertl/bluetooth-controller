@@ -127,7 +127,6 @@ namespace BluetoothController
             m_BtAdapter.CancelDiscovery();
             m_BtAdapter.StartDiscovery();
         }
-
        
         /// <summary>
         /// Displays found devices
@@ -140,7 +139,6 @@ namespace BluetoothController
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
             m_ProgressDialog.Dismiss();
         }
-
 
         public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
@@ -180,6 +178,7 @@ namespace BluetoothController
             ll.Add(bluetoothDevice.Name);
             ll.Add(bluetoothDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);        }
+            StartActivity(activity2);
+        }
     }
 }
