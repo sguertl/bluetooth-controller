@@ -40,6 +40,8 @@ namespace Controller
         private float m_XPosition; // Current x of joystick
         private float m_YPosition; // Current y of joystick
 
+        private int m_StickIndex; // Index of joystick
+
         private int m_Power; // Current power (= displacement) of the joystick; maximum is 1 (= 100 %)
 
         private int m_Angle; // Current angle of the joystick
@@ -54,18 +56,20 @@ namespace Controller
             m_StickRadius = m_StickDiameter / 2;
             m_DisplacementRadius = m_DisplacementDiameter / 2;
 
+            CENTER_Y = height / 16 + height / 2 + m_StickRadius / 2;
             if (isLeftStick)
             {
-                CENTER_X = width / 5 + m_StickRadius / 2;              
+                CENTER_X = width / 5 + m_StickRadius / 2;
+                m_StickIndex = 0;
+                m_YPosition = CENTER_Y + m_DisplacementRadius;
             }
             else
             {
                 CENTER_X = width - width / 5 - m_StickRadius / 2;
+                m_YPosition = CENTER_Y;
+                m_StickIndex = 1;
             }
             m_XPosition = CENTER_X;
-
-            CENTER_Y = height / 16 + height / 2 + m_StickRadius / 2;
-            m_YPosition = CENTER_Y;
         }
 
         /// <summary>
@@ -213,6 +217,42 @@ namespace Controller
         public float GetAbs()
         {
             return (float)Math.Sqrt((m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y));
+        }
+
+        public int GetThrottleValue()
+        {
+            if (m_StickIndex == LEFT_STICK)
+            {
+                if (m_YPosition > CENTER_Y + m_DisplacementRadius)
+                {
+                    return 0;
+                }
+                int throttleValue = (int)(32767 * Math.Sqrt(
+                (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
+                (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
+                throttleValue = Math.Max(0, throttleValue);
+                throttleValue = Math.Min(32767, throttleValue);
+                return throttleValue;
+            }
+            return -1;
+        }
+
+        public int GetRotationValue()
+        {
+            if (m_StickIndex == LEFT_STICK)
+            {
+                if (m_XPosition < CENTER_X - m_DisplacementRadius)
+                {
+                    return -32768;
+                }
+                int rotationValue = (int)(65536 * Math.Sqrt(
+                (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
+                (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+                rotationValue = Math.Max(-32768, rotationValue);
+                rotationValue = Math.Min(32767, rotationValue);
+                return rotationValue;
+            }
+            return -999999;
         }
     }
 }

@@ -83,9 +83,9 @@ namespace Controller
 
             m_ShapeStickLeft.SetBounds(
                 (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius, 
+                (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius, 
                 (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius);
+                (int)m_LeftJS.CENTER_Y + 3*(int)m_LeftJS.m_StickRadius);
 
             m_ShapeStickRight.SetBounds(
                 (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius, 
@@ -244,8 +244,8 @@ namespace Controller
 
             // Draw data text for left joystick
             canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
-            canvas.DrawText("Power is " + m_LeftJS.GetPower() + " %", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
-            canvas.DrawText("Abs is " + m_LeftJS.GetAbs(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+            canvas.DrawText("Throttle " + m_LeftJS.GetThrottleValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+            canvas.DrawText("Rotation " + m_LeftJS.GetRotationValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
             canvas.DrawText("Angle is " + m_LeftJS.GetAngle() + " °", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
             canvas.DrawText("Direction is " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 90, paint);
 
