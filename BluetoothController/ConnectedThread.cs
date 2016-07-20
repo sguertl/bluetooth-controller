@@ -28,14 +28,13 @@ namespace BluetoothController
         private BluetoothDevice m_Device;            
         private string m_UuidString;
         private Sender m_Sender;
-        private Context m_Context;
+        private PairedDevices m_PairedDevices;
 
-        public ConnectedThread(BluetoothDevice device, string UUIDString, Context context)
+        public ConnectedThread(BluetoothDevice device, string UUIDString)
         {
             // Initializing objects
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
-            m_Context = context;
 
             // Converting the UUID string into a UUID object
             MY_UUID = UUID.FromString(m_UuidString); // Wandelt den UUID String in ein UUID Objekt um
@@ -56,9 +55,16 @@ namespace BluetoothController
             m_Socket = (BluetoothSocket)m.Invoke(tmp.RemoteDevice, param);
         }
 
+        public ConnectedThread(BluetoothDevice device, string UUIDString, PairedDevices pairedDevices)
+            :this(device, UUIDString)
+        {
+            m_PairedDevices = pairedDevices;
+        }
+
         /// <summary>
         /// Tries to connect to a specific device
         /// </summary>
+        //public override void Run()
         public override void Run()
         {
             // Cancels the discovery due to better performance
@@ -69,7 +75,12 @@ namespace BluetoothController
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
-                }      
+                    
+                }
+                if (m_PairedDevices != null)
+                {
+                    m_PairedDevices.StartActivity(m_Device);
+                }
             }
             catch (Java.Lang.Exception connectException)
             {
@@ -78,15 +89,19 @@ namespace BluetoothController
                 try
                 {
                     m_Socket.Close();
-                    Toast.MakeText(m_Context, "Could not connect to device", ToastLength.Short).Show();
                 }
                 catch (Java.Lang.Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
+
+                if(m_PairedDevices != null)
+                {
+                    m_PairedDevices.PrintMessage("Could not connect to device");
+                }
                 return;
-            }     
-            ManageConnectedSocket(m_Socket);
+            }
+            ManageConnectedSocket(m_Socket);  
         }
 
         /// <summary>

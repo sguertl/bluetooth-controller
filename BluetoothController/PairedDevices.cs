@@ -24,6 +24,13 @@ namespace BluetoothController
         private LinearLayout m_Linear;
         private List<String> m_List;
         private List<String> m_UuidList;
+        private bool m_IsConnected;
+
+        public bool IsConnected
+        {
+            get { return m_IsConnected; }
+            set { m_IsConnected = value; }
+        }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,6 +64,7 @@ namespace BluetoothController
             m_PairedDevice = m_BtAdapter.BondedDevices;
             m_List = new List<String>();
             m_UuidList = new List<String>();
+            m_IsConnected = true;
 
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
@@ -86,13 +94,21 @@ namespace BluetoothController
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
+        }
 
+        public void StartActivity(BluetoothDevice bluetoothDevice)
+        {
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
             ll.Add(bluetoothDevice.Name);
             ll.Add(bluetoothDevice.Address);
             activity2.PutStringArrayListExtra("MyData", ll);
             StartActivity(activity2);
+        }
+
+        public void PrintMessage(string message)
+        {
+            Toast.MakeText(this, message, ToastLength.Short).Show();
         }
     }
 }

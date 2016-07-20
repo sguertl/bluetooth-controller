@@ -172,7 +172,7 @@ namespace BluetoothController
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
             // Creating a ConnectionThread object
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);
             connect.Start();
 
             // Starting new activity
