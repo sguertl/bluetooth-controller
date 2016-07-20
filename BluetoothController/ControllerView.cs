@@ -33,6 +33,9 @@ namespace Controller
         private Joystick m_LeftJS;
         private Joystick m_RightJS;
 
+        //
+        private BluetoothController.WriteAdmin m_WriteAdmin;
+
         public ControllerView(Context context) : base(context)
         {
             SetOnTouchListener(this);
@@ -40,6 +43,8 @@ namespace Controller
 
             SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels; //ConvertPixelsToDp(metrics.WidthPixels);
             SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels; //ConvertPixelsToDp(metrics.HeightPixels);
+
+            m_WriteAdmin = new BluetoothController.WriteAdmin(this);
 
             InitShapes();
             InitJoysticks();
