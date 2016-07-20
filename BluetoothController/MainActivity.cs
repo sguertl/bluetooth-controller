@@ -11,7 +11,7 @@ using Android.Graphics.Drawables.Shapes;
 
 namespace BluetoothController
 {
-    [Activity(Label = "BluetoothController", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "BluetoothController", MainLauncher = true, Icon = "@drawable/icon", Theme = "@android:style/Theme.Black.NoTitleBar")]
     public class MainActivity : Activity
     {
         // Members

@@ -14,7 +14,7 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
-    [Activity(Label = "SearchedDevices")]
+    [Activity(Label = "SearchedDevices", Theme = "@android:style/Theme.Black.NoTitleBar")]
     public class SearchDevices : Activity, IEstablishConnection
     {
         // Members
@@ -35,8 +35,6 @@ namespace BluetoothController
 
             Init();
 
-            // Starting to discover for devices nearby
-            OnSearch();
         }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace BluetoothController
 
 
             m_ProgressDialog = new ProgressDialog(this);
-            m_ProgressDialog.SetMessage("Scanning for Devices...");
+            m_ProgressDialog.SetMessage("Scanning for devices...");
             m_ProgressDialog.SetCancelable(false);
             m_ProgressDialog.CancelEvent += delegate { m_ProgressDialog.Dismiss(); m_BtAdapter.CancelDiscovery(); };
 

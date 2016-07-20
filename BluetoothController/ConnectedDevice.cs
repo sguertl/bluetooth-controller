@@ -14,7 +14,7 @@ using Android.Graphics.Drawables;
 namespace BluetoothController
 {
 
-    [Activity(Label = "ConnectedDevice")]
+    [Activity(Label = "ConnectedDevice" ,Theme = "@android:style/Theme.Black.NoTitleBar")]
     public class ConnectedDevices : Activity
     {
         // Members
