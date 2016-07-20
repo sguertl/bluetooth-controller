@@ -27,6 +27,7 @@ namespace BluetoothController
         private List<string> m_Uuids; // List of UUIDs
         private GradientDrawable m_Drawable;
         private ProgressDialog m_ProgressDialog;
+        private bool m_Outside = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -85,8 +86,24 @@ namespace BluetoothController
                 // Starting to search when button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    OnSearch();
+                    if (!m_Outside)
+                    {
+                        OnSearch();
+                    }
                     m_BtSearch.Background = m_Drawable;
+                }else if(e2.Event.Action == MotionEventActions.Move)
+                {
+                    if (e2.Event.GetY() + m_BtSearch.GetY() >= m_BtSearch.Top && e2.Event.GetY() + m_BtSearch.GetY() <= m_BtSearch.Bottom &&
+                   e2.Event.GetX() >= m_BtSearch.Left && e2.Event.GetX() <= m_BtSearch.Right)
+                    {
+                        m_Outside = false;
+                        m_BtSearch.SetBackgroundColor(Android.Graphics.Color.Aqua);
+                    }
+                    else
+                    {
+                        m_Outside = true;
+                        m_BtSearch.Background = m_Drawable;
+                    }
                 }
             };
 

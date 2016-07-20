@@ -91,8 +91,25 @@ namespace BluetoothController
                 // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    StartActivity(typeof(SearchDevices));
+                    if (!m_OutsideSearch)
+                    {
+                        StartActivity(typeof(SearchDevices));    
+                    }
                     m_BtSearchDevices.Background = m_Drawable;
+                }
+                else if(e2.Event.Action == MotionEventActions.Move)
+                {
+                    if (e2.Event.GetY() + m_BtSearchDevices.GetY() >= m_BtSearchDevices.Top && e2.Event.GetY() + m_BtSearchDevices.GetY() <= m_BtSearchDevices.Bottom &&
+                   e2.Event.GetX() >= m_BtSearchDevices.Left && e2.Event.GetX() <= m_BtSearchDevices.Right)
+                    {
+                        m_OutsideSearch = false;
+                        m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aqua);
+                    }
+                    else
+                    {
+                        m_OutsideSearch = true;
+                        m_BtSearchDevices.Background = m_Drawable;
+                    }
                 }
             };
 
@@ -112,14 +129,9 @@ namespace BluetoothController
                     {
                       StartActivity(typeof(PairedDevices));
                     }
-                    
-                    
-                 //   StartActivity(typeof(PairedDevices));
                     m_BtPairedDevices.Background = m_Drawable;
                 }else if(e2.Event.Action == MotionEventActions.Move)
                 {
-                    Console.WriteLine("++++ Y + " + e2.Event.GetY());
-
                     if(e2.Event.GetY() + m_BtPairedDevices.GetY()  >=  m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
                        e2.Event.GetX() >= m_BtPairedDevices.Left && e2.Event.GetX() <= m_BtPairedDevices.Right)
                     {
