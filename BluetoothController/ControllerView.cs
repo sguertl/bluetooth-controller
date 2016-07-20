@@ -34,7 +34,7 @@ namespace Controller
         private Joystick m_RightJS;
 
         // Controlling position
-        private bool m_InvertControl = true;
+        private bool m_InvertControl = false;
 
         //
         private BluetoothController.DataTransfer m_Transfer;
@@ -91,7 +91,7 @@ namespace Controller
 
             m_ShapeStickLeft.SetBounds(
                 (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_StickRadius, 
-                m_InvertControl ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius, 
+                m_InvertControl ? (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius, 
                 (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_StickRadius, 
                 m_InvertControl ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + 3 * (int)m_LeftJS.m_StickRadius);
 
