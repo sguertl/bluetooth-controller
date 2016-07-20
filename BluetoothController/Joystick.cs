@@ -240,38 +240,30 @@ namespace Controller
 
         public int GetThrottleValue()
         {
-            if (m_StickIndex == LEFT_STICK)
+            if (m_YPosition > CENTER_Y + m_DisplacementRadius)
             {
-                if (m_YPosition > CENTER_Y + m_DisplacementRadius)
-                {
-                    return 0;
-                }
-                int throttleValue = (int)(32767 * Math.Sqrt(
-                (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
-                (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
-                throttleValue = Math.Max(0, throttleValue);
-                throttleValue = Math.Min(32767, throttleValue);
-                return throttleValue;
+                return 0;
             }
-            return -1;
+            int throttleValue = (int)(32767 * Math.Sqrt(
+            (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
+            (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
+            throttleValue = Math.Max(0, throttleValue);
+            throttleValue = Math.Min(32767, throttleValue);
+            return throttleValue;
         }
 
         public int GetRotationValue()
         {
-            if (m_StickIndex == LEFT_STICK)
+            if (m_XPosition < CENTER_X - m_DisplacementRadius)
             {
-                if (m_XPosition < CENTER_X - m_DisplacementRadius)
-                {
-                    return -32768;
-                }
-                int rotationValue = (int)(65536 * Math.Sqrt(
-                (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
-                (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
-                rotationValue = Math.Max(-32768, rotationValue);
-                rotationValue = Math.Min(32767, rotationValue);
-                return rotationValue;
+                return -32768;
             }
-            return -999999;
+            int rotationValue = (int)(65536 * Math.Sqrt(
+            (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
+            (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+            rotationValue = Math.Max(-32768, rotationValue);
+            rotationValue = Math.Min(32767, rotationValue);
+            return rotationValue;
         }
     }
 }

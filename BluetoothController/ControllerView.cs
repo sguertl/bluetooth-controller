@@ -189,7 +189,6 @@ namespace Controller
             {
                 // Handle touch in the left half
                 m_LeftJS.SetPosition(xPosition, yPosition);
-                m_LeftJS.GetPower();
                 // Check if touch was inside the displacement radius
                 if ((m_LeftJS.GetAbs()) <= m_LeftJS.m_DisplacementRadius) // if((abs + m_LeftJS.m_StickRadius...
                 {
@@ -208,6 +207,9 @@ namespace Controller
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) - (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_Y,
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_X,
                     (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.m_StickRadius + (int)m_LeftJS.CENTER_Y);
+                    //m_LeftJS.SetPosition((int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_X, 
+                    //    (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_Y);
+
                 }
             }
             else
@@ -232,6 +234,8 @@ namespace Controller
                     (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) - (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_Y,
                     (int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_X,
                     (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.m_StickRadius + (int)m_RightJS.CENTER_Y);
+                    //m_RightJS.SetPosition((int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.CENTER_X,
+                    //    (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.CENTER_Y);
                 }
             }
         }
@@ -254,21 +258,32 @@ namespace Controller
             paint.TextAlign = Paint.Align.Center;
             paint.StrokeWidth = 5;
 
-            // Draw data text for left joystick
-            canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
-            canvas.DrawText("Throttle " + m_LeftJS.GetThrottleValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
-            canvas.DrawText("Rotation " + m_LeftJS.GetRotationValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
-            canvas.DrawText("Angle is " + m_LeftJS.GetAngle() + " °", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
-            canvas.DrawText("Direction is " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 90, paint);
+            if(!m_Inverted)
+            {
+                // Draw data text for left joystick
+                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
+                canvas.DrawText("Throttle: " + m_LeftJS.GetThrottleValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Rotation: " + m_LeftJS.GetRotationValue(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
 
-            // Draw data text for right joystick
-            canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
-            canvas.DrawText("Power is " + m_RightJS.GetPower() + " %", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
-            canvas.DrawText("Abs is " + m_RightJS.GetAbs(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
-            canvas.DrawText("Angle is " + m_RightJS.GetAngle() + " °", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
-            canvas.DrawText("Direction is " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 90, paint);
+                // Draw data text for right joystick
+                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
+                canvas.DrawText("Power: " + m_RightJS.GetPower() + " %", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Direction: " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+            }
+            else if(m_Inverted)
+            {
+                // Draw data text for left joystick
+                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
+                canvas.DrawText("Power: " + m_LeftJS.GetPower() + " %", m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Direction: " + m_LeftJS.GetDirection(), m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
 
-
+                // Draw data text for right joystick
+                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 - 30, paint);
+                canvas.DrawText("Throttle: " + m_RightJS.GetThrottleValue(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Rotation: " + m_RightJS.GetRotationValue(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_RightJS.GetDirection(), m_RightJS.CENTER_X, m_RightJS.CENTER_Y - SCREEN_HEIGHT / 2 + 60, paint);
+            }
         }
 
         /// <summary>
