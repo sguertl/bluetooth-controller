@@ -26,6 +26,8 @@ namespace Controller
         public static readonly int TOP_LEFT = 6;
         public static readonly int LEFT = 7;
         public static readonly int BOTTOM_LEFT = 8;
+        public static readonly int LEFT_STICK = 0;
+        public static readonly int RIGHT_STICK = 1;
 
         public readonly float m_StickDiameter; // Diameter of the joystick
         public readonly float m_DisplacementDiameter; // Diameter of the displacement
