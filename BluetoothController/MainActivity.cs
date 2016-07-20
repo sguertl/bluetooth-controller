@@ -7,6 +7,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Bluetooth;
 using Android.Graphics.Drawables;
+using Android.Graphics.Drawables.Shapes;
 
 namespace BluetoothController
 {
@@ -74,7 +75,7 @@ namespace BluetoothController
             m_Drawable.SetColor(Android.Graphics.Color.White);
             m_BtPairedDevices.Background = m_Drawable;
             m_BtSearchDevices.Background = m_Drawable;
-
+            
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
@@ -84,13 +85,13 @@ namespace BluetoothController
                 // Setting background blue if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
                 {
-                    m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine); // Setzt Button Background, wenn der Button berührt wird
+                    m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
                 }
                 // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
                     StartActivity(typeof(SearchDevices));
-                    m_BtSearchDevices.SetBackgroundDrawable(m_Drawable);
+                    m_BtSearchDevices.Background = m_Drawable;
                 }
             };
 
@@ -99,16 +100,24 @@ namespace BluetoothController
             {
                 // Setting background blue if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
-                { 
+                {
                     m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
                 }
                 // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
+                    //Console.WriteLine("X: " + m_BtPairedDevices.GetX() + " - " + m_BtPairedDevices.GetX() + m_BtPairedDevices.Width
+                    //    + " / Y: " + m_BtPairedDevices.GetY() + " - " + m_BtPairedDevices.GetY() + m_BtPairedDevices.Height);
+                    //if((e2.Event.GetX() >= m_BtPairedDevices.GetX() && e2.Event.GetX() <= m_BtPairedDevices.GetX() + m_BtPairedDevices.Width) &&
+                    //   (e2.Event.GetY() >= m_BtPairedDevices.GetY() && e2.Event.GetY() <= m_BtPairedDevices.GetY() + m_BtPairedDevices.Height))
+                    //{
+                    //    StartActivity(typeof(PairedDevices));
+                    //}
                     StartActivity(typeof(PairedDevices));
-                    m_BtPairedDevices.SetBackgroundDrawable(m_Drawable);
+                    m_BtPairedDevices.Background = m_Drawable;
                 }
             };
+
         }
 
         /// <summary>

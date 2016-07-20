@@ -19,7 +19,7 @@ namespace BluetoothController
     public class ConnectedThread : Thread
     {
         // Constants
-        private readonly int SUCCESS_CONNECT = 0;
+        //private readonly int SUCCESS_CONNECT = 0;
         private readonly UUID MY_UUID;
 
         // Members
@@ -75,11 +75,14 @@ namespace BluetoothController
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
+<<<<<<< HEAD
                     
                 }
                 if (m_PairedDevices != null)
                 {
                     m_PairedDevices.StartActivity(m_Device);
+=======
+>>>>>>> origin/master
                 }
             }
             catch (Java.Lang.Exception connectException)

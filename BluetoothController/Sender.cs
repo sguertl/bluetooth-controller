@@ -118,11 +118,6 @@ namespace BluetoothController
             {
                 Console.WriteLine(ex.Message);
             }
-            finally
-            {
-                /*Activity activity = new Activity();
-                activity.StartActivity(typeof(SearchDevices));*/
-            }
         }
     }
 }

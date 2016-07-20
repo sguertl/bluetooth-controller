@@ -23,7 +23,6 @@ namespace BluetoothController
         private MyBroadcastreciver m_Receiver;
         private Button m_BtSearch;
         private LinearLayout m_Linear;
-        private BluetoothDevice m_Device;
         private ListView m_ListView;
         private List<string> m_Uuids; // List of UUIDs
         private GradientDrawable m_Drawable;
@@ -128,7 +127,6 @@ namespace BluetoothController
             m_BtAdapter.CancelDiscovery();
             m_BtAdapter.StartDiscovery();
         }
-
        
         /// <summary>
         /// Displays found devices
@@ -141,7 +139,6 @@ namespace BluetoothController
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
             m_ProgressDialog.Dismiss();
         }
-
 
         public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
         {
