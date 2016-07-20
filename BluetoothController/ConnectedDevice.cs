@@ -80,7 +80,7 @@ namespace BluetoothController
                 // button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    StartActivity(typeof(ControllerActivity));
+                   StartActivity(typeof(ControllerActivity));
                     //m_BtControl.SetBackgroundDrawable(drawable);
                     m_BtControl.Background = (Drawable)drawable;
                 }
