@@ -26,6 +26,7 @@ namespace BluetoothController
         private List<String> m_UuidList;
         private bool m_IsConnected;
 
+
         public bool IsConnected
         {
             get { return m_IsConnected; }
