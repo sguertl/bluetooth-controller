@@ -33,6 +33,9 @@ namespace Controller
         private Joystick m_LeftJS;
         private Joystick m_RightJS;
 
+        // Controlling position
+        private bool m_InvertControl = true;
+
         public ControllerView(Context context) : base(context)
         {
             SetOnTouchListener(this);
@@ -78,20 +81,20 @@ namespace Controller
         /// </summary>
         private void InitJoysticks()
         {
-            m_LeftJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, true);
-            m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false);
+            m_LeftJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, true, m_InvertControl);
+            m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false, m_InvertControl);
 
             m_ShapeStickLeft.SetBounds(
                 (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius, 
+                m_InvertControl ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y - (int)m_LeftJS.m_StickRadius, 
                 (int)m_LeftJS.CENTER_X + (int)m_LeftJS.m_StickRadius, 
-                (int)m_LeftJS.CENTER_Y + 3 * (int)m_LeftJS.m_StickRadius);
+                m_InvertControl ? (int)m_LeftJS.CENTER_Y + (int)m_LeftJS.m_StickRadius : (int)m_LeftJS.CENTER_Y + 3 * (int)m_LeftJS.m_StickRadius);
 
             m_ShapeStickRight.SetBounds(
                 (int)m_RightJS.CENTER_X - (int)m_RightJS.m_StickRadius, 
-                (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
+                m_InvertControl ? (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y - (int)m_RightJS.m_StickRadius,
                 (int)m_RightJS.CENTER_X + (int)m_RightJS.m_StickRadius, 
-                (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
+                m_InvertControl ? (int)m_RightJS.CENTER_Y + 3 * (int)m_RightJS.m_StickRadius : (int)m_RightJS.CENTER_Y + (int)m_RightJS.m_StickRadius);
 
             //m_ShapeRadiusLeft.SetBounds(
             //    (int)m_LeftJS.CENTER_X - (int)m_LeftJS.m_DisplacementRadius - (int)m_LeftJS.m_StickRadius, 

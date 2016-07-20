@@ -50,7 +50,7 @@ namespace Controller
 
         private int m_Direction; // Current direction of the joystick
 
-        public Joystick(float width, float height, bool isLeftStick)
+        public Joystick(float width, float height, bool isLeftStick, bool invertedControl)
         {
             m_StickDiameter = (width / 8 + width / 2) / 2 - width / 5;
             m_DisplacementDiameter = m_StickDiameter * 2.25f;
@@ -59,19 +59,36 @@ namespace Controller
             m_DisplacementRadius = m_DisplacementDiameter / 2;
 
             CENTER_Y = height / 16 + height / 2 + m_StickRadius / 2;
-            if (isLeftStick)
+            if(!invertedControl)
             {
-                CENTER_X = width / 5 + m_StickRadius / 2;
-                m_StickIndex = 0;
-                m_YPosition = CENTER_Y + m_DisplacementRadius;
+                if (isLeftStick)
+                {
+                    CENTER_X = width / 5 + m_StickRadius / 2;
+                    m_StickIndex = 0;
+                    SetPosition(CENTER_X, CENTER_Y + m_DisplacementRadius);
+                }
+                else
+                {
+                    CENTER_X = width - width / 5 - m_StickRadius / 2;
+                    m_StickIndex = 1;
+                    SetPosition(CENTER_X, CENTER_Y);
+                }
             }
             else
             {
-                CENTER_X = width - width / 5 - m_StickRadius / 2;
-                m_YPosition = CENTER_Y;
-                m_StickIndex = 1;
+                if (isLeftStick)
+                {
+                    CENTER_X = width / 5 + m_StickRadius / 2;
+                    m_StickIndex = 0;
+                    SetPosition(CENTER_X, CENTER_Y);
+                }
+                else
+                {
+                    CENTER_X = width - width / 5 - m_StickRadius / 2;
+                    m_StickIndex = 1;
+                    SetPosition(CENTER_X, CENTER_Y + m_DisplacementRadius);                   
+                }
             }
-            m_XPosition = CENTER_X;
         }
 
         /// <summary>
