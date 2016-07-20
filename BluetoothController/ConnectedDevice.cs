@@ -71,7 +71,6 @@ namespace BluetoothController
             // Handling button contact
             m_BtControl.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
             {
-                Console.WriteLine("'''''''''''''''''''''''"+e2.Event.Action);
                 // Changing button background if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
                 {
