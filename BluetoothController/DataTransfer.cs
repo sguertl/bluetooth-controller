@@ -13,13 +13,13 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
-    public class WriteAdmin
+    public class DataTransfer
     {
         private Controller.ControllerView m_CV;
         private Sender m_Sender;
         private byte[] m_Bytes;
 
-        public WriteAdmin(Controller.ControllerView CV)
+        public DataTransfer(Controller.ControllerView CV)
         {
             m_CV = CV;
             Init();

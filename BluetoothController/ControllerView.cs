@@ -37,7 +37,7 @@ namespace Controller
         private bool m_InvertControl = true;
 
         //
-        private BluetoothController.WriteAdmin m_WriteAdmin;
+        private BluetoothController.DataTransfer m_Transfer;
 
         public ControllerView(Context context) : base(context)
         {
@@ -47,7 +47,7 @@ namespace Controller
             SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels; //ConvertPixelsToDp(metrics.WidthPixels);
             SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels; //ConvertPixelsToDp(metrics.HeightPixels);
 
-            m_WriteAdmin = new BluetoothController.WriteAdmin(this);
+            m_Transfer = new BluetoothController.DataTransfer(this);
 
             InitShapes();
             InitJoysticks();
