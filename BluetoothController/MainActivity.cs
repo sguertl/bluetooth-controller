@@ -25,7 +25,6 @@ namespace BluetoothController
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-
             //ಠ_ಠ
             Init();
 

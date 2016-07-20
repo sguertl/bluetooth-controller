@@ -93,11 +93,6 @@ namespace BluetoothController
                 {
                     Console.WriteLine(e.Message);
                 }
-
-                if(m_PairedDevices != null)
-                {
-                    m_PairedDevices.PrintMessage("Could not connect to device");
-                }
                 return;
             }
             ManageConnectedSocket(m_Socket);  
