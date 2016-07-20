@@ -71,8 +71,7 @@ namespace BluetoothController
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
             // Setting background color of the ListView
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Black);
-
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
 
             // Adding handler when clicking on a ListViewItem
             m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) => { OnItemClick(sender, e); };
