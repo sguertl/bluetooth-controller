@@ -13,7 +13,7 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
-    [Activity(Label = "PairedDevices", Theme = "@android:style/Theme.Black.NoTitleBar")]
+    [Activity(Label = "PairedDevices", Theme = "@android:style/Theme.Light.NoTitleBar")]
     public class PairedDevices : Activity, IEstablishConnection
     {
         // Members

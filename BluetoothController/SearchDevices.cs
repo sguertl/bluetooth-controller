@@ -14,7 +14,7 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
-    [Activity(Label = "SearchedDevices", Theme = "@android:style/Theme.Black.NoTitleBar")]
+    [Activity(Label = "SearchedDevices", Theme = "@android:style/Theme.Light.NoTitleBar")]
     public class SearchDevices : Activity, IEstablishConnection
     {
         // Members
