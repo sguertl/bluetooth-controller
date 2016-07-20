@@ -75,14 +75,10 @@ namespace BluetoothController
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
-<<<<<<< HEAD
-                    
                 }
                 if (m_PairedDevices != null)
                 {
                     m_PairedDevices.StartActivity(m_Device);
-=======
->>>>>>> origin/master
                 }
             }
             catch (Java.Lang.Exception connectException)
