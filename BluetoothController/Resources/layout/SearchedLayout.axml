@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/linear3">
+    <TextView
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search devices"
+        android:gravity="center_horizontal" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
