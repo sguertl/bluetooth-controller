@@ -33,11 +33,8 @@ namespace Controller
         private Joystick m_LeftJS;
         private Joystick m_RightJS;
 
-<<<<<<< HEAD
         // Controlling position
         private bool m_InvertControl = true;
-=======
->>>>>>> origin/master
 
         public ControllerView(Context context) : base(context)
         {
