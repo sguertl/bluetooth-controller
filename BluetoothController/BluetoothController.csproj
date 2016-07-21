@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BluetoothInterrupt.cs" />
-    <Compile Include="Resources\ByteConverter.cs" />
+    <Compile Include="ByteConverter.cs" />
     <Compile Include="ConnectedDevice.cs" />
     <Compile Include="ConnectedThread.cs" />
     <Compile Include="ControllerActivity.cs" />
