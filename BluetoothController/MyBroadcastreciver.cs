@@ -44,7 +44,6 @@ namespace BluetoothController
 
             m_Main.GiveAMessage(action);
 
-
             if (BluetoothAdapter.ActionDiscoveryStarted.Equals(action))
             {
                 m_Main.StartProgress();
@@ -103,7 +102,6 @@ namespace BluetoothController
                         }
                     }
               
-
                 if (m_List.Count > 0)
                 {
                     String address = m_List.ElementAt(0).Split('\n')[1];

@@ -34,13 +34,13 @@ namespace Controller
         private Joystick m_LeftJS;
         private Joystick m_RightJS;
 
-        // Controlling position
+        // Controller position
         private bool m_Inverted = false;
 
-        // Transfering data via bluetooth
+        // Transfer data via bluetooth
         private BluetoothController.DataTransfer m_Transfer;
 
-        // Interrupt
+        // Interrupter
         private BluetoothController.BluetoothInterrupt m_Interrupt;
 
         public ControllerView(Context context, bool inverted) : base(context)

@@ -17,12 +17,11 @@ namespace BluetoothController
 {
     public class Sender : Thread
     {
-        // Member Variablen
+        // Members
         private BluetoothSocket m_Socket;
         private Stream m_InputStream;
         private Stream m_OutputStream;
         private static Int16[] m_Message;
-        //
 
         public Sender(BluetoothSocket socket)
         {
@@ -57,7 +56,7 @@ namespace BluetoothController
                 try
                 {
                     int bytes = 0;
-                 //   m_InputStream.Position = 0;
+                    // m_InputStream.Position = 0;
                     //only processes bytes when byte were sent
                     while (bytes == 0)
                     {

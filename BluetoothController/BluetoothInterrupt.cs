@@ -35,6 +35,5 @@ namespace BluetoothController
         {
             return m_Available;
         }
-
     }
 }

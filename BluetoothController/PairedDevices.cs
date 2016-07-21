@@ -114,8 +114,6 @@ namespace BluetoothController
                 activity2.PutStringArrayListExtra("MyData", ll);
                 StartActivity(activity2);
             }
-
-
         }
     }
 }

@@ -43,7 +43,6 @@ namespace BluetoothController
                 alert.SetMessage("Bluetooth is not supported!");
                 alert.SetButton("Ok", (s, ev) => { Finish(); });
                 alert.Show();
-
             }
             else
             {

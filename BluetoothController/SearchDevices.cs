@@ -140,9 +140,11 @@ namespace BluetoothController
             String address = view.Text.Split('\n')[1];
             // Creating a BluetoothDevice object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            try {
+            try
+            {
                 BuildConnection(btDevice, m_Uuids[e.Position]);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 BuildConnection(btDevice, m_Uuids[0]);
             }    
@@ -168,7 +170,6 @@ namespace BluetoothController
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, new PairedDevices());
             connect.Start();
-
  
             while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
             if (!ConnectedThread.m_FailedCon)
@@ -180,9 +181,6 @@ namespace BluetoothController
                 activity2.PutStringArrayListExtra("MyData", ll);
                 StartActivity(activity2);
             }
-
-
         }
-
     }
 }
