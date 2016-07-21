@@ -48,10 +48,14 @@ namespace BluetoothController
             return bytes;
         }
 
-        private static string GetBinary(string binary, int number)
+        public static string GetBinary(string binary, int number)
         {
-            binary = (number % 2) + binary;
-            return number / 2 == 1 ? "1" + binary : GetBinary(binary, number / 2);
+            if (number != 0)
+            {
+                binary = (number % 2) + binary;
+                return number / 2 == 1 ? "1" + binary : GetBinary(binary, number / 2);
+            }
+            return "0";
         }
 
         private static UInt16 GetDecimal(string binary, int position, UInt16 result)
