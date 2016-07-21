@@ -14,8 +14,9 @@ namespace Controller
 {
     public class Joystick
     {
-        // Constants
-        private readonly double RAD = 1 / (2 * Math.PI) * 360; // 1 rad in degrees
+        // -------------------------- CONSTANTS --------------------------------
+
+        private const double RAD = 1 / (2 * Math.PI) * 360; // 1 rad in degrees
 
         public static readonly int CENTER = 0;
         public static readonly int BOTTOM = 1;
@@ -29,64 +30,90 @@ namespace Controller
         public static readonly int LEFT_STICK = 0;
         public static readonly int RIGHT_STICK = 1;
 
-        public readonly float m_StickDiameter; // Diameter of the joystick
-        public readonly float m_DisplacementDiameter; // Diameter of the displacement
+        public readonly float StickDiameter; // Diameter of the joystick
+        public readonly float DisplacementDiameter; // Diameter of the displacement
 
-        public readonly float m_StickRadius; // Radius of the joystick
-        public readonly float m_DisplacementRadius; // Radius of the displacement
+        public static float StickRadius; // Radius of the joystick
+        public static float DisplacementRadius; // Radius of the displacement
 
-        public readonly float CENTER_X; // Center x of joystick
-        public readonly float CENTER_Y; // Center y of joystick
 
-        // Variables
+        // --------------------------- VARIABLES ------------------------------
+
         private float m_XPosition; // Current x of joystick
         private float m_YPosition; // Current y of joystick
 
-        private int m_StickIndex; // Index of joystick
+        // Center x of joystick
+        private float m_CenterX; 
+        public float CenterX { get { return m_CenterX; } set { m_CenterX = value; } }
 
-        private int m_Power; // Current power (= displacement) of the joystick; maximum is 1 (= 100 %)
+        // Center y of joystick
+        private float m_CenterY; 
+        public float CenterY { get { return m_CenterY; } set { m_CenterY = value; } }
 
-        private int m_Angle; // Current angle of the joystick
+        // Current power (= displacement) of the joystick; maximum is 1 (= 100 %)
+        private int m_Power; 
+        public int Power { get { return GetPower(); } set { m_Power = value; } }
 
-        private int m_Direction; // Current direction of the joystick
+        // Current angle of the joystick
+        private float m_Angle; 
+        public float Angle { get { return GetAngle(); } set { m_Angle = value; } }
 
+        // Current direction of the joystick
+        private int m_Direction;
+        public int Direction { get { return GetDirection(); } set { m_Direction = value; } }
+
+        // Vector length
+        private float m_Abs;
+        public float Abs { get { return GetAbs(); } set { m_Abs = value; } }
+
+
+        private Int16 m_ThrottleValue;
+        public Int16 ThrottleValue { get { return GetThrottleValue(); } set { m_ThrottleValue = value; } }
+
+        private Int16 m_RotationValue;
+        public Int16 RotationValue { get { return GetRotationValue(); } set { m_RotationValue = value; } }
+
+        private Int16 m_ForwardBackwardValue;
+        public Int16 ForwardBackwardValue { get { return GetForwardBackwardValue(); } set { m_ForwardBackwardValue = value; } }
+
+        private Int16 m_LeftRightValue;
+        public Int16 LeftRightValue { get { return GetLeftRightValue(); } set { m_LeftRightValue = value; } }
+
+
+        // ----------------------------- CTOR ----------------------------------
         public Joystick(float width, float height, bool isLeftStick, bool invertedControl)
         {
-            m_StickDiameter = (width / 8 + width / 2) / 2 - width / 5;
-            m_DisplacementDiameter = m_StickDiameter * 2.25f;
+            StickDiameter = (width / 8 + width / 2) / 2 - width / 5;
+            DisplacementDiameter = StickDiameter * 2.25f;
 
-            m_StickRadius = m_StickDiameter / 2;
-            m_DisplacementRadius = m_DisplacementDiameter / 2;
+            StickRadius = StickDiameter / 2;
+            DisplacementRadius = DisplacementDiameter / 2;
 
-            CENTER_Y = height / 16 + height / 2 + m_StickRadius / 2;
+            m_CenterY = height / 16 + height / 2 + StickRadius / 2;
             if(!invertedControl)
             {
                 if (isLeftStick)
                 {
-                    CENTER_X = width / 5 + m_StickRadius / 2;
-                    m_StickIndex = 0;
-                    SetPosition(CENTER_X, CENTER_Y + m_DisplacementRadius);
+                    m_CenterX = width / 5 + StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY + DisplacementRadius);
                 }
                 else
                 {
-                    CENTER_X = width - width / 5 - m_StickRadius / 2;
-                    m_StickIndex = 1;
-                    SetPosition(CENTER_X, CENTER_Y);
+                    m_CenterX = width - width / 5 - StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY);
                 }
             }
             else
             {
                 if (isLeftStick)
                 {
-                    CENTER_X = width / 5 + m_StickRadius / 2;
-                    m_StickIndex = 0;
-                    SetPosition(CENTER_X, CENTER_Y);
+                    m_CenterX = width / 5 + StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY);
                 }
                 else
                 {
-                    CENTER_X = width - width / 5 - m_StickRadius / 2;
-                    m_StickIndex = 1;
-                    SetPosition(CENTER_X, CENTER_Y + m_DisplacementRadius);                   
+                    m_CenterX = width - width / 5 - StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY + DisplacementRadius);                   
                 }
             }
         }
@@ -115,19 +142,19 @@ namespace Controller
         /// Calculates the angle of the moved joystick
         /// </summary>
         /// <returns>Angle of the joystick</returns>
-        public float GetAngle()
+        private float GetAngle()
         {
-            if (m_XPosition > CENTER_X)
+            if (m_XPosition > m_CenterX)
             {
-                if (m_YPosition < CENTER_Y)
+                if (m_YPosition < m_CenterY)
                 {
                     //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD + 90);
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD + 90) - 90;
+                    return m_Angle = (int)(Math.Atan((m_YPosition - m_CenterY) / (m_XPosition - m_CenterX)) * RAD + 90) - 90;
                 }
-                else if (m_YPosition > CENTER_Y)
+                else if (m_YPosition > m_CenterY)
                 {
                     //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) + 90;
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD);
+                    return m_Angle = (int)(Math.Atan((m_YPosition - m_CenterY) / (m_XPosition - m_CenterX)) * RAD);
                 }
                 else
                 {
@@ -135,17 +162,17 @@ namespace Controller
                     return m_Angle = 0;
                 }
             }
-            else if (m_XPosition < CENTER_X)
+            else if (m_XPosition < m_CenterX)
             {
-                if (m_YPosition < CENTER_Y)
+                if (m_YPosition < m_CenterY)
                 {
                     //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD - 90);
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD - 90) - 90;
+                    return m_Angle = (int)(Math.Atan((m_YPosition - m_CenterY) / (m_XPosition - m_CenterX)) * RAD - 90) - 90;
                 }
-                else if (m_YPosition > CENTER_Y)
+                else if (m_YPosition > m_CenterY)
                 {
                     //return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) - 90;
-                    return m_Angle = (int)(Math.Atan((m_YPosition - CENTER_Y) / (m_XPosition - CENTER_X)) * RAD) - 180;
+                    return m_Angle = (int)(Math.Atan((m_YPosition - m_CenterY) / (m_XPosition - m_CenterX)) * RAD) - 180;
                 }
                 else
                 {
@@ -155,7 +182,7 @@ namespace Controller
             }
             else
             {
-                if (m_YPosition <= CENTER_Y)
+                if (m_YPosition <= m_CenterY)
                 {
                     //return m_Angle = 0;
                     return m_Angle = -90;
@@ -180,9 +207,9 @@ namespace Controller
         /// Calculates the direction in which the joystick was moved
         /// </summary>
         /// <returns>Direction of the joystick</returns>
-        public int GetDirection()
+        private int GetDirection()
         {
-            if(CENTER_X == m_XPosition && CENTER_Y == m_YPosition)
+            if(m_CenterX == m_XPosition && m_CenterY == m_YPosition)
             {
                 return m_Direction = 0;
             }
@@ -193,17 +220,17 @@ namespace Controller
             int a = 0;
             if (m_Angle <= 0)
             {
-                a = (m_Angle * -1) + 90;
+                a = ((int)m_Angle * -1) + 90;
             }
             else if (m_Angle > 0)
             {
                 if (m_Angle <= 90)
                 {
-                    a = 90 - m_Angle;
+                    a = 90 - (int)m_Angle;
                 }
                 else
                 {
-                    a = 360 - (m_Angle - 90);
+                    a = 360 - ((int)m_Angle - 90);
                 }
             }
 
@@ -220,11 +247,11 @@ namespace Controller
         /// Calculates the power of the joystick
         /// </summary>
         /// <returns>Power of the joystick in percent (max. 100)</returns>
-        public int GetPower()
+        private int GetPower()
         {
             m_Power = (int)(100 * Math.Sqrt(
-                (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + 
-                (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementRadius));
+                (m_XPosition - m_CenterX) * (m_XPosition - m_CenterX) + 
+                (m_YPosition - m_CenterY) * (m_YPosition - m_CenterY)) / (DisplacementRadius));
             m_Power = Math.Min(m_Power, 100);
             return m_Power;
         }
@@ -233,73 +260,72 @@ namespace Controller
         /// Calculates the length of the vector
         /// </summary>
         /// <returns>Length of the vector</returns>
-        public float GetAbs()
+        private float GetAbs()
         {
-            return (float)Math.Sqrt((m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y));
+            return m_Abs = (float)Math.Sqrt((m_XPosition - m_CenterX) * (m_XPosition - m_CenterX) + (m_YPosition - m_CenterY) * (m_YPosition - m_CenterY));
         }
 
-        public int GetThrottleValue()
+        private Int16 GetThrottleValue()
         {
             int throttleValue = 0;
-            if (m_YPosition > CENTER_Y + m_DisplacementRadius)
+            if (m_YPosition > m_CenterY + DisplacementRadius)
             {
-                return throttleValue;
+                return (Int16)throttleValue;
             }
-            //throttleValue = (int)(32767 * Math.Sqrt(
-            //    (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + 
-            //    (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
-            throttleValue = (int)(32767 * (CENTER_Y + m_DisplacementRadius - m_YPosition) / m_DisplacementDiameter);
-            throttleValue = Math.Max(0, throttleValue);
-            throttleValue = Math.Min(32767, throttleValue);
-            return throttleValue;
+            throttleValue = (int)(32767 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
+            throttleValue = Math.Max((Int16)0, throttleValue);
+            throttleValue = Math.Min((Int16)32767, throttleValue);
+            m_ThrottleValue = (Int16)throttleValue;
+            return m_ThrottleValue;
         }
 
-        public int GetRotationValue()
+        private Int16 GetRotationValue()
         {
             int rotationValue = -32768;
-            if (m_XPosition < CENTER_X - m_DisplacementRadius)
+            if (m_XPosition < m_CenterX - DisplacementRadius)
             {
-                return rotationValue;
+                return (Int16)rotationValue;
             }
-            //int rotationValue = (int)(65536 * Math.Sqrt(
-            //    (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
-            //    (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
-            rotationValue = (int)((65536 * (CENTER_X + m_DisplacementRadius - m_XPosition) / m_DisplacementDiameter) - 32768) * (-1);
+            rotationValue = (int)((65536 * (m_CenterX + DisplacementRadius - m_XPosition) / DisplacementDiameter) - 32768) * (-1);
             rotationValue = Math.Max(-32768, rotationValue);
             rotationValue = Math.Min(32767, rotationValue);
-            return rotationValue;
+            m_RotationValue = (Int16)rotationValue;
+            return m_RotationValue;
         }
 
-        public int GetForwardBackwardValue()
+        private Int16 GetForwardBackwardValue()
         {
             int forwardBackwardValue = -32768;
-            if (m_YPosition > CENTER_Y + m_DisplacementRadius)
+            if (m_YPosition > m_CenterY + DisplacementRadius)
             {
-                return forwardBackwardValue;
+                return (Int16)forwardBackwardValue;
             }
-            //forwardBackwardValue = (int)(65536 * Math.Sqrt(
-            //    (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
-            //    (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter)) - 32768;
-            forwardBackwardValue = (int)(65536 * (CENTER_Y + m_DisplacementRadius - m_YPosition) / m_DisplacementDiameter) - 32768;
+            forwardBackwardValue = (int)(65536 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) - 32768;
             forwardBackwardValue = Math.Max(-32768, forwardBackwardValue);
             forwardBackwardValue = Math.Min(32767, forwardBackwardValue);
-            return forwardBackwardValue;
+            m_ForwardBackwardValue = (Int16)forwardBackwardValue;
+            return m_ForwardBackwardValue;
         }
 
-        public int GetLeftRightValue()
+        private Int16 GetLeftRightValue()
         {
             int leftRightValue = -32768;
-            if (m_XPosition < CENTER_X - m_DisplacementRadius)
+            if (m_XPosition < m_CenterX - DisplacementRadius)
             {
-                return -32768;
+                return (Int16)leftRightValue;
             }
-            //leftRightValue = (int)(65536 * Math.Sqrt(
-            //    (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
-            //    (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
-            leftRightValue = (int)((65536 * (CENTER_X + m_DisplacementRadius - m_XPosition) / m_DisplacementDiameter) - 32768) * (-1);
+            leftRightValue = (int)((65536 * (m_CenterX + DisplacementRadius - m_XPosition) / DisplacementDiameter) - 32768) * (-1);
             leftRightValue = Math.Max(-32768, leftRightValue);
             leftRightValue = Math.Min(32767, leftRightValue);
-            return leftRightValue;
+            m_LeftRightValue = (Int16)leftRightValue;
+            return m_LeftRightValue;
+        }
+
+        public void CalculateValues()
+        {
+            GetPower();
+            GetAngle();
+            GetAbs();
         }
     }
 }
