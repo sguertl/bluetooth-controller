@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interrupt.cs" />
     <Compile Include="Resources\ByteConverter.cs" />
     <Compile Include="ConnectedDevice.cs" />
     <Compile Include="ConnectedThread.cs" />

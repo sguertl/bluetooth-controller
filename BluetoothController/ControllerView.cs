@@ -13,6 +13,7 @@ using Android.Graphics.Drawables;
 using Android.Graphics;
 using Android.Graphics.Drawables.Shapes;
 
+
 namespace Controller
 {
     public class ControllerView : View, View.IOnTouchListener
@@ -39,6 +40,9 @@ namespace Controller
         // Transfering data via bluetooth
         private BluetoothController.DataTransfer m_Transfer;
 
+        // Interrupt
+        private BluetoothController.Interrupt m_Interrupt;
+
         public ControllerView(Context context, bool inverted) : base(context)
         {
             m_Inverted = inverted;
@@ -50,6 +54,9 @@ namespace Controller
             SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels; //ConvertPixelsToDp(metrics.HeightPixels);
 
             m_Transfer = new BluetoothController.DataTransfer(this);
+
+            m_Interrupt = new BluetoothController.Interrupt();
+            m_Interrupt.Start();
 
             InitShapes();
             InitJoysticks();
@@ -151,15 +158,17 @@ namespace Controller
                     break;
             }
 
-            if(!m_Inverted)
+            if(!m_Inverted && m_Interrupt.GetVerfuegbar())
             {
                 m_Transfer.Write((Int16)m_LeftJS.GetThrottleValue(), (Int16)m_LeftJS.GetRotationValue(), 
                     (Int16)m_RightJS.GetForwardBackwardValue(), (Int16)m_RightJS.GetLeftRightValue());
+                m_Interrupt.SetVerfuegbar(false);
             }
-            else
+            else if (m_Interrupt.GetVerfuegbar())
             {
                 m_Transfer.Write((Int16)m_RightJS.GetThrottleValue(), (Int16)m_RightJS.GetRotationValue(),
                     (Int16)m_LeftJS.GetForwardBackwardValue(), (Int16)m_LeftJS.GetLeftRightValue());
+                m_Interrupt.SetVerfuegbar(false);
             }
             
             this.Invalidate();
