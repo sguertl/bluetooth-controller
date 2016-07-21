@@ -115,11 +115,6 @@ namespace BluetoothController
                 activity2.PutStringArrayListExtra("MyData", ll);
                 StartActivity(activity2);
             }
-<<<<<<< HEAD
-=======
-
-        //    m_ProgressDialog.Dismiss();
->>>>>>> origin/master
         }
     }
 }
