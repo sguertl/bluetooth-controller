@@ -116,6 +116,7 @@ namespace BluetoothController
                 StartActivity(activity2);
             }
 
+        //    m_ProgressDialog.Dismiss();
         }
     }
 }
