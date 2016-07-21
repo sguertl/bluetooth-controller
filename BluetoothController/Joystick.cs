@@ -240,13 +240,15 @@ namespace Controller
 
         public int GetThrottleValue()
         {
+            int throttleValue = 0;
             if (m_YPosition > CENTER_Y + m_DisplacementRadius)
             {
-                return 0;
+                return throttleValue;
             }
-            int throttleValue = (int)(32767 * Math.Sqrt(
-                (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + 
-                (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
+            //throttleValue = (int)(32767 * Math.Sqrt(
+            //    (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) + 
+            //    (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter));
+            throttleValue = (int)(32767 * (CENTER_Y + m_DisplacementRadius - m_YPosition) / m_DisplacementDiameter);
             throttleValue = Math.Max(0, throttleValue);
             throttleValue = Math.Min(32767, throttleValue);
             return throttleValue;
@@ -254,13 +256,15 @@ namespace Controller
 
         public int GetRotationValue()
         {
+            int rotationValue = -32768;
             if (m_XPosition < CENTER_X - m_DisplacementRadius)
             {
-                return -32768;
+                return rotationValue;
             }
-            int rotationValue = (int)(65536 * Math.Sqrt(
-                (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
-                (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+            //int rotationValue = (int)(65536 * Math.Sqrt(
+            //    (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
+            //    (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+            rotationValue = (int)((65536 * (CENTER_X + m_DisplacementRadius - m_XPosition) / m_DisplacementDiameter) - 32768) * (-1);
             rotationValue = Math.Max(-32768, rotationValue);
             rotationValue = Math.Min(32767, rotationValue);
             return rotationValue;
@@ -268,13 +272,15 @@ namespace Controller
 
         public int GetForwardBackwardValue()
         {
+            int forwardBackwardValue = -32768;
             if (m_YPosition > CENTER_Y + m_DisplacementRadius)
             {
-                return -32768;
+                return forwardBackwardValue;
             }
-            int forwardBackwardValue = (int)(65536 * Math.Sqrt(
-                (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
-                (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter)) - 32768;
+            //forwardBackwardValue = (int)(65536 * Math.Sqrt(
+            //    (m_XPosition - CENTER_X) * (m_XPosition - CENTER_X) +
+            //    (m_YPosition - (CENTER_Y + m_DisplacementRadius)) * (m_YPosition - (CENTER_Y + m_DisplacementRadius))) / (m_DisplacementDiameter)) - 32768;
+            forwardBackwardValue = (int)(65536 * (CENTER_Y + m_DisplacementRadius - m_YPosition) / m_DisplacementDiameter) - 32768;
             forwardBackwardValue = Math.Max(-32768, forwardBackwardValue);
             forwardBackwardValue = Math.Min(32767, forwardBackwardValue);
             return forwardBackwardValue;
@@ -282,13 +288,15 @@ namespace Controller
 
         public int GetLeftRightValue()
         {
+            int leftRightValue = -32768;
             if (m_XPosition < CENTER_X - m_DisplacementRadius)
             {
                 return -32768;
             }
-            int leftRightValue = (int)(65536 * Math.Sqrt(
-                (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
-                (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+            //leftRightValue = (int)(65536 * Math.Sqrt(
+            //    (m_XPosition - (CENTER_X - m_DisplacementRadius)) * (m_XPosition - (CENTER_X - m_DisplacementRadius)) +
+            //    (m_YPosition - CENTER_Y) * (m_YPosition - CENTER_Y)) / (m_DisplacementDiameter)) - 32768;
+            leftRightValue = (int)((65536 * (CENTER_X + m_DisplacementRadius - m_XPosition) / m_DisplacementDiameter) - 32768) * (-1);
             leftRightValue = Math.Max(-32768, leftRightValue);
             leftRightValue = Math.Min(32767, leftRightValue);
             return leftRightValue;

@@ -125,28 +125,6 @@ namespace Controller
             switch(e.Action)
             {
                 case MotionEventActions.Up:
-                    //if(e.PointerCount == 2)
-                    //{
-                    //    if(e.GetX(0) > SCREEN_WIDTH / 2)
-                    //    {
-                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                    //    }
-                    //    if(e.GetX(1) > SCREEN_WIDTH / 2)
-                    //    {
-                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                    //    }
-                    //}
-                    //if(e.GetX() > SCREEN_WIDTH / 2)
-                    //{
-                    //    UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                    //}
-                    //else
-                    //{
-                    //    if(e.GetX() > SCREEN_WIDTH / 2)
-                    //    {
-                    //        UpdateOvals(m_RightJS.CENTER_X, m_RightJS.CENTER_Y);
-                    //    }
-                    //}
                     if (m_Inverted)
                         UpdateOvals(m_LeftJS.CENTER_X, m_LeftJS.CENTER_Y);
                     else
