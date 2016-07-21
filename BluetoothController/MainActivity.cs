@@ -22,6 +22,7 @@ namespace BluetoothController
         private LinearLayout m_Linear;
         private bool m_Outside = false;
         private bool m_OutsideSearch = false;
+        private Drawable m_Draw;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -74,8 +75,9 @@ namespace BluetoothController
             m_Drawable.SetShape(ShapeType.Rectangle);
             m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
             m_Drawable.SetColor(Android.Graphics.Color.White);
-            m_BtPairedDevices.Background = m_Drawable;
-            m_BtSearchDevices.Background = m_Drawable;
+            m_Draw = m_BtPairedDevices.Background;
+        //    m_BtPairedDevices.Background = m_Drawable;
+       //     m_BtSearchDevices.Background = m_Drawable;
             
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
@@ -95,7 +97,7 @@ namespace BluetoothController
                     {
                         StartActivity(typeof(SearchDevices));    
                     }
-                    m_BtSearchDevices.Background = m_Drawable;
+                    m_BtSearchDevices.Background = m_Draw;
                 }
                 else if(e2.Event.Action == MotionEventActions.Move)
                 {
@@ -108,7 +110,8 @@ namespace BluetoothController
                     else
                     {
                         m_OutsideSearch = true;
-                        m_BtSearchDevices.Background = m_Drawable;
+                        //  m_BtSearchDevices.Background = m_Drawable; 
+                        m_BtSearchDevices.Background = m_Draw;
                     }
                 }
             };
@@ -129,7 +132,7 @@ namespace BluetoothController
                     {
                       StartActivity(typeof(PairedDevices));
                     }
-                    m_BtPairedDevices.Background = m_Drawable;
+                    m_BtPairedDevices.Background = m_Draw;
                 }else if(e2.Event.Action == MotionEventActions.Move)
                 {
                     if(e2.Event.GetY() + m_BtPairedDevices.GetY()  >=  m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
@@ -141,7 +144,7 @@ namespace BluetoothController
                     else
                     {
                         m_Outside = true;
-                        m_BtPairedDevices.Background = m_Drawable;
+                        m_BtPairedDevices.Background = m_Draw;
                     }
                 }
             };
