@@ -56,6 +56,7 @@ namespace BluetoothController
                 m_CopyList = new List<string>(m_List);
                 if (m_List.Count > 0)
                 {
+                    m_Main.StartProgress();
                     // Getting address of the device and removing it from the list
                     String address = m_List.ElementAt(0).Split('\n')[1];
                     m_List.RemoveAt(0);
@@ -91,7 +92,7 @@ namespace BluetoothController
                 try
                 {
                     for (int i = 0; i < uuidExtra.Length; i++)
-                    {         
+                    {
                         if (i == 0)
                         {
                             if (!m_CompareList.Contains(uuidExtra[i].ToString()))

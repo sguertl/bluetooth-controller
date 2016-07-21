@@ -76,10 +76,7 @@ namespace BluetoothController
                 {
                     m_Socket.Connect();
                 }
-                if (m_PairedDevices != null)
-                {
-                    m_PairedDevices.StartActivity(m_Device);
-                }
+               
             }
             catch (Java.Lang.Exception connectException)
             {
@@ -95,7 +92,7 @@ namespace BluetoothController
                 }
                 return;
             }
-        //    ManageConnectedSocket(m_Socket);  
+         //   ManageConnectedSocket(m_Socket);  
         }
 
         /// <summary>
@@ -104,8 +101,8 @@ namespace BluetoothController
         /// <param name="mmSocket"></param>
         private void ManageConnectedSocket(BluetoothSocket mmSocket)
         {
-            m_Sender = new Sender(mmSocket);
-            m_Sender.Start();
+            //m_Sender = new Sender(mmSocket);
+            //m_Sender.Start();
             //Java.Lang.String test = new Java.Lang.String("Dir1:8 Pow1:100 Dir2:3 Pow2:100");
             //sender.Write(test.GetBytes());
         }

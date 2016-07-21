@@ -140,7 +140,12 @@ namespace BluetoothController
             
             // Creating a BluetoothDevice object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
-            BuildConnection(btDevice, m_Uuids[e.Position]);
+            try {
+                BuildConnection(btDevice, m_Uuids[e.Position]);
+            }catch(Exception ex)
+            {
+                BuildConnection(btDevice, m_Uuids[0]);
+            }    
         }
 
         /// <summary>
@@ -160,10 +165,9 @@ namespace BluetoothController
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
             // Creating a ConnectionThread object
-            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid);
+            ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, new PairedDevices());
             connect.Start();
-
-            // Starting new activity
+            while (!ConnectedThread.m_Socket.IsConnected) { }
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
             ll.Add(bluetoothDevice.Name);

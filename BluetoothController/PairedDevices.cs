@@ -95,10 +95,7 @@ namespace BluetoothController
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
-        }
-
-        public void StartActivity(BluetoothDevice bluetoothDevice)
-        {
+            while (!ConnectedThread.m_Socket.IsConnected) { }
             var activity2 = new Intent(this, typeof(ConnectedDevices));
             IList<String> ll = new List<string>();
             ll.Add(bluetoothDevice.Name);
