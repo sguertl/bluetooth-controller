@@ -45,8 +45,12 @@ namespace BluetoothController
             m_OutputStream = tempOutStream;
         }
 
+        /// <summary>
+        /// Start to read bytes
+        /// </summary>
         public override void Run()
         {
+            // byte buffer 11 - 1 byte as start byte - data bytes - last to bytes fcs
             byte[] buffer = new byte[11];
             while (true)
             {
@@ -54,10 +58,12 @@ namespace BluetoothController
                 {
                     int bytes = 0;
                  //   m_InputStream.Position = 0;
+                    //only processes bytes when byte were sent
                     while (bytes == 0)
                     {
                         bytes += m_InputStream.Read(buffer, 0, buffer.Length);
                     }
+                    //checks if the message was correctly sent
                     m_Message = CheckBuffer(buffer);
                 }
                 catch (System.Exception ex)
