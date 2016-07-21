@@ -73,15 +73,12 @@ namespace BluetoothController
             m_BtAdapter.CancelDiscovery();
             try
             {
-                TimeEx te = new TimeEx();
-                te.Start();
+
                 // Checks if device is already connected
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
                 }
-
-                te.Interrupt();
 
             }
             catch (Java.Lang.Exception connectException)
