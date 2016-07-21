@@ -40,8 +40,8 @@ namespace BluetoothController
             bytes[0] = STARTBYTE;
 
             //Umwandlung der joystick befehle in byte
-            int posi = 0;
-            for (int i = 1; i < args.Length; i++)
+            int posi = 1;
+            for (int i = 0; i < args.Length; i++)
             {
                 short s = args[i];
                 byte x = (byte)s;
