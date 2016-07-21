@@ -339,5 +339,10 @@ namespace Controller
             GetAngle();
             GetAbs();
         }
+
+        public bool IsCentered()
+        {
+            return m_XPosition == m_CenterX && m_YPosition == m_CenterY;
+        }
     }
 }

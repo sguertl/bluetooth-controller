@@ -131,23 +131,57 @@ namespace Controller
             switch(e.Action)
             {
                 case MotionEventActions.Up:
-                    if (m_Inverted)
+                    //if (m_Inverted)
+                    //{
+                    //    if(m_LeftJS.IsCentered())
+                    //    {
+                    //        UpdateOvals(m_RightJS.CenterX, e.GetY());
+                    //    }
+                    //    else
+                    //    {
+                    //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (m_RightJS.IsCentered())
+                    //    {
+                    //        UpdateOvals(m_LeftJS.CenterX, e.GetY());
+                    //    }
+                    //    else
+                    //    {
+                    //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                    //    }
+                    //}
+                    if(m_Inverted)
+                    {
                         UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                    }
                     else
-                        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                    {
+                        UpdateOvals(m_RightJS.CenterX, m_LeftJS.CenterY);
+                    }
                     break;
-                case MotionEventActions.Pointer1Up:
-                    if (m_Inverted)
-                        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                    else
-                        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                    break;
-                case MotionEventActions.Pointer2Up:
-                    if (m_Inverted)
-                        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                    else
-                        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                    break;
+                //case MotionEventActions.Pointer1Up:
+                //    if (m_Inverted)
+                //    {
+                //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                //    }
+                //    else
+                //    {
+                //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                //    }
+                //    break;
+                //case MotionEventActions.Pointer2Up:
+                //    if (m_Inverted)
+                //    {
+                //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                //    }
+                //    else
+                //    {
+                //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                //    }
+                //    break;
                 default:
                     UpdateOvals(e.GetX(0), e.GetY(0));
                     if (e.PointerCount == 2)
