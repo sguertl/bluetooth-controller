@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:textSize="24dp"
-        android:layout_marginTop="10dp"
+        android:textSize="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Controller settings"
