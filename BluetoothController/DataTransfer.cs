@@ -28,6 +28,7 @@ namespace BluetoothController
         public void Init()
         {
             m_Sender = new Sender(ConnectedThread.m_Socket);
+            m_Sender.Start();
         }
 
         public void Write(params Int16[] args)

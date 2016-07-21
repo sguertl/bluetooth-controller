@@ -95,7 +95,7 @@ namespace BluetoothController
                 }
                 return;
             }
-            ManageConnectedSocket(m_Socket);  
+        //    ManageConnectedSocket(m_Socket);  
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace BluetoothController
         /// <summary>
         /// Cancels an in-progress connection and closes the socket
         /// </summary>
-        public void Cancel()
+        public static void Cancel()
         {
             try { m_Socket.Close(); }
             catch (Java.Lang.Exception e) { Console.WriteLine(e.Message); }

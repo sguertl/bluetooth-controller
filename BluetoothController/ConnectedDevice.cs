@@ -63,8 +63,17 @@ namespace BluetoothController
             // Handling button contact
            m_BtControl.Click += delegate
            {
-               StartActivity(typeof(ControllerActivity));
+               if (ConnectedThread.m_Socket.IsConnected)
+               {
+                   StartActivity(typeof(ControllerActivity));
+               }
            };
+
+            m_BtDisconnect.Click += delegate
+            {
+                ConnectedThread.Cancel();
+                StartActivity(typeof(MainActivity));
+            };
         }
     }
 }
