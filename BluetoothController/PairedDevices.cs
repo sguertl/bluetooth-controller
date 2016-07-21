@@ -26,6 +26,7 @@ namespace BluetoothController
         private List<String> m_List;
         private List<String> m_UuidList;
         private bool m_IsConnected;
+        private ProgressDialog m_ProgressDialog;
 
 
         public bool IsConnected
@@ -68,6 +69,10 @@ namespace BluetoothController
             m_UuidList = new List<String>();
             m_IsConnected = true;
 
+            m_ProgressDialog = new ProgressDialog(this);
+            m_ProgressDialog.SetMessage("Connecting with device");
+            m_ProgressDialog.SetCancelable(false);
+
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
@@ -94,19 +99,21 @@ namespace BluetoothController
         /// <param name="uuid"></param>
         public void BuildConnection(BluetoothDevice bluetoothDevice, string uuid)
         {
+            Toast.MakeText(ApplicationContext, "Connecting...", 0).Show();
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
+            
             while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
             if (!ConnectedThread.m_FailedCon)
-            { 
-            var activity2 = new Intent(this, typeof(ConnectedDevices));
-            IList<String> ll = new List<string>();
-            ll.Add(bluetoothDevice.Name);
-            ll.Add(bluetoothDevice.Address);
-            activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);
-             }
+            {
+                var activity2 = new Intent(this, typeof(ConnectedDevices));
+                IList<String> ll = new List<string>();
+                ll.Add(bluetoothDevice.Name);
+                ll.Add(bluetoothDevice.Address);
+                activity2.PutStringArrayListExtra("MyData", ll);
+                StartActivity(activity2);
+            }
 
 
         }

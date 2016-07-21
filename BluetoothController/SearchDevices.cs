@@ -138,7 +138,6 @@ namespace BluetoothController
             // Displaying the chosen item on a TextView
             TextView view = (TextView)e.View;
             String address = view.Text.Split('\n')[1];
-            
             // Creating a BluetoothDevice object
             BluetoothDevice btDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
             try {
@@ -165,9 +164,12 @@ namespace BluetoothController
         /// <param name="uuid"></param>
         public void BuildConnection(BluetoothDevice bluetoothDevice, String uuid)
         {
+            Toast.MakeText(ApplicationContext, "Connecting...", 0).Show();
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, new PairedDevices());
             connect.Start();
+
+ 
             while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
             if (!ConnectedThread.m_FailedCon)
             {
@@ -178,6 +180,8 @@ namespace BluetoothController
                 activity2.PutStringArrayListExtra("MyData", ll);
                 StartActivity(activity2);
             }
+
+
         }
 
     }
