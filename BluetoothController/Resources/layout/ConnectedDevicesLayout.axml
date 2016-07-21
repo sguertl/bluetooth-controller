@@ -15,28 +15,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/DeviceName"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:textSize="18dp"
         android:text="1 " />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/DeviceAdresse"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:textSize="18dp"
         android:text="2 " />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btSteueren"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:textSize="18dp"
         android:text="Control" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btDisconnect"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:textSize="18dp"
         android:text="Disconnect" />
 </LinearLayout>

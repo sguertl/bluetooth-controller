@@ -14,7 +14,8 @@ using Android.Graphics.Drawables;
 
 namespace BluetoothController
 {
-    [Activity(Label = "SearchedDevices", Theme = "@android:style/Theme.Light.NoTitleBar")]
+    [Activity(Label = "SearchedDevices", Theme = "@android:style/Theme.Light.NoTitleBar.Fullscreen", 
+        ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SearchDevices : Activity, IEstablishConnection
     {
         // Members
