@@ -4,25 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/linear">
-
     <TextView
-    android:textSize="24dp"
-    android:layout_marginTop="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Bluetooth Controller"
-    android:gravity="center_horizontal" />
-
-  <Button
+        android:textSize="26dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth Controller"
+        android:gravity="center_horizontal" />
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:textSize="18dp"
         android:id="@+id/btSearchDevices"
         android:text="Search Devices" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:textSize="18dp"
         android:id="@+id/btPairedDevices"
         android:text="Show Paired Devices" />
 </LinearLayout>

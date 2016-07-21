@@ -18,10 +18,7 @@ namespace BluetoothController
         private BluetoothAdapter m_BtAdapter;
         private Button m_BtPairedDevices;
         private Button m_BtSearchDevices;
-        private GradientDrawable m_Drawable;
         private LinearLayout m_Linear;
-        private bool m_Outside = false;
-        private bool m_OutsideSearch = false;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -68,99 +65,35 @@ namespace BluetoothController
             // Setting text color of the buttons
             m_BtPairedDevices.SetTextColor(Android.Graphics.Color.Black);
             m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
-
-            // Setting border
-            m_Drawable = new GradientDrawable();
-            m_Drawable.SetShape(ShapeType.Rectangle);
-            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
-            m_Drawable.SetColor(Android.Graphics.Color.White);
-            m_BtPairedDevices.Background = m_Drawable;
-            m_BtSearchDevices.Background = m_Drawable;
             
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
-            // Handling search devices button contact
-            m_BtSearchDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+            // Handling search devices button click
+            m_BtSearchDevices.Click += delegate
             {
-                // Setting background blue if button was touched
-                if (e2.Event.Action == MotionEventActions.Down)
+                if(m_BtAdapter.IsEnabled)
                 {
-                    m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                    StartActivity(typeof(SearchDevices));
                 }
-                // Starting a new activity if button was released
-                else if (e2.Event.Action == MotionEventActions.Up)
+                else
                 {
-                    if (m_BtAdapter.IsEnabled)
-                    {
-                        if (!m_OutsideSearch)
-                        {
-                            StartActivity(typeof(SearchDevices));
-                        }
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
-                    }
-                    m_BtSearchDevices.Background = m_Drawable;
-                }
-                else if (e2.Event.Action == MotionEventActions.Move)
-                {
-                    if (e2.Event.GetY() + m_BtSearchDevices.GetY() >= m_BtSearchDevices.Top && e2.Event.GetY() + m_BtSearchDevices.GetY() <= m_BtSearchDevices.Bottom &&
-                   e2.Event.GetX() >= m_BtSearchDevices.Left && e2.Event.GetX() <= m_BtSearchDevices.Right)
-                    {
-                        m_OutsideSearch = false;
-                        m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.Aqua);
-                    }
-                    else
-                    {
-                        m_OutsideSearch = true;
-                        m_BtSearchDevices.Background = m_Drawable;
-                    }
+                    Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
                 }
             };
 
-            // Handling paired devices button contact
-            m_BtPairedDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+            // Handling paired devices button click
+            m_BtPairedDevices.Click += delegate
             {
-                // Setting background blue if button was touched
-                if (e2.Event.Action == MotionEventActions.Down)
+                if (m_BtAdapter.IsEnabled)
                 {
-                    m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                    StartActivity(typeof(PairedDevices));
                 }
-                // Starting a new activity if button was released
-                else if (e2.Event.Action == MotionEventActions.Up)
+                else
                 {
-                    if (m_BtAdapter.IsEnabled)
-                    {
-                        if (!m_Outside)
-                        {
-                            StartActivity(typeof(PairedDevices));
-                        }
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
-                    }
-                    m_BtPairedDevices.Background = m_Drawable;
-                }
-                else if (e2.Event.Action == MotionEventActions.Move)
-                {
-                    if (e2.Event.GetY() + m_BtPairedDevices.GetY() >= m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
-                       e2.Event.GetX() >= m_BtPairedDevices.Left && e2.Event.GetX() <= m_BtPairedDevices.Right)
-                    {
-                        m_Outside = false;
-                        m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.Aqua);
-                    }
-                    else
-                    {
-                        m_Outside = true;
-                        m_BtPairedDevices.Background = m_Drawable;
-                    }
+                    Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
                 }
             };
-
-
         }
 
         /// <summary>
