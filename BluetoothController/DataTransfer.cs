@@ -18,6 +18,7 @@ namespace BluetoothController
         private Controller.ControllerView m_CV;
         private Sender m_Sender;
         private byte[] m_Bytes;
+        private readonly Int16 StartByte = 10;
 
         public DataTransfer(Controller.ControllerView CV)
         {
@@ -34,6 +35,8 @@ namespace BluetoothController
         public void Write(params Int16[] args)
         {
             m_Bytes = BluetoothController.ByteConverter.ConvertToByte(args);
+            Int16[] newBytes = new Int16[11];
+            newBytes[0] = StartByte;
             m_Sender.Write(m_Bytes);
         }
     }

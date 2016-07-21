@@ -14,7 +14,7 @@ namespace BluetoothController
 {
     public class ByteConverter
     {
-        
+
         public static Int16[] ConvertFromByte(byte[] bytes)
         {
             Int16[] numbers = new Int16[bytes.Length / 2];
