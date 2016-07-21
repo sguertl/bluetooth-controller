@@ -13,7 +13,8 @@ using Android.Bluetooth;
 
 namespace BluetoothController
 {
-    [Activity(Label = "PairedDevices", Theme = "@android:style/Theme.Light.NoTitleBar")]
+    [Activity(Label = "PairedDevices", Theme = "@android:style/Theme.Light.NoTitleBar.Fullscreen",
+        ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class PairedDevices : Activity, IEstablishConnection
     {
         // Members
@@ -71,7 +72,8 @@ namespace BluetoothController
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
             // Setting background color of the ListView
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.LightGray);
+            m_ListView.DividerHeight = 14;
 
             // Adding handler when clicking on a ListViewItem
             m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) => { OnItemClick(sender, e); };

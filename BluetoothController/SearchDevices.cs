@@ -56,7 +56,8 @@ namespace BluetoothController
             m_ProgressDialog.CancelEvent += delegate { m_ProgressDialog.Dismiss(); m_BtAdapter.CancelDiscovery(); };
 
             // Setting background color of ListView
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.LightGray);
+            m_ListView.DividerHeight = 14;
 
             // Adding event when clicking on a ListViewItem 
             m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) => { OnItemClick(sender, e); };
