@@ -172,6 +172,17 @@ namespace Controller
                     }
                     break;
             }
+
+            if(!m_Inverted)
+            {
+                m_Transfer.Write((Int16)m_LeftJS.GetThrottleValue(), (Int16)m_LeftJS.GetRotationValue(), 
+                    (Int16)m_RightJS.GetForwardBackwardValue(), (Int16)m_RightJS.GetLeftRightValue());
+            }
+            else
+            {
+                m_Transfer.Write((Int16)m_RightJS.GetThrottleValue(), (Int16)m_RightJS.GetRotationValue(),
+                    (Int16)m_LeftJS.GetForwardBackwardValue(), (Int16)m_LeftJS.GetLeftRightValue());
+            }
             
             this.Invalidate();
             return true;

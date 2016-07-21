@@ -32,23 +32,20 @@
             android:textSize="16dp"
             android:id="@+id/rbThrottleRight" />
     </RadioGroup>
-
-  <TextView
-    android:id="@+id/tvDescription"
-    android:textSize="14dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:text="The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left."
-    android:layout_margin="10dp"
-    />
-
-  <Button
-    android:id="@+id/btStart"
-    android:textSize="20dp"
-    android:text="Start controller"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/tvDescription"
+        android:textSize="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left."
+        android:layout_margin="10dp" />
+    <Button
+        android:id="@+id/btStart"
+        android:textSize="20dp"
+        android:text="Start controller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp" />
 </LinearLayout>

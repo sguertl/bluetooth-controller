@@ -35,7 +35,5 @@ namespace BluetoothController
             m_Bytes = BluetoothController.ByteConverter.ConvertToByte(args);
             m_Sender.Write(m_Bytes);
         }
-
-
     }
 }
