@@ -44,8 +44,13 @@ namespace BluetoothController
 
             m_Main.GiveAMessage(action);
 
+
+            if (BluetoothAdapter.ActionDiscoveryStarted.Equals(action))
+            {
+                m_Main.StartProgress();
+            }
             // Checking if search is stopped
-            if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
+          else if (BluetoothAdapter.ActionDiscoveryFinished.Equals(action))
             {
                 // Creating a copy of the list
                 m_CopyList = new List<string>(m_List);

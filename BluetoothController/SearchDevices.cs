@@ -123,7 +123,12 @@ namespace BluetoothController
         {
             m_BtSearch.Text = "Search";
             m_ProgressDialog.Dismiss();
-            Toast.MakeText(this, "No devices nearby", ToastLength.Short).Show();
+        }
+
+        public void StartProgress()
+        {
+            m_BtSearch.Text = "Searching ...";
+            m_ProgressDialog.Show();
         }
 
         public void OnItemClick(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
