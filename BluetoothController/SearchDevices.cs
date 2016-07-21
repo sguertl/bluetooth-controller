@@ -168,13 +168,16 @@ namespace BluetoothController
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, new PairedDevices());
             connect.Start();
-            while (!ConnectedThread.m_Socket.IsConnected) { }
-            var activity2 = new Intent(this, typeof(ConnectedDevices));
-            IList<String> ll = new List<string>();
-            ll.Add(bluetoothDevice.Name);
-            ll.Add(bluetoothDevice.Address);
-            activity2.PutStringArrayListExtra("MyData", ll);
-            StartActivity(activity2);
+            while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
+            if (!ConnectedThread.m_FailedCon)
+            {
+                var activity2 = new Intent(this, typeof(ConnectedDevices));
+                IList<String> ll = new List<string>();
+                ll.Add(bluetoothDevice.Name);
+                ll.Add(bluetoothDevice.Address);
+                activity2.PutStringArrayListExtra("MyData", ll);
+                StartActivity(activity2);
+            }
         }
 
     }
