@@ -91,13 +91,20 @@ namespace BluetoothController
                 // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    if (!m_OutsideSearch)
+                    if (m_BtAdapter.IsEnabled)
                     {
-                        StartActivity(typeof(SearchDevices));    
+                        if (!m_OutsideSearch)
+                        {
+                            StartActivity(typeof(SearchDevices));
+                        }
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
                     }
                     m_BtSearchDevices.Background = m_Drawable;
                 }
-                else if(e2.Event.Action == MotionEventActions.Move)
+                else if (e2.Event.Action == MotionEventActions.Move)
                 {
                     if (e2.Event.GetY() + m_BtSearchDevices.GetY() >= m_BtSearchDevices.Top && e2.Event.GetY() + m_BtSearchDevices.GetY() <= m_BtSearchDevices.Bottom &&
                    e2.Event.GetX() >= m_BtSearchDevices.Left && e2.Event.GetX() <= m_BtSearchDevices.Right)
@@ -116,7 +123,6 @@ namespace BluetoothController
             // Handling paired devices button contact
             m_BtPairedDevices.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
             {
-                
                 // Setting background blue if button was touched
                 if (e2.Event.Action == MotionEventActions.Down)
                 {
@@ -125,14 +131,22 @@ namespace BluetoothController
                 // Starting a new activity if button was released
                 else if (e2.Event.Action == MotionEventActions.Up)
                 {
-                    if (!m_Outside)
+                    if (m_BtAdapter.IsEnabled)
                     {
-                      StartActivity(typeof(PairedDevices));
+                        if (!m_Outside)
+                        {
+                            StartActivity(typeof(PairedDevices));
+                        }
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Bluetooth has to be turned on", ToastLength.Short).Show();
                     }
                     m_BtPairedDevices.Background = m_Drawable;
-                }else if(e2.Event.Action == MotionEventActions.Move)
+                }
+                else if (e2.Event.Action == MotionEventActions.Move)
                 {
-                    if(e2.Event.GetY() + m_BtPairedDevices.GetY()  >=  m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
+                    if (e2.Event.GetY() + m_BtPairedDevices.GetY() >= m_BtPairedDevices.Top && e2.Event.GetY() + m_BtPairedDevices.GetY() <= m_BtPairedDevices.Bottom &&
                        e2.Event.GetX() >= m_BtPairedDevices.Left && e2.Event.GetX() <= m_BtPairedDevices.Right)
                     {
                         m_Outside = false;
