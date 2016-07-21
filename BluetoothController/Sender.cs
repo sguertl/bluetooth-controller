@@ -21,16 +21,8 @@ namespace BluetoothController
         private BluetoothSocket m_Socket;
         private Stream m_InputStream;
         private Stream m_OutputStream;
-        private string m_Message;
+        private static Int16[] m_Message;
         //
-
-        /// <summary>
-        /// Last Message received
-        /// </summary>
-        public string Message
-        {
-            get { return m_Message; }
-        }
 
         public Sender(BluetoothSocket socket)
         {
@@ -55,7 +47,7 @@ namespace BluetoothController
 
         public override void Run()
         {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[11];
             while (true)
             {
                 try
@@ -66,8 +58,7 @@ namespace BluetoothController
                     {
                         bytes += m_InputStream.Read(buffer, 0, buffer.Length);
                     }
-
-                    m_Message = CreateStringFromBuffer(buffer, bytes);
+                    m_Message = CheckBuffer(buffer);
                 }
                 catch (System.Exception ex)
                 {
@@ -77,14 +68,33 @@ namespace BluetoothController
             }
         }
 
-        private string CreateStringFromBuffer(byte[] buffer, int bytes)
+        private Int16[] CheckBuffer(byte[] buffer)
         {
-            string returnString = "";
-            for (int i = 0; i < bytes * 8; i++)
+            if(buffer[0] == ByteConverter.STARTBYTE)
             {
-                returnString += (char)buffer[i];
+                return ByteConverter.ConvertFromByte(buffer);
             }
-            return returnString;
+            else
+            {
+                for(int i = 1; i < buffer.Length; i++)
+                {
+                    if(buffer[i] == ByteConverter.STARTBYTE)
+                    {
+                        return ByteConverter.ConvertFromByte(GetArrayFromPosition(buffer, i));
+                    }
+                }
+            }
+            return null;
+        }
+
+        private byte[] GetArrayFromPosition(byte[] bytes, int position)
+        {
+            byte[] newBytes = new byte[bytes.Length - position];
+            for(int i = position; i < newBytes.Length; i++)
+            {
+                newBytes[i - position] = bytes[i];
+            }
+            return newBytes;
         }
 
         /// <summary>
