@@ -59,6 +59,10 @@ namespace BluetoothController
                     BluetoothDevice device = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
                     bool result = device.FetchUuidsWithSdp();
                 }
+                else
+                {
+                    m_Main.Reset();
+                }
             }
             // Checking if device was found
             else if ((BluetoothDevice.ActionFound.Equals(action)))
@@ -101,7 +105,7 @@ namespace BluetoothController
                     BluetoothDevice device2 = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(address);
                     bool result = device2.FetchUuidsWithSdp();
                 }
-                else { m_Main.SetAdapterToListView(m_CopyList);}
+                else { m_Main.SetAdapterToListView(m_CopyList); }
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
