@@ -5,36 +5,38 @@
     android:layout_height="match_parent"
     android:id="@+id/linear4">
     <TextView
-    android:textSize="24dp"
-    android:layout_marginTop="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Connected Device"
-    android:gravity="center_horizontal" />
-  <TextView
+        android:textSize="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Connected Device"
+        android:gravity="center_horizontal" />
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/DeviceName"
         android:layout_margin="10dp"
-        android:textSize="32sp"
+        android:textSize="18dp"
         android:text="1 " />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/DeviceAdresse"
         android:layout_margin="10dp"
-        android:textSize="32sp"
+        android:textSize="18dp"
         android:text="2 " />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btSteueren"
         android:layout_margin="10dp"
+        android:textSize="18dp"
         android:text="Control" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btDisconnect"
         android:layout_margin="10dp"
+        android:textSize="18dp"
         android:text="Disconnect" />
 </LinearLayout>

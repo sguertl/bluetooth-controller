@@ -135,7 +135,6 @@ namespace BluetoothController
         {
             // Displaying the chosen item on a TextView
             TextView view = (TextView)e.View;
-            view.SetBackgroundColor(Android.Graphics.Color.Blue);
             String address = view.Text.Split('\n')[1];
             
             // Creating a BluetoothDevice object
