@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Bluetooth;
+using System.Threading;
 
 namespace BluetoothController
 {
@@ -103,7 +104,7 @@ namespace BluetoothController
             // Creating a ConnectionThread object
             ConnectedThread connect = new ConnectedThread(bluetoothDevice, uuid, this);
             connect.Start();
-            
+
             while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
             if (!ConnectedThread.m_FailedCon)
             {
@@ -114,7 +115,6 @@ namespace BluetoothController
                 activity2.PutStringArrayListExtra("MyData", ll);
                 StartActivity(activity2);
             }
-
 
         }
     }
