@@ -93,5 +93,6 @@ namespace BluetoothController
             result += (UInt16)(binary[binary.Length - position - 1] == '1' ? Math.Pow(2, position) : 0);
             return position + 1 < binary.Length ? GetDecimal(binary, position + 1, result) : result;
         }
+
     }
 }

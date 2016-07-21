@@ -65,6 +65,7 @@
     <Compile Include="SearchDevices.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="DataTransfer.cs" />
+    <Compile Include="TimeEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />

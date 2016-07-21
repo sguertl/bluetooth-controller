@@ -29,12 +29,14 @@ namespace BluetoothController
         private string m_UuidString;
         private Sender m_Sender;
         private PairedDevices m_PairedDevices;
+        public static bool m_FailedCon;
 
         public ConnectedThread(BluetoothDevice device, string UUIDString)
-        {
+        { 
             // Initializing objects
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_UuidString = UUIDString;
+            m_FailedCon = false;
 
             // Converting the UUID string into a UUID object
             MY_UUID = UUID.FromString(m_UuidString); // Wandelt den UUID String in ein UUID Objekt um
@@ -71,15 +73,20 @@ namespace BluetoothController
             m_BtAdapter.CancelDiscovery();
             try
             {
+                TimeEx te = new TimeEx();
+                te.Start();
                 // Checks if device is already connected
                 if (!m_Socket.IsConnected)
                 {
                     m_Socket.Connect();
                 }
-               
+
+                te.Interrupt();
+
             }
             catch (Java.Lang.Exception connectException)
             {
+                m_FailedCon = true;
                 // Could not connect to device
                 Console.WriteLine(connectException.Message);
                 try
