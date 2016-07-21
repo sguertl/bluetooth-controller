@@ -13,27 +13,27 @@ using Java.Lang;
 
 namespace BluetoothController
 {
-   public class Interrupt : Thread
+   public class BluetoothInterrupt : Thread
     {
-        private bool m_Verfuegbar = true;
+        private bool m_Available = true;
 
         public override void Run()
         {
             while (true)
             {
-                m_Verfuegbar = true;
+                m_Available = true;
                 Thread.Sleep(10);
             }
         }
 
-        public void SetVerfuegbar(bool t)
+        public void SetAvailable(bool available)
         {
-            m_Verfuegbar = t;
+            m_Available = available;
         }
 
-        public bool GetVerfuegbar()
+        public bool IsAvailable()
         {
-            return m_Verfuegbar;
+            return m_Available;
         }
 
     }

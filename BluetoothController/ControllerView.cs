@@ -41,7 +41,7 @@ namespace Controller
         private BluetoothController.DataTransfer m_Transfer;
 
         // Interrupt
-        private BluetoothController.Interrupt m_Interrupt;
+        private BluetoothController.BluetoothInterrupt m_Interrupt;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -55,7 +55,7 @@ namespace Controller
 
             m_Transfer = new BluetoothController.DataTransfer(this);
 
-            m_Interrupt = new BluetoothController.Interrupt();
+            m_Interrupt = new BluetoothController.BluetoothInterrupt();
             m_Interrupt.Start();
 
             InitShapes();
@@ -158,17 +158,17 @@ namespace Controller
                     break;
             }
 
-            if(!m_Inverted && m_Interrupt.GetVerfuegbar())
+            if(!m_Inverted && m_Interrupt.IsAvailable())
             {
                 m_Transfer.Write((Int16)m_LeftJS.GetThrottleValue(), (Int16)m_LeftJS.GetRotationValue(), 
                     (Int16)m_RightJS.GetForwardBackwardValue(), (Int16)m_RightJS.GetLeftRightValue());
-                m_Interrupt.SetVerfuegbar(false);
+                m_Interrupt.SetAvailable(false);
             }
-            else if (m_Interrupt.GetVerfuegbar())
+            else if (m_Interrupt.IsAvailable())
             {
                 m_Transfer.Write((Int16)m_RightJS.GetThrottleValue(), (Int16)m_RightJS.GetRotationValue(),
                     (Int16)m_LeftJS.GetForwardBackwardValue(), (Int16)m_LeftJS.GetLeftRightValue());
-                m_Interrupt.SetVerfuegbar(false);
+                m_Interrupt.SetAvailable(false);
             }
             
             this.Invalidate();
