@@ -96,6 +96,7 @@ namespace BluetoothController
         /// </summary>
         public void OnSearch()
         {
+            m_BtSearch.Text = "Searching ...";
             // Removing old devices
             m_ListView.Adapter = null;
             m_Receiver.ResetList();
@@ -114,11 +115,13 @@ namespace BluetoothController
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
             m_ListView.Adapter = adapter;
             m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
+            m_BtSearch.Text = "Search";
             m_ProgressDialog.Dismiss();
         }
 
         public void Reset()
         {
+            m_BtSearch.Text = "Search";
             m_ProgressDialog.Dismiss();
             Toast.MakeText(this, "No devices nearby", ToastLength.Short).Show();
         }
