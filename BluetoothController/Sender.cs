@@ -104,12 +104,12 @@ namespace BluetoothController
         {
             try
             {
-                //  m_OutputStream.Write(bytes, 0, bytes.Length);
-                for (int i = 0; i < bytes.Length; i++)
+                m_OutputStream.Write(bytes, 0, bytes.Length);
+                /*for (int i = 0; i < bytes.Length; i++)
                 {
                     string bin = ByteConverter.GetBinary("", bytes[i]);
                     Console.WriteLine(1 + i +". Byte: " + bytes[i] + " Binär: " + bin);
-                }
+                }*/
             }
             catch (System.Exception ex)
             {
