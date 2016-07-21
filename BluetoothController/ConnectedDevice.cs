@@ -23,8 +23,6 @@ namespace BluetoothController
         private Button m_BtControl; // Button for controlling the device
         private Button m_BtDisconnect; // Button for disconnecting from the device
         private LinearLayout m_Linear;
-        private bool m_Outside = false;
-        private GradientDrawable m_Drawable;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,14 +48,6 @@ namespace BluetoothController
             m_BtControl.SetTextColor(Android.Graphics.Color.Black);
             m_BtDisconnect.SetTextColor(Android.Graphics.Color.Black);
 
-            // Setting border of buttons
-            m_Drawable = new GradientDrawable();
-            m_Drawable.SetShape(ShapeType.Rectangle);
-            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
-            m_Drawable.SetColor(Android.Graphics.Color.White);
-            m_BtControl.Background = m_Drawable;
-            m_BtDisconnect.Background = m_Drawable;
-
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);
 
@@ -71,38 +61,10 @@ namespace BluetoothController
             m_ViewAddress.SetTextColor(Android.Graphics.Color.Black);
 
             // Handling button contact
-            m_BtControl.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
-            {
-                // Changing button background if button was touched
-                if (e2.Event.Action == MotionEventActions.Down)
-                {
-                    m_BtControl.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
-                }
-                // Starting a new activity and setting default button background if
-                // button was released
-                else if (e2.Event.Action == MotionEventActions.Up)
-                {
-                    if (!m_Outside)
-                    {
-                        StartActivity(typeof(ControllerActivity));
-                    }
-                    //m_BtControl.SetBackgroundDrawable(drawable);
-                    m_BtControl.Background = m_Drawable;
-                }else if(e2.Event.Action == MotionEventActions.Move)
-                {
-                    if (e2.Event.GetY() + m_BtControl.GetY() >= m_BtControl.Top && e2.Event.GetY() + m_BtControl.GetY() <= m_BtControl.Bottom &&
-                   e2.Event.GetX() >= m_BtControl.Left && e2.Event.GetX() <= m_BtControl.Right)
-                    {
-                        m_Outside = false;
-                        m_BtControl.SetBackgroundColor(Android.Graphics.Color.Aqua);
-                    }
-                    else
-                    {
-                        m_Outside = true;
-                        m_BtControl.Background = m_Drawable;
-                    }
-                }
-            };
+           m_BtControl.Click += delegate
+           {
+               StartActivity(typeof(ControllerActivity));
+           };
         }
     }
 }

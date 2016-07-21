@@ -25,9 +25,7 @@ namespace BluetoothController
         private LinearLayout m_Linear;
         private ListView m_ListView;
         private List<string> m_Uuids; // List of UUIDs
-        private GradientDrawable m_Drawable;
         private ProgressDialog m_ProgressDialog;
-        private bool m_Outside = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,7 +44,6 @@ namespace BluetoothController
             m_Uuids = new List<string>();
             m_ListView = FindViewById<ListView>(Resource.Id.listViewSearched);
             m_BtSearch = FindViewById<Button>(Resource.Id.btSearchDevices);
-            m_Drawable = new GradientDrawable();
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear3);
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_Filter = new IntentFilter();
@@ -66,42 +63,10 @@ namespace BluetoothController
             // Setting text color of button
             m_BtSearch.SetTextColor(Android.Graphics.Color.Black);
 
-            // Setting border
-            m_Drawable.SetShape(ShapeType.Rectangle);
-            m_Drawable.SetStroke(2, Android.Graphics.Color.Black);
-            m_Drawable.SetColor(Android.Graphics.Color.White);
-            m_BtSearch.Background = m_Drawable;
-
             // Adding event when clicking the search button
-            m_BtSearch.Touch += (object sender, Android.Views.View.TouchEventArgs e2) =>
+            m_BtSearch.Click += delegate
             {
-                // Changing background if button was touched
-                if (e2.Event.Action == MotionEventActions.Down)
-                {
-                    m_BtSearch.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
-                }
-                // Starting to search when button was released
-                else if (e2.Event.Action == MotionEventActions.Up)
-                {
-                    if (!m_Outside)
-                    {
-                        OnSearch();
-                    }
-                    m_BtSearch.Background = m_Drawable;
-                }else if(e2.Event.Action == MotionEventActions.Move)
-                {
-                    if (e2.Event.GetY() + m_BtSearch.GetY() >= m_BtSearch.Top && e2.Event.GetY() + m_BtSearch.GetY() <= m_BtSearch.Bottom &&
-                   e2.Event.GetX() >= m_BtSearch.Left && e2.Event.GetX() <= m_BtSearch.Right)
-                    {
-                        m_Outside = false;
-                        m_BtSearch.SetBackgroundColor(Android.Graphics.Color.Aqua);
-                    }
-                    else
-                    {
-                        m_Outside = true;
-                        m_BtSearch.Background = m_Drawable;
-                    }
-                }
+                OnSearch();
             };
 
             // Setting activity background
