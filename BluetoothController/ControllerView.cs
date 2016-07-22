@@ -12,7 +12,7 @@ using Android.Widget;
 using Android.Graphics.Drawables;
 using Android.Graphics;
 using Android.Graphics.Drawables.Shapes;
-
+using System.Threading;
 
 namespace Controller
 {
@@ -43,6 +43,8 @@ namespace Controller
         // Interrupter
         private BluetoothController.BluetoothInterrupt m_Interrupt;
 
+        //private readonly Timer m_DispatcherTimer;
+
         public ControllerView(Context context, bool inverted) : base(context)
         {
             m_Inverted = inverted;
@@ -60,7 +62,24 @@ namespace Controller
 
             InitShapes();
             InitJoysticks();
+
+            //TimerCallback timerDelegate = new TimerCallback(Write);
+            //m_DispatcherTimer = new Timer(timerDelegate, null, 10, 100);
         }
+
+        //public void Write(object state)
+        //{
+        //    if (!m_Inverted)
+        //    {
+        //        m_Transfer.Write((Int16)m_LeftJS.ThrottleValue, (Int16)m_LeftJS.RotationValue,
+        //            (Int16)m_RightJS.ForwardBackwardValue, (Int16)m_RightJS.LeftRightValue);
+        //    }
+        //    else
+        //    {
+        //        m_Transfer.Write((Int16)m_RightJS.ThrottleValue, (Int16)m_RightJS.RotationValue,
+        //            (Int16)m_LeftJS.ForwardBackwardValue, (Int16)m_LeftJS.LeftRightValue);
+        //    }
+        //}
 
         /// <summary>
         /// Initializes the joystick and displacement shapes
