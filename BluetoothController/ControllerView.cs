@@ -43,7 +43,7 @@ namespace Controller
         // Interrupter
         private BluetoothController.BluetoothInterrupt m_Interrupt;
 
-        //private readonly Timer m_DispatcherTimer;
+        private readonly Timer m_DispatcherTimer;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -58,28 +58,28 @@ namespace Controller
             m_Transfer = new BluetoothController.DataTransfer(this);
 
             m_Interrupt = new BluetoothController.BluetoothInterrupt();
-            m_Interrupt.Start();
+            //m_Interrupt.Start();
 
             InitShapes();
             InitJoysticks();
 
-            //TimerCallback timerDelegate = new TimerCallback(Write);
-            //m_DispatcherTimer = new Timer(timerDelegate, null, 10, 100);
+            TimerCallback timerDelegate = new TimerCallback(Write);
+            m_DispatcherTimer = new Timer(timerDelegate, null, 10, 100);
         }
 
-        //public void Write(object state)
-        //{
-        //    if (!m_Inverted)
-        //    {
-        //        m_Transfer.Write((Int16)m_LeftJS.ThrottleValue, (Int16)m_LeftJS.RotationValue,
-        //            (Int16)m_RightJS.ForwardBackwardValue, (Int16)m_RightJS.LeftRightValue);
-        //    }
-        //    else
-        //    {
-        //        m_Transfer.Write((Int16)m_RightJS.ThrottleValue, (Int16)m_RightJS.RotationValue,
-        //            (Int16)m_LeftJS.ForwardBackwardValue, (Int16)m_LeftJS.LeftRightValue);
-        //    }
-        //}
+        public void Write(object state)
+        {
+            if (!m_Inverted)
+            {
+                m_Transfer.Write((Int16)m_LeftJS.ThrottleValue, (Int16)m_LeftJS.RotationValue,
+                    (Int16)m_RightJS.ForwardBackwardValue, (Int16)m_RightJS.LeftRightValue);
+            }
+            else
+            {
+                m_Transfer.Write((Int16)m_RightJS.ThrottleValue, (Int16)m_RightJS.RotationValue,
+                    (Int16)m_LeftJS.ForwardBackwardValue, (Int16)m_LeftJS.LeftRightValue);
+            }
+        }
 
         /// <summary>
         /// Initializes the joystick and displacement shapes
@@ -150,36 +150,36 @@ namespace Controller
             switch(e.Action)
             {
                 case MotionEventActions.Up:
-                    //if (m_Inverted)
-                    //{
-                    //    if(m_LeftJS.IsCentered())
-                    //    {
-                    //        UpdateOvals(m_RightJS.CenterX, e.GetY());
-                    //    }
-                    //    else
-                    //    {
-                    //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (m_RightJS.IsCentered())
-                    //    {
-                    //        UpdateOvals(m_LeftJS.CenterX, e.GetY());
-                    //    }
-                    //    else
-                    //    {
-                    //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                    //    }
-                    //}
-                    if(m_Inverted)
+                    if (m_Inverted)
                     {
-                        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                        if (m_LeftJS.IsCentered())
+                        {
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                        }
+                        else
+                        {
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                        }
                     }
                     else
                     {
-                        UpdateOvals(m_RightJS.CenterX, m_LeftJS.CenterY);
+                        if (m_RightJS.IsCentered())
+                        {
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                        }
+                        else
+                        {
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                        }
                     }
+                    //if(m_Inverted)
+                    //{
+                    //    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                    //}
+                    //else
+                    //{
+                    //    UpdateOvals(m_RightJS.CenterX, m_LeftJS.CenterY);
+                    //}
                     break;
                 //case MotionEventActions.Pointer1Up:
                 //    if (m_Inverted)
@@ -210,7 +210,7 @@ namespace Controller
                     break;
             }
 
-            WriteValues();
+            //WriteValues();
             
             this.Invalidate();
             return true;
