@@ -64,6 +64,12 @@ namespace BluetoothController
                     }
                     //checks if the message was correctly sent
                     m_Message = CheckBuffer(buffer);
+                    Console.Write("Receive: ");
+                    for(int i = 0; i < m_Message.Length; i++)
+                    {
+                        Console.Write(m_Message[i] + " ");
+                    }
+                    Console.WriteLine("");
                 }
                 catch (System.Exception ex)
                 {
@@ -110,11 +116,12 @@ namespace BluetoothController
             try
             {
                 m_OutputStream.Write(bytes, 0, bytes.Length);
-                /*for (int i = 0; i < bytes.Length; i++)
+                Console.Write("Transmit: ");
+                for (int i = 0; i < bytes.Length; i++)
                 {
-                    string bin = ByteConverter.GetBinary("", bytes[i]);
-                    Console.WriteLine(1 + i +". Byte: " + bytes[i] + " Binär: " + bin);
-                }*/
+                    Console.Write(bytes[i] + " ");
+                }
+                Console.WriteLine("");
             }
             catch (System.Exception ex)
             {
