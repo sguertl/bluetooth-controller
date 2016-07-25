@@ -58,26 +58,26 @@ namespace Controller
             m_Transfer = new BluetoothController.DataTransfer(this);
 
             m_Interrupt = new BluetoothController.BluetoothInterrupt();
-            //m_Interrupt.Start();
+            m_Interrupt.Start();
 
             InitShapes();
             InitJoysticks();
 
             TimerCallback timerDelegate = new TimerCallback(Write);
-            m_DispatcherTimer = new Timer(timerDelegate, null, 10, 100);
+            m_DispatcherTimer = new Timer(timerDelegate, null, 0, 10);
         }
 
         public void Write(object state)
         {
             if (!m_Inverted)
             {
-                m_Transfer.Write((Int16)m_LeftJS.ThrottleValue, (Int16)m_LeftJS.RotationValue,
-                    (Int16)m_RightJS.ForwardBackwardValue, (Int16)m_RightJS.LeftRightValue);
+                m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RotationValue,
+                    m_RightJS.ForwardBackwardValue, m_RightJS.LeftRightValue);
             }
             else
             {
-                m_Transfer.Write((Int16)m_RightJS.ThrottleValue, (Int16)m_RightJS.RotationValue,
-                    (Int16)m_LeftJS.ForwardBackwardValue, (Int16)m_LeftJS.LeftRightValue);
+                m_Transfer.Write(m_RightJS.ThrottleValue, m_RightJS.RotationValue,
+                    m_LeftJS.ForwardBackwardValue, m_LeftJS.LeftRightValue);
             }
         }
 
