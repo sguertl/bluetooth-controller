@@ -154,7 +154,8 @@ namespace Controller
                     {
                         if (m_LeftJS.IsCentered())
                         {
-                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_RightJS.CenterX, e.GetY());
                         }
                         else
                         {
@@ -165,7 +166,8 @@ namespace Controller
                     {
                         if (m_RightJS.IsCentered())
                         {
-                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            //UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_LeftJS.CenterX, e.GetY());
                         }
                         else
                         {
@@ -181,26 +183,62 @@ namespace Controller
                     //    UpdateOvals(m_RightJS.CenterX, m_LeftJS.CenterY);
                     //}
                     break;
-                //case MotionEventActions.Pointer1Up:
-                //    if (m_Inverted)
-                //    {
-                //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                //    }
-                //    else
-                //    {
-                //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                //    }
-                //    break;
-                //case MotionEventActions.Pointer2Up:
-                //    if (m_Inverted)
-                //    {
-                //        UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                //    }
-                //    else
-                //    {
-                //        UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                //    }
-                //    break;
+                case MotionEventActions.Pointer1Up:
+                    if (m_Inverted)
+                    {
+                        if(e.GetX(0) <= SCREEN_WIDTH / 2)
+                        {
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                        }
+                        else if(e.GetX(0) > SCREEN_WIDTH / 2)
+                        {
+                            //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_RightJS.CenterX, e.GetY(0));
+                        }
+                        //UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                    }
+                    else
+                    {
+                        if (e.GetX(0) <= SCREEN_WIDTH / 2)
+                        {
+                            //UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_LeftJS.CenterX, e.GetY(0));
+                        }
+                        else if (e.GetX(0) > SCREEN_WIDTH / 2)
+                        {
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                        }
+                        //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                    }
+                    break;
+                case MotionEventActions.Pointer2Up:
+                    if (m_Inverted)
+                    {
+                        if (e.GetX(0) <= SCREEN_WIDTH / 2)
+                        {
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                        }
+                        else if (e.GetX(0) > SCREEN_WIDTH / 2)
+                        {
+                            //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_RightJS.CenterX, e.GetY(0));
+                        }
+                        //UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                    }
+                    else
+                    {
+                        if (e.GetX(0) <= SCREEN_WIDTH / 2)
+                        {
+                            //UpdateOvals(m_LeftJS.CenterY, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_LeftJS.CenterY, e.GetY(0));
+                        }
+                        else if (e.GetX(0) > SCREEN_WIDTH / 2)
+                        {
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                        }
+                        //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                    }
+                    break;
                 default:
                     UpdateOvals(e.GetX(0), e.GetY(0));
                     if (e.PointerCount == 2)

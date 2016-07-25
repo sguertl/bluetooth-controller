@@ -146,6 +146,7 @@ namespace BluetoothController
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 BuildConnection(btDevice, m_Uuids[0]);
             }    
         }

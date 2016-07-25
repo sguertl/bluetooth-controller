@@ -27,7 +27,7 @@ namespace BluetoothController
         public static BluetoothSocket m_Socket;
         private BluetoothDevice m_Device;            
         private string m_UuidString;
-        private Sender m_Sender;
+        //private Sender m_Sender;
         private PairedDevices m_PairedDevices;
         public static bool m_FailedCon;
 
@@ -116,11 +116,11 @@ namespace BluetoothController
         /// <param name="directionLeft">Direction of the left joystick</param>
         /// <param name="powerRight">Power of the right joystick</param>
         /// <param name="directionRight">Direction of the right joystick</param>
-        public void Write(int powerLeft, int directionLeft, int powerRight, int directionRight)
-        {
-            Java.Lang.String power = new Java.Lang.String(powerLeft+":"+directionLeft+":"+powerRight+":"+directionRight);
-            m_Sender.Write(power.GetBytes());
-        }
+        //public void Write(int powerLeft, int directionLeft, int powerRight, int directionRight)
+        //{
+            //Java.Lang.String power = new Java.Lang.String(powerLeft+":"+directionLeft+":"+powerRight+":"+directionRight);
+            //m_Sender.Write(power.GetBytes());
+        //}
 
         /// <summary>
         /// Cancels an in-progress connection and closes the socket
