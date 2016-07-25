@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace BluetoothController
 {
-    [Activity(Label = "ControllerActivity", MainLauncher = true, Theme = "@android:style/Theme.Light.NoTitleBar.Fullscreen",
+    [Activity(Label = "ControllerActivity", Theme = "@android:style/Theme.Light.NoTitleBar.Fullscreen",
         ScreenOrientation = Android.Content.PM.ScreenOrientation.SensorLandscape)]
     public class ControllerActivity : Activity
     {
