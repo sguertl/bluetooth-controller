@@ -1,0 +1,21 @@
+uint8_t ReadData[11];
+  //UART_Receive(&UART_0, ReadData, 11);
+  uint64_t init_status = (UART_STATUS_t)UART_Init(&UART_0);
+  if(init_status == UART_STATUS_SUCCESS)
+  {
+	  while(1)
+      {
+		  //Receive 11 bytes of data
+		  if(UART_Receive(&UART_0, ReadData, sizeof(ReadData)) == UART_STATUS_SUCCESS)
+		  {
+			  uint8_t abc = UART_GetReceivedWord(&UART_0);
+			  int i;
+			  for(i = 0; i < sizeof(ReadData); i++)
+			  {
+				  XMC_DEBUG("Value is %d", ReadData[i]);
+			  }
+			  //Retransmit the received 11 bytes
+			  //UART_Transmit(&UART_0, ReadData, 11);
+		  }
+      }
+  }
