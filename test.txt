@@ -12,10 +12,16 @@ namespace Bluetooth
             manager = new CBCentralManager(this, null);
         }
 
+        public override void DiscoveredPeripheral(CBCentralManager central, CBPeripheral peripheral, NSDictionary advertisementData, NSNumber RSSI)
+        {
+            Console.WriteLine("Periphera: " + peripheral);
+        }
+
         public override void UpdatedState(CBCentralManager central)
         {
             String s = "";
-
+            CBUUID d = null; 
+          
             switch (central.State)
             {
                 case CBCentralManagerState.Unknown:
@@ -35,6 +41,7 @@ namespace Bluetooth
                     break;
                 case CBCentralManagerState.PoweredOn:
                     s = "Bluetooth is On";
+                    manager.ScanForPeripherals(d, options: null);
                     break;
                 default:
                     break;
