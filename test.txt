@@ -3,10 +3,10 @@ using CoreBluetooth;
 
 namespace Bluetooth
 {
-    public class Test : CBCentralManagerDelegate
+     public class Test : CBCentralManagerDelegate
     {
         private CBCentralManager manager;
-
+        private bool scanned = false;
         public Test()
         {
             manager = new CBCentralManager(this, null);
@@ -14,28 +14,22 @@ namespace Bluetooth
 
         public override void DiscoveredPeripheral(CBCentralManager central, CBPeripheral peripheral, NSDictionary advertisementData, NSNumber RSSI)
         {
-            Console.WriteLine("Periphera: " + peripheral);
+            Console.WriteLine("Periphera: " + peripheral.Identifier.AsString() + " UUID = " + peripheral.UUID + " Name = " + peripheral.Name);
         }
 
-         public override void UpdatedState(CBCentralManager central)
+        public override void UpdatedState(CBCentralManager central)
         {
             String s = "";
 
-            var state = central.State;
+            var  state = central.State;
             if (state == CBCentralManagerState.PoweredOn && !scanned)
             {
-                s = "Bluetooth is On";
-                var spp = new CBUUID[] {
-                CBUUID.FromString("00001101-0000-1000-8000-00805f9b34fb")
-            };
-                var dict = new NSDictionary();
-                central.ScanForPeripherals(spp, dict);
+                Console.WriteLine("Scanning for devices");
+                central.ScanForPeripherals((CBUUID[])null);
                 scanned = true;
             }
-            else
-            {
-
-                switch (central.State)
+            
+            switch (central.State)
                 {
                     case CBCentralManagerState.Unknown:
                         s = "Bluetooth is Unknown";
@@ -57,10 +51,9 @@ namespace Bluetooth
                         break;
                     default:
                         break;
-                }
-            }
+                }    
+                       
             Console.WriteLine(s);
-
         }
     }
 }
