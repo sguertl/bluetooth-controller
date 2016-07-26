@@ -21,6 +21,7 @@ namespace Bluetooth
         {
             String s = "";
             CBUUID d = null; 
+00001101-0000-1000-8000-00805f9b34fb
           
             switch (central.State)
             {
