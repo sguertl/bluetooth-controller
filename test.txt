@@ -17,35 +17,47 @@ namespace Bluetooth
             Console.WriteLine("Periphera: " + peripheral);
         }
 
-        public override void UpdatedState(CBCentralManager central)
+         public override void UpdatedState(CBCentralManager central)
         {
             String s = "";
-            CBUUID d = null; 
-00001101-0000-1000-8000-00805f9b34fb
-          
-            switch (central.State)
+
+            var state = central.State;
+            if (state == CBCentralManagerState.PoweredOn && !scanned)
             {
-                case CBCentralManagerState.Unknown:
-                    s = "Bluetooth is Unknown";
-                    break;
-                case CBCentralManagerState.Resetting:
-                    s = "Bluetooth is resetting";
-                    break;
-                case CBCentralManagerState.Unsupported:
-                    s = "Bluetooth is not supported";
-                    break;
-                case CBCentralManagerState.Unauthorized:
-                    s = "Bluetooth is unauthorized";
-                    break;
-                case CBCentralManagerState.PoweredOff:
-                    s = "Bluetooth is Off";
-                    break;
-                case CBCentralManagerState.PoweredOn:
-                    s = "Bluetooth is On";
-                    manager.ScanForPeripherals(d, options: null);
-                    break;
-                default:
-                    break;
+                s = "Bluetooth is On";
+                var spp = new CBUUID[] {
+                CBUUID.FromString("00001101-0000-1000-8000-00805f9b34fb")
+            };
+                var dict = new NSDictionary();
+                central.ScanForPeripherals(spp, dict);
+                scanned = true;
+            }
+            else
+            {
+
+                switch (central.State)
+                {
+                    case CBCentralManagerState.Unknown:
+                        s = "Bluetooth is Unknown";
+                        break;
+                    case CBCentralManagerState.Resetting:
+                        s = "Bluetooth is resetting";
+                        break;
+                    case CBCentralManagerState.Unsupported:
+                        s = "Bluetooth is not supported";
+                        break;
+                    case CBCentralManagerState.Unauthorized:
+                        s = "Bluetooth is unauthorized";
+                        break;
+                    case CBCentralManagerState.PoweredOff:
+                        s = "Bluetooth is Off";
+                        break;
+                    case CBCentralManagerState.PoweredOn:
+                        s = "Bluetooth is On";
+                        break;
+                    default:
+                        break;
+                }
             }
             Console.WriteLine(s);
 
