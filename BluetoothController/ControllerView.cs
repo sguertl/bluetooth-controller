@@ -58,7 +58,7 @@ namespace Controller
             m_Transfer = new BluetoothController.DataTransfer(this);
 
             m_Interrupt = new BluetoothController.BluetoothInterrupt();
-            m_Interrupt.Start();
+            //m_Interrupt.Start();
 
             InitShapes();
             InitJoysticks();
