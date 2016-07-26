@@ -19,3 +19,41 @@ uint8_t ReadData[11];
 		  }
       }
   }
+
+// ------------------------- NEW ---------------------------------
+uint8_t readData[11];
+  int16_t data[4];
+  uint64_t init_status = (UART_STATUS_t)UART_Init(&UART_0);
+  if(init_status == UART_STATUS_SUCCESS)
+  {
+	  while(1)
+      {
+		  /*int i;
+		  for (i = 0; i < 11; ++i)
+		  {
+			  ReadData[i] = UART_GetReceivedWord(&UART_0);
+		  }*/
+		  //Receive 11 bytes of data
+		  //UART_Receive(&UART_0, ReadData, 1);
+		  UART_Receive(&UART_0, readData, sizeof(readData));
+		  int startPos = 0;
+		  //for(startPos; startPos < sizeof(readData) & readData[startPos] != 10; startPos++){}
+		  int j;
+		  //for(j = 0; j < startPos; j++)
+		  for(startPos; startPos < sizeof(readData) & readData[startPos++] != 10; startPos++)
+		  {
+			uint8_t firstByte = readData[0];
+			int i;
+			for(i = 0; i < sizeof(readData) - 1; i++)
+			{
+				readData[i] = readData[i + 1];
+			}
+			readData[sizeof(readData) - 1] = firstByte;
+		  }
+
+
+		  /*if(UART_Receive(&UART_0, ReadData, sizeof(ReadData)) == UART_STATUS_SUCCESS)
+		  {
+		  }*/
+      }
+  }
