@@ -9,7 +9,6 @@ namespace BluetoothController.IOS
 	public class Test : CBCentralManagerDelegate
 	{
 		private CBCentralManager manager;
-		private bool scanned = false;
 		public Test ()
 		{
 			manager = new CBCentralManager (this, null);
@@ -45,13 +44,6 @@ namespace BluetoothController.IOS
         public override void UpdatedState (CBCentralManager central)
 		{
 			String s = "";
-
-			//var state = central.State;
-			//if (state == CBCentralManagerState.PoweredOn && !scanned) {
-			//	Console.WriteLine ("Scanning for devices");
-			
-				//scanned = true;
-			//}
 
 			switch (central.State) {
 			case CBCentralManagerState.Unknown:
