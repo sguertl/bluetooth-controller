@@ -122,6 +122,7 @@
     <Compile Include="MainViewController.designer.cs">
       <DependentUpon>MainViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyCBCentralManagerDelegate.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="PairedViewController.cs" />
     <Compile Include="PairedViewController.designer.cs">
