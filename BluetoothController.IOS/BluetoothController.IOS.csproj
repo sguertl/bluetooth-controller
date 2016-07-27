@@ -94,6 +94,7 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -109,10 +110,29 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ViewController.cs" />
-    <Compile Include="ViewController.designer.cs">
-      <DependentUpon>ViewController.cs</DependentUpon>
+    <Compile Include="MainViewController.cs" />
+    <Compile Include="MainViewController.designer.cs">
+      <DependentUpon>MainViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Test.cs" />
+    <Compile Include="PairedViewController.cs" />
+    <Compile Include="PairedViewController.designer.cs">
+      <DependentUpon>PairedViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchViewController.cs" />
+    <Compile Include="SearchViewController.designer.cs">
+      <DependentUpon>SearchViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControllerViewController.cs" />
+    <Compile Include="ControllerViewController.designer.cs">
+      <DependentUpon>ControllerViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControllerView.cs" />
+    <Compile Include="ControllerView_.cs" />
+    <Compile Include="ControllerView_.designer.cs">
+      <DependentUpon>ControllerView_.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Joystick.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
