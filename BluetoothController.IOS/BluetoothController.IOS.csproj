@@ -135,7 +135,6 @@
     <Compile Include="ControllerViewController.designer.cs">
       <DependentUpon>ControllerViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="ControllerView.cs" />
     <Compile Include="ControllerView_.cs" />
     <Compile Include="ControllerView_.designer.cs">
       <DependentUpon>ControllerView_.cs</DependentUpon>
