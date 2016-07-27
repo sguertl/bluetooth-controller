@@ -14,9 +14,7 @@ namespace BluetoothController.IOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
-			View.AddSubview (controllerView);
-		}
+					}
 
 		public override bool ShouldAutorotate ()
 		{
