@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UIKit;
+using ExternalAccessory;
 
 namespace BluetoothController.IOS
 {
@@ -102,6 +103,15 @@ namespace BluetoothController.IOS
         public void DisconnectPeripheral(CBPeripheral peripheral)
         {
             mCentralManager.CancelPeripheralConnection(peripheral);
+            myManagerDelegate = new MyCBCentralManagerDelegate();
+            var managerDelegate = new CBCentralManager(myManagerDelegate, DispatchQueue.CurrentQueue);
+            managerDelegate.ScanForPeripherals((CBUUID[])null);
+
+			/*CBCentralManager manager = new CBCentralManager ();
+			manager.ScanForPeripherals (CBUUID.FromString("713D0003-503E-4C75-BA94-3148F18D941E"));
+			manager.DiscoveredPeripheral += delegate {
+				Console.WriteLine ("Discovered");
+			};*/
         }
 
 		public override bool ShouldAutorotate ()
