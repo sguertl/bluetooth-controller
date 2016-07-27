@@ -122,11 +122,11 @@ namespace BluetoothController
                 }*/
                 m_OutputStream.Write(bytes, 0, bytes.Length);
                 //TEST
-                /*for (int i = 0; i < bytes.Length; i++)
+                for (int i = 0; i < bytes.Length; i++)
                 {
                     Console.WriteLine(bytes[i] + " ");
                 }
-                Console.WriteLine("");*/
+                Console.WriteLine("");
             }
             catch (System.Exception ex)
             {
