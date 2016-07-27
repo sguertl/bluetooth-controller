@@ -198,7 +198,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue id="4212" destination="4058" kind="show"/>
+                                    <segue id="4212" destination="4058" kind="show" animates="NO"/>
                                 </connections>
                                 <constraints>
                                     <constraint id="688" firstItem="675" firstAttribute="height" constant="39">
@@ -349,7 +349,7 @@
                         <viewControllerLayoutGuide type="bottom" id="4056"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4059" customClass="ControllerView">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

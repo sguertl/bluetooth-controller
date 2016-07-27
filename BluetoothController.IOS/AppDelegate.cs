@@ -20,7 +20,8 @@ namespace BluetoothController.IOS
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
 
-			Test t = new Test ();
+			BluetoothLEManager mgr = new BluetoothLEManager ();
+			//mgr.BeginScanningForDevices ();
 
 			return true;
 		}
