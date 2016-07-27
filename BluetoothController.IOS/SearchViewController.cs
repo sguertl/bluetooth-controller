@@ -21,11 +21,11 @@ namespace BluetoothController.IOS
 
         public SearchViewController (IntPtr handle) : base (handle)
         {
-			mCentralManager = new CBCentralManager (DispatchQueue.CurrentQueue);
+			mCentralManager = new CBCentralManager (); //(DispatchQueue.CurrentQueue);
 
 			mDiscoveredDevices = new List<CBPeripheral> ();
 			mCentralManager.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
-				Console.WriteLine ("Discovered Peripherel " + e.Peripheral.Name);
+				Console.WriteLine ("Discovered Peripheral " + e.Peripheral.Name);
 				mDiscoveredDevices.Add (e.Peripheral);
 				DeviceDiscovered (this, e);
 			};
