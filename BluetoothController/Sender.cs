@@ -124,7 +124,7 @@ namespace BluetoothController
                 //TEST
                 for (int i = 0; i < bytes.Length; i++)
                 {
-                    Console.WriteLine(bytes[i] + " ");
+                    Console.Write(bytes[i] + " ");
                 }
                 Console.WriteLine("");
             }

@@ -48,9 +48,11 @@ namespace BluetoothController
         /// </summary>
         private static bool CheckFcsEquality(byte[] bytes)
         {
-            UInt16 calculatedFcs = GetOneComplementOfBinary(GetBinary("", GetCheckSequence(bytes)), 0, 0);
-            UInt16 messageFcs = GetDecimal(GetBinary("", bytes[bytes.Length - 1]) + GetBinary("", bytes[bytes.Length - 2]), 0, 0);
-            return calculatedFcs == messageFcs;
+            UInt16 oneComplement = GetCheckSequence(bytes);
+            oneComplement += 1;
+            byte firstByte = (byte)oneComplement;
+            byte secondByte = (byte)(oneComplement >> 8);
+            return (firstByte == bytes[bytes.Length - 2] && secondByte == bytes[bytes.Length - 1]);
         }
 
         /// <summary>
@@ -76,7 +78,8 @@ namespace BluetoothController
             }
 
             // Calculate Frame Check Sequence (2 Bytes)
-            UInt16 fcs = GetOneComplementOfBinary(GetBinary("", GetCheckSequence(bytes)), 0, 0);
+            UInt16 fcs = GetCheckSequence(bytes);
+            fcs += 1;
             bytes[9] = (byte)fcs;
             bytes[10] = (byte)(fcs >> 8);
 
@@ -108,7 +111,7 @@ namespace BluetoothController
         public static UInt16 GetOneComplementOfBinary(string binary, int position, UInt16 result)
         {
             result += (UInt16)(binary[binary.Length - position - 1] == '0' ? Math.Pow(2, position) : 0);
-            return position + 1 < binary.Length ? GetDecimal(binary, position + 1, result) : result;
+            return position + 1 < binary.Length ? GetOneComplementOfBinary(binary, position + 1, result) : result;
         }
 
         /// <summary>
