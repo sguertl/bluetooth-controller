@@ -27,13 +27,12 @@ namespace BluetoothController.IOS
             btnSearch.TouchUpInside += OnSearchDevices;
 		}
 
-<<<<<<< HEAD
         private void OnSearchDevices(object sender, EventArgs args)
         {
             myManagerDelegate = new MyCBCentralManagerDelegate();
             var managerDelegate = new CBCentralManager(myManagerDelegate, DispatchQueue.CurrentQueue);
         }
-=======
+
 		public override bool ShouldAutorotate ()
 		{
 			return false;
@@ -48,6 +47,5 @@ namespace BluetoothController.IOS
 		{
 			return UIInterfaceOrientationMask.Portrait;
 		}
->>>>>>> origin/master
     }
 }

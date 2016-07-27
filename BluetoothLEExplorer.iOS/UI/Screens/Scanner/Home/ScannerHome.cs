@@ -4,7 +4,7 @@ using Foundation;
 using CoreBluetooth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MBProgressHUD;
+//using MBProgressHUD;
 
 namespace BluetoothLEExplorer.iOS
 {
@@ -13,7 +13,7 @@ namespace BluetoothLEExplorer.iOS
 	{
 		ScanButton scanButton;
 		BleDeviceTableSource tableSource;
-		MTMBProgressHUD connectingDialog;
+		//MTMBProgressHUD connectingDialog;
 		DeviceDetailsScreen detailsScreen;
 
 		public ScannerHome (IntPtr handle)
@@ -54,8 +54,8 @@ namespace BluetoothLEExplorer.iOS
 			StopScanning ();
 
 			// show our connecting... overlay
-			connectingDialog.LabelText = string.Format("Connecting to {0}", e.SelectedPeripheral.Name);
-			connectingDialog.Show (true);
+			//connectingDialog.LabelText = string.Format("Connecting to {0}", e.SelectedPeripheral.Name);
+			//connectingDialog.Show (true);
 
 			// when the peripheral connects, load our details screen
 			BluetoothLEManager.Current.DeviceConnected += HandleDeviceConnected;
@@ -78,7 +78,7 @@ namespace BluetoothLEExplorer.iOS
 
 		void HandleDeviceConnected (object sender, CBPeripheralEventArgs e)
 		{
-			connectingDialog.Hide (false);
+			//connectingDialog.Hide (false);
 
 			detailsScreen = Storyboard.InstantiateViewController ("DeviceDetailsScreen") as DeviceDetailsScreen;
 			detailsScreen.ConnectedPeripheral = e.Peripheral;
@@ -102,11 +102,11 @@ namespace BluetoothLEExplorer.iOS
 			};
 
 			// add our 'connecting' overlay
-			connectingDialog = new MTMBProgressHUD (View) {
-				LabelText = "Connecting to device...",
-				RemoveFromSuperViewOnHide = false
-			};
-			View.AddSubview (connectingDialog);
+			//connectingDialog = new MTMBProgressHUD (View) {
+			//	LabelText = "Connecting to device...",
+			//	RemoveFromSuperViewOnHide = false
+			//};
+			//View.AddSubview (connectingDialog);
 		}
 	}
 }
