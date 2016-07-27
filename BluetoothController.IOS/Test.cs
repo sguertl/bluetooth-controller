@@ -1,6 +1,7 @@
 ﻿using System;
 using CoreBluetooth;
 using Foundation;
+using System.Timers;
 
 namespace BluetoothController.IOS
 {
@@ -16,18 +17,40 @@ namespace BluetoothController.IOS
 
 		public override void DiscoveredPeripheral (CBCentralManager central, CBPeripheral peripheral, NSDictionary advertisementData, NSNumber RSSI)
 		{
+            Console.WriteLine("1");
 			Console.WriteLine ("Peripheral: " + peripheral.Identifier.AsString () + " UUID = " + peripheral.UUID + " Name = " + peripheral.Name);
 		}
 
-		public override void UpdatedState (CBCentralManager central)
+        public override void ConnectedPeripheral(CBCentralManager central, CBPeripheral peripheral)
+        {
+            Console.WriteLine("2");
+        }
+
+        public override void DisconnectedPeripheral(CBCentralManager central, CBPeripheral peripheral, NSError error)
+        {
+            Console.WriteLine("3");
+        }
+
+        public override void FailedToConnectPeripheral(CBCentralManager central, CBPeripheral peripheral, NSError error)
+        {
+            Console.WriteLine("4");
+        }
+
+        public override void RetrievedConnectedPeripherals(CBCentralManager central, CBPeripheral[] peripherals)
+        {
+            Console.WriteLine("5");
+        }
+
+
+        public override void UpdatedState (CBCentralManager central)
 		{
 			String s = "";
 
 			//var state = central.State;
 			//if (state == CBCentralManagerState.PoweredOn && !scanned) {
 			//	Console.WriteLine ("Scanning for devices");
-				central.ScanForPeripherals ((CBUUID [])null);
-				scanned = true;
+			
+				//scanned = true;
 			//}
 
 			switch (central.State) {
@@ -48,7 +71,10 @@ namespace BluetoothController.IOS
 				break;
 			case CBCentralManagerState.PoweredOn:
 				s = "Bluetooth is On";
-				break;
+                    central.ScanForPeripherals((CBUUID[])null);
+                    var timer = new Timer(30 * 1000);
+                    timer.Elapsed += (sender, e) => central.StopScan();
+                    break;
 			default:
 				break;
 			}
