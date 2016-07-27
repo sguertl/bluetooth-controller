@@ -27,6 +27,22 @@ namespace BluetoothController.IOS
 			base.DidReceiveMemoryWarning ();
 			// Release any cached data, images, etc that aren't in use.
 		}
+
+		public override bool ShouldAutorotate ()
+		{
+			return false;
+		}
+
+		public override UIInterfaceOrientation PreferredInterfaceOrientationForPresentation ()
+		{
+			return UIInterfaceOrientation.Portrait;
+		}
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
+		{
+			return UIInterfaceOrientationMask.Portrait;
+		}
+
 		/*
 		public override void PrepareForSegue (UIStoryboardSegue segue, Foundation.NSObject sender)
 		{
