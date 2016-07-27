@@ -31,6 +31,7 @@ namespace BluetoothController.IOS
         {
             myManagerDelegate = new MyCBCentralManagerDelegate();
             var managerDelegate = new CBCentralManager(myManagerDelegate, DispatchQueue.CurrentQueue);
+            managerDelegate.ScanForPeripherals((CBUUID[])null);
         }
 
 		public override bool ShouldAutorotate ()
