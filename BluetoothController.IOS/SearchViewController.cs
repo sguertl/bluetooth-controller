@@ -59,18 +59,6 @@ namespace BluetoothController.IOS
 
 		public bool isScanning { get; set; }
 
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
-			// Perform any additional setup after loading the view, typically from a nib.
-			btnSearch.Layer.CornerRadius = 5;
-			btnSearch.Layer.MasksToBounds = true;
-
-			btnBackToMain.Layer.CornerRadius = 5;
-			btnBackToMain.Layer.MasksToBounds = true;
-            btnSearch.TouchUpInside += OnSearchDevices;
-		}
-
         private void OnSearchDevices(object sender, EventArgs args)
         {
 			BeginScanningForDevices ();
@@ -103,6 +91,18 @@ namespace BluetoothController.IOS
 		public void DisconnectPeripheral (CBPeripheral peripheral)
 		{
 			mCentralManager.CancelPeripheralConnection (peripheral);
+		}
+
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
+			// Perform any additional setup after loading the view, typically from a nib.
+			btnSearch.Layer.CornerRadius = 5;
+			btnSearch.Layer.MasksToBounds = true;
+
+			btnBackToMain.Layer.CornerRadius = 5;
+			btnBackToMain.Layer.MasksToBounds = true;
+			btnSearch.TouchUpInside += OnSearchDevices;
 		}
 
 		public override bool ShouldAutorotate ()
