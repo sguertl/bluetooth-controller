@@ -34,43 +34,43 @@ namespace Controller
 
         // Center x of joystick
         private float m_CenterX; 
-        public float CenterX { get { return m_CenterX; } set { m_CenterX = value; } }
+        public float CenterX { get { return m_CenterX; } private set { m_CenterX = value; } }
 
         // Center y of joystick
         private float m_CenterY; 
-        public float CenterY { get { return m_CenterY; } set { m_CenterY = value; } }
+        public float CenterY { get { return m_CenterY; } private set { m_CenterY = value; } }
 
         // Current power (= displacement) of the joystick; maximum is 1 (= 100 %)
         private int m_Power; 
-        public int Power { get { return GetPower(); } set { m_Power = value; } }
+        public int Power { get { return GetPower(); } private set { m_Power = value; } }
 
         // Current angle of the joystick
         private float m_Angle; 
-        public float Angle { get { return GetAngle(); } set { m_Angle = value; } }
+        public float Angle { get { return GetAngle(); } private set { m_Angle = value; } }
 
         // Current direction of the joystick
         private int m_Direction;
-        public int Direction { get { return GetDirection(); } set { m_Direction = value; } }
+        public int Direction { get { return GetDirection(); } private set { m_Direction = value; } }
 
         // Vector length
         private float m_Abs;
-        public float Abs { get { return GetAbs(); } set { m_Abs = value; } }
+        public float Abs { get { return GetAbs(); } private set { m_Abs = value; } }
 
         // Throttle value of the stick
         private Int16 m_ThrottleValue;
-        public Int16 ThrottleValue { get { return GetThrottleValue(); } set { m_ThrottleValue = value; } }
+        public Int16 ThrottleValue { get { return GetThrottleValue(); } private set { m_ThrottleValue = value; } }
 
         // Rotation value of the stick
         private Int16 m_RotationValue;
-        public Int16 RotationValue { get { return GetRotationValue(); } set { m_RotationValue = value; } }
+        public Int16 RotationValue { get { return GetRotationValue(); } private set { m_RotationValue = value; } }
 
         // Forward/Backward value of the stick
         private Int16 m_ForwardBackwardValue;
-        public Int16 ForwardBackwardValue { get { return GetForwardBackwardValue(); } set { m_ForwardBackwardValue = value; } }
+        public Int16 ForwardBackwardValue { get { return GetForwardBackwardValue(); } private set { m_ForwardBackwardValue = value; } }
 
         // Left/Right value of the stick
         private Int16 m_LeftRightValue;
-        public Int16 LeftRightValue { get { return GetLeftRightValue(); } set { m_LeftRightValue = value; } }
+        public Int16 LeftRightValue { get { return GetLeftRightValue(); } private set { m_LeftRightValue = value; } }
 
 
         // ----------------------------- CTOR ----------------------------------
