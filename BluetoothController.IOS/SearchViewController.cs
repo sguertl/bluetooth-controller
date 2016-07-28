@@ -21,14 +21,17 @@ namespace BluetoothController.IOS
 
         public SearchViewController (IntPtr handle) : base (handle)
         {
-			mCentralManager = new CBCentralManager (); //(DispatchQueue.CurrentQueue);
+			mCentralManager = new CBCentralManager (DispatchQueue.CurrentQueue);
 
 			mDiscoveredDevices = new List<CBPeripheral> ();
 			mCentralManager.DiscoveredPeripheral += (object sender, CBDiscoveredPeripheralEventArgs e) => {
-				Console.WriteLine ("Discovered Peripheral " + e.Peripheral.Name);
+				Console.WriteLine ("Discovered Peripheral " + e.Peripheral.Identifier);
 				mDiscoveredDevices.Add (e.Peripheral);
 				DeviceDiscovered (this, e);
 			};
+
+			// 55BC208A-5FB5-5619-FDF9-106345844366
+			// 55BC208A-5FB5-5619-FDF9-106345844366
 
 			mCentralManager.UpdatedState += (object sender, EventArgs e) => {
 				Console.WriteLine ("UpdatedState: " + mCentralManager.State);
@@ -38,6 +41,7 @@ namespace BluetoothController.IOS
 				Console.WriteLine ("Connected Peripheral: " + e.Peripheral.Name);
 				if (!mDiscoveredDevices.Contains (e.Peripheral)) {
 					mDiscoveredDevices.Add (e.Peripheral);
+					mCentralManager.ConnectPeripheral (e.Peripheral, (NSDictionary) null);
 				}
 				DeviceConnected (sender, e);
 			};
@@ -74,10 +78,12 @@ namespace BluetoothController.IOS
 
 		public async Task BeginScanningForDevices ()
 		{
-			Console.WriteLine ("Beginn scanning");
+			Console.WriteLine ("Begin scanning");
 			mDiscoveredDevices.Clear ();
 			isScanning = true;
-			mCentralManager.ScanForPeripherals (peripheralUuids: null);
+			//mCentralManager.ScanForPeripherals (peripheralUuids: null);
+			mCentralManager.ScanForPeripherals ((CBUUID [])null);
+			//mCentralManager.ScanForPeripherals (new[] { UUID });
 
 			await Task.Delay (10000);
 

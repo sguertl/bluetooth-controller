@@ -17,13 +17,16 @@ namespace BluetoothController.IOS
 		public override void DiscoveredPeripheral (CBCentralManager central, CBPeripheral peripheral, NSDictionary advertisementData, NSNumber RSSI)
 		{
             Console.WriteLine("1");
-			Console.WriteLine ("Peripheral: " + peripheral.Identifier.AsString () + " UUID = " + peripheral.UUID + " Name = " + peripheral.Name);
+			Console.WriteLine ("Peripheral: " + peripheral.Identifier.AsString () + " UUID = " + peripheral.Identifier + " Name = " + peripheral.Name);
             StopS("Methode DiscoveredPeripheral");
+			Console.WriteLine ("Start connecting");
+			manager.ConnectPeripheral (peripheral, (PeripheralConnectionOptions) null);
 
         }
 
         public override void ConnectedPeripheral(CBCentralManager central, CBPeripheral peripheral)
         {
+			Console.WriteLine ("P: " + peripheral.Name);
             Console.WriteLine("2");
         }
 
@@ -82,6 +85,7 @@ namespace BluetoothController.IOS
             Console.WriteLine("From " + d);
             manager.StopScan();
             Console.WriteLine("Scan is stopped!!!");
+
         }
 
 	}

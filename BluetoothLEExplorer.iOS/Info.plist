@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.Xamarin.Robotics.BluetoothLEExplorer.iOS</string>
+	<string>com.sguertl.bluetooth-controller</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -26,6 +26,8 @@
 		<string>Icon-Small-40@2x</string>
 	</array>
 	<key>CFBundleDisplayName</key>
+	<string>BLE Explr.</string>
+	<key>CFBundleName</key>
 	<string>BLE Explr.</string>
 </dict>
 </plist>

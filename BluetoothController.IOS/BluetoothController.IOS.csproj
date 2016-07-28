@@ -74,7 +74,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: sebastianguertl@icloud.com (24HL4TYCFP)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>true</MtouchFastDev>
@@ -86,6 +86,8 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
+    <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
+    <CodesignProvision>6e7e92e5-4386-4577-9c95-c1407eacf303</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
