@@ -18,7 +18,9 @@ namespace BluetoothController.IOS
 		{
             Console.WriteLine("1");
 			Console.WriteLine ("Peripheral: " + peripheral.Identifier.AsString () + " UUID = " + peripheral.UUID + " Name = " + peripheral.Name);
-		}
+            manager.StopScan();
+
+        }
 
         public override void ConnectedPeripheral(CBCentralManager central, CBPeripheral peripheral)
         {
@@ -63,9 +65,9 @@ namespace BluetoothController.IOS
 				break;
 			case CBCentralManagerState.PoweredOn:
 				s = "Bluetooth is On";
-                    central.ScanForPeripherals((CBUUID[])null);
+                    manager.ScanForPeripherals((CBUUID[])null);
                     var timer = new Timer(30 * 1000);
-                    timer.Elapsed += (sender, e) => central.StopScan();
+                    timer.Elapsed += (sender, e) => StopS();
                     break;
 			default:
 				break;
@@ -73,5 +75,13 @@ namespace BluetoothController.IOS
 
 			Console.WriteLine (s);
 		}
+
+
+        public void StopS()
+        {
+            manager.StopScan();
+            Console.WriteLine("Scan is stopped!!!");
+        }
+
 	}
 }
