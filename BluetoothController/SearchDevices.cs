@@ -63,7 +63,8 @@ namespace BluetoothController
             m_ListView.ItemClick += (object sender, Android.Widget.AdapterView.ItemClickEventArgs e) => { OnItemClick(sender, e); };
        
             // Setting text color of button
-            m_BtSearch.SetTextColor(Android.Graphics.Color.Black);
+            m_BtSearch.SetBackgroundColor(Android.Graphics.Color.DeepSkyBlue);
+            m_BtSearch.SetTextColor(Android.Graphics.Color.White);
 
             // Adding event when clicking the search button
             m_BtSearch.Click += delegate
@@ -116,7 +117,8 @@ namespace BluetoothController
         {
             ArrayAdapter<String> adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, l);
             m_ListView.Adapter = adapter;
-            m_ListView.SetBackgroundColor(Android.Graphics.Color.Gray);
+            m_ListView.SetBackgroundColor(Android.Graphics.Color.WhiteSmoke);
+            m_ListView.DividerHeight = 14;
             m_BtSearch.Text = "Search";
             m_ProgressDialog.Dismiss();
         }

@@ -63,8 +63,10 @@ namespace BluetoothController
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear);
 
             // Setting text color of the buttons
-            m_BtPairedDevices.SetTextColor(Android.Graphics.Color.Black);
-            m_BtSearchDevices.SetTextColor(Android.Graphics.Color.Black);
+            m_BtPairedDevices.SetBackgroundColor(Android.Graphics.Color.DeepSkyBlue);
+            m_BtSearchDevices.SetBackgroundColor(Android.Graphics.Color.DeepSkyBlue);
+            m_BtPairedDevices.SetTextColor(Android.Graphics.Color.White);
+            m_BtSearchDevices.SetTextColor(Android.Graphics.Color.White);
             
             // Setting activity background
             m_Linear.SetBackgroundColor(Android.Graphics.Color.White);

@@ -19,6 +19,12 @@
         android:layout_margin="10dp"
         android:textSize="18dp"
         android:text="Search" />
+    <TextView
+        android:textSize="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tap on a device to connect"
+        android:gravity="center_horizontal" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

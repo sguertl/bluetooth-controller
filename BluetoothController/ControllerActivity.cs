@@ -43,6 +43,9 @@ namespace BluetoothController
             m_RbThrottleLeft.Click += OnThrottleLeftClick;
             m_RbThrottleRight.Click += OnThrottleRightClick;
 
+            m_BtStart.SetBackgroundColor(Android.Graphics.Color.DeepSkyBlue);
+            m_BtStart.SetTextColor(Android.Graphics.Color.White);
+
             m_BtStart.Click += OnStartController;
 
             var conTimerDelegate = new TimerCallback(CheckConnection);

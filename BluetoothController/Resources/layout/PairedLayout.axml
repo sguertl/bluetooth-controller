@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         android:text="Paired devices"
         android:gravity="center_horizontal" />
+    <TextView
+        android:textSize="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tap on a device to connect"
+        android:gravity="center_horizontal" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
