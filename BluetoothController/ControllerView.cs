@@ -111,8 +111,7 @@ namespace Controller
             paintRadius.Color = Color.LightGray;
             //paintRadius.SetARGB(255, 230, 230, 230);
             //paintRadius.SetStyle(Paint.Style.Fill);
-            paintRadius.SetStyle(Paint.Style.FillAndStroke);
-            paintRadius.StrokeWidth = 10;
+            paintRadius.SetStyle(Paint.Style.Fill);
             // Shape for left displacement 
             m_ShapeRadiusLeft = new ShapeDrawable(new OvalShape());
             m_ShapeRadiusLeft.Paint.Set(paintRadius);
@@ -171,16 +170,16 @@ namespace Controller
                 (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS);
 
             m_ShapeBorderRadiusLeft.SetBounds (
-                (int)m_LeftJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 7,
-                (int)m_LeftJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 7,
-                (int)m_LeftJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 7,
-                (int)m_LeftJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 7);
+                (int)m_LeftJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
+                (int)m_LeftJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
+                (int)m_LeftJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
+                (int)m_LeftJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 2);
 
             m_ShapeBorderRadiusRight.SetBounds (
-                (int)m_RightJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 7,
-                (int)m_RightJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 7,
-                (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 7,
-                (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 7);
+                (int)m_RightJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
+                (int)m_RightJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
+                (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
+                (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 2);
         }
 
         /// <summary>
@@ -432,7 +431,7 @@ namespace Controller
         private void SetBoundsForLeftStick(int left, int top, int right, int bottom)
         {
             m_ShapeStickLeft.SetBounds(left, top, right, bottom);
-            m_ShapeBorderStickLeft.SetBounds(left - 3, top - 3, right + 3, bottom + 3);
+            m_ShapeBorderStickLeft.SetBounds(left - 2, top - 2, right + 2, bottom + 2);
         }
 
         /// <summary>
@@ -445,7 +444,7 @@ namespace Controller
         private void SetBoundsForRightStick(int left, int top, int right, int bottom)
         {
             m_ShapeStickRight.SetBounds(left, top, right, bottom);
-            m_ShapeBorderStickRight.SetBounds(left - 3, top - 3, right + 3, bottom + 3);
+            m_ShapeBorderStickRight.SetBounds(left - 2, top - 2, right + 2, bottom + 2);
         }
 
         /// <summary>
