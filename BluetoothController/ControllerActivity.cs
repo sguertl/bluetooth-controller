@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -27,6 +27,8 @@ namespace BluetoothController
         private readonly String TEXT_LEFT = "The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left.";
         private readonly String TEXT_RIGHT = "The left joystick will be used to move forward, backwards, to the right and to the left. The right joystick will be used to regulate the throttle and rotation.";
 
+        private Timer m_ConDispatcherTimer;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -42,6 +44,9 @@ namespace BluetoothController
             m_RbThrottleRight.Click += OnThrottleRightClick;
 
             m_BtStart.Click += OnStartController;
+
+            var conTimerDelegate = new TimerCallback(CheckConnection);
+            //m_ConDispatcherTimer = new Timer(conTimerDelegate, null, 1000, 1000);
         }
 
         private void OnThrottleRightClick(object sender, EventArgs e)
@@ -74,6 +79,21 @@ namespace BluetoothController
             {
                 m_Inverted = true;
                 m_TvDescription.Text = TEXT_RIGHT;
+            }
+        }
+
+        private void CheckConnection(object state)
+        {
+            if (!ConnectedThread.m_Socket.IsConnected)
+            {
+                AlertDialog alert = new AlertDialog.Builder(this).Create();
+                alert.SetTitle("Connection lost");
+                alert.SetMessage("Connection to device lost. Please reconnect.");
+                alert.SetButton("Ok", (s, ev) => {});
+                alert.Show();
+                var intent = new Intent(this, typeof(MainActivity))
+                    .SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(intent);
             }
         }
     }

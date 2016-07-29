@@ -42,7 +42,7 @@ namespace BluetoothController
             // Getting specific event
             String action = intent.Action;
 
-            m_Main.GiveAMessage(action);
+            //m_Main.GiveAMessage(action);
 
             if (BluetoothAdapter.ActionDiscoveryStarted.Equals(action))
             {
@@ -80,7 +80,7 @@ namespace BluetoothController
 
                 // Add the name and address to an array adapter to show in a Toast
                 String derp = device.Name + " - " + device.Address;
-                m_Main.GiveAMessage(derp);
+                //m_Main.GiveAMessage(derp);
             }
             else if (BluetoothDevice.ActionUuid.Equals(action))
             {

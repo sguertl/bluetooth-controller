@@ -51,8 +51,8 @@ namespace Controller
         // Interrupter
         private BluetoothController.BluetoothInterrupt m_Interrupt;
 
-        // Timer for sending data
-        private readonly Timer m_DispatcherTimer;
+        // Timer for sending data and checking BT connection
+        private readonly Timer m_WriteDispatcherTimer;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -61,33 +61,16 @@ namespace Controller
             SetOnTouchListener(this);
             SetBackgroundColor(Color.White);
 
-            SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels; //ConvertPixelsToDp(metrics.WidthPixels);
-            SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels; //ConvertPixelsToDp(metrics.HeightPixels);
+            SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels;
+            SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels;
 
             m_Transfer = new BluetoothController.DataTransfer(this);
-
-            m_Interrupt = new BluetoothController.BluetoothInterrupt();
-            //m_Interrupt.Start();
 
             InitShapes();
             InitJoysticks();
 
-            TimerCallback timerDelegate = new TimerCallback(Write);
-            m_DispatcherTimer = new Timer(timerDelegate, null, 0, 10);
-        }
-
-        public void Write(object state)
-        {
-            if (!m_Inverted)
-            {
-                m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RotationValue,
-                    m_RightJS.ForwardBackwardValue, m_RightJS.LeftRightValue);
-            }
-            else
-            {
-                m_Transfer.Write(m_RightJS.ThrottleValue, m_RightJS.RotationValue,
-                    m_LeftJS.ForwardBackwardValue, m_LeftJS.LeftRightValue);
-            }
+            var sendTimerDelegate = new TimerCallback(Write);
+            m_WriteDispatcherTimer = new Timer(sendTimerDelegate, null, 0, 10);
         }
 
         /// <summary>
@@ -169,13 +152,13 @@ namespace Controller
                 (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS,
                 (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS);
 
-            m_ShapeBorderRadiusLeft.SetBounds (
+            m_ShapeBorderRadiusLeft.SetBounds(
                 (int)m_LeftJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
                 (int)m_LeftJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
                 (int)m_LeftJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
                 (int)m_LeftJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 2);
 
-            m_ShapeBorderRadiusRight.SetBounds (
+            m_ShapeBorderRadiusRight.SetBounds(
                 (int)m_RightJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
                 (int)m_RightJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
                 (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
@@ -201,15 +184,6 @@ namespace Controller
                         {
                             UpdateOvals(m_RightJS.CenterX, e.GetY());
                         }
-                        /*if (m_LeftJS.IsCentered())
-                        {
-                            //UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
-                            UpdateOvals(m_RightJS.CenterX, e.GetY());
-                        }
-                        else
-                        {
-                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                        }*/
                     }
                     else
                     {
@@ -221,51 +195,68 @@ namespace Controller
                         {
                             UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
                         }
-                        /*if (m_RightJS.IsCentered())
-                        {
-                            //UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
-                            UpdateOvals(m_LeftJS.CenterX, e.GetY());
-                        }
-                        else
-                        {
-                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
-                        }*/
                     }
-                    //if(m_Inverted)
-                    //{
-                    //    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                    //}
-                    //else
-                    //{
-                    //    UpdateOvals(m_RightJS.CenterX, m_LeftJS.CenterY);
-                    //}
                     break;
                 case MotionEventActions.Pointer1Up:
-                    Console.WriteLine("UP1: " + e.PointerCount);
                     if (m_Inverted)
                     {
-                        if (e.GetX() <= SCREEN_WIDTH / 2)
+                        for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
-                        }
-                        else
-                        {
-                            UpdateOvals(m_RightJS.CenterX, e.GetY());
+                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            {
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                            }
+                            else
+                            {
+                                UpdateOvals(m_RightJS.CenterX, e.GetY(i));
+                            }
                         }
                     }
                     else
                     {
-                        if (e.GetX() <= SCREEN_WIDTH / 2)
+                        for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            UpdateOvals(m_LeftJS.CenterX, e.GetY());
-                        }
-                        else
-                        {
-                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            {
+                                UpdateOvals(m_LeftJS.CenterX, e.GetY(i));
+                            }
+                            else
+                            {
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                            }
                         }
                     }
                     break;
-
+                case MotionEventActions.Pointer2Up:
+                    if (m_Inverted)
+                    {
+                        for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
+                        {
+                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            {
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                            }
+                            else
+                            {
+                                UpdateOvals(m_RightJS.CenterX, e.GetY(i));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
+                        {
+                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            {
+                                UpdateOvals(m_LeftJS.CenterX, e.GetY(i));
+                            }
+                            else
+                            {
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                            }
+                        }
+                    }
+                    break;
                 default:
                     for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                     {
@@ -273,8 +264,6 @@ namespace Controller
                     }
                     break;
             }
-
-            //WriteValues();
 
             this.Invalidate();
             return true;
@@ -403,25 +392,6 @@ namespace Controller
         }
 
         /// <summary>
-        /// Helper method for sending data to receiver
-        /// </summary>
-        private void WriteValues()
-        {
-            if (!m_Inverted && m_Interrupt.IsAvailable())
-            {
-                m_Transfer.Write((Int16)m_LeftJS.ThrottleValue, (Int16)m_LeftJS.RotationValue,
-                    (Int16)m_RightJS.ForwardBackwardValue, (Int16)m_RightJS.LeftRightValue);
-                m_Interrupt.SetAvailable(false);
-            }
-            else if (m_Interrupt.IsAvailable())
-            {
-                m_Transfer.Write((Int16)m_RightJS.ThrottleValue, (Int16)m_RightJS.RotationValue,
-                    (Int16)m_LeftJS.ForwardBackwardValue, (Int16)m_LeftJS.LeftRightValue);
-                m_Interrupt.SetAvailable(false);
-            }
-        }
-
-        /// <summary>
         /// Helper method for setting the bounds of the left joystick
         /// </summary>
         /// <param name="left">Position of left bound</param>
@@ -448,14 +418,21 @@ namespace Controller
         }
 
         /// <summary>
-        /// Helper method for converting pixels (=px) into
-        /// density-independent pixels (=dp)
+        /// Helper method for sending data via bluetooth to the device
         /// </summary>
-        /// <param name="pixels"></param>
-        /// <returns>Converted value in dp</returns>
-        private int ConvertPixelsToDp(float pixels)
+        /// <param name="state">State.</param>
+        public void Write(object state)
         {
-            return (int)((pixels) / Resources.DisplayMetrics.Density);
+            if (!m_Inverted)
+            {
+                m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RotationValue,
+                    m_RightJS.ForwardBackwardValue, m_RightJS.LeftRightValue);
+            }
+            else
+            {
+                m_Transfer.Write(m_RightJS.ThrottleValue, m_RightJS.RotationValue,
+                    m_LeftJS.ForwardBackwardValue, m_LeftJS.LeftRightValue);
+            }
         }
     }
 }
