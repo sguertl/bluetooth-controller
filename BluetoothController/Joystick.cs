@@ -60,17 +60,17 @@ namespace Controller
         private Int16 m_ThrottleValue;
         public Int16 ThrottleValue { get { return GetThrottleValue(); } private set { m_ThrottleValue = value; } }
 
-        // Rotation value of the stick
-        private Int16 m_RotationValue;
-        public Int16 RotationValue { get { return GetRotationValue(); } private set { m_RotationValue = value; } }
+        // Rudder value of the stick
+        private Int16 m_RudderValue;
+        public Int16 RudderValue { get { return GetRudderValue(); } private set { m_RudderValue = value; } }
 
-        // Forward/Backward value of the stick
-        private Int16 m_ForwardBackwardValue;
-        public Int16 ForwardBackwardValue { get { return GetForwardBackwardValue(); } private set { m_ForwardBackwardValue = value; } }
+        // Elevator value of the stick
+        private Int16 m_ElevatorValue;
+        public Int16 ElevatorValue { get { return GetElevatorValue(); } private set { m_ElevatorValue = value; } }
 
-        // Left/Right value of the stick
-        private Int16 m_LeftRightValue;
-        public Int16 LeftRightValue { get { return GetLeftRightValue(); } private set { m_LeftRightValue = value; } }
+        // Aileron value of the stick
+        private Int16 m_AileronValue;
+        public Int16 AileronValue { get { return GetAileronValue(); } private set { m_AileronValue = value; } }
 
 
         // ----------------------------- CTOR ----------------------------------
@@ -277,57 +277,57 @@ namespace Controller
         }
 
         /// <summary>
-        /// Calculates the rotation value of the stick
+        /// Calculates the rudder value of the stick
         /// </summary>
-        /// <returns>Rotation value (between -32768 and 32767)</returns>
-        private Int16 GetRotationValue()
+        /// <returns>Rudder value (between -32768 and 32767)</returns>
+        private Int16 GetRudderValue()
         {
-            int rotationValue = -32768;
+            int rudderValue = -32768;
             if (m_XPosition < m_CenterX - DISPLACEMENT_RADIUS)
             {
-                return (Int16)rotationValue;
+                return (Int16)rudderValue;
             }
-            rotationValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
-            rotationValue = Math.Max(-32768, rotationValue);
-            rotationValue = Math.Min(32767, rotationValue);
-            m_RotationValue = (Int16)rotationValue;
-            return m_RotationValue;
+            rudderValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
+            rudderValue = Math.Max(-32768, rudderValue);
+            rudderValue = Math.Min(32767, rudderValue);
+            m_RudderValue = (Int16)rudderValue;
+            return m_RudderValue;
         }
 
         /// <summary>
-        /// Calculates the forward/backward value of the stick
+        /// Calculates the elevator value of the stick
         /// </summary>
-        /// <returns>Forward/Backward value (between -32768 and 32767)</returns>
-        private Int16 GetForwardBackwardValue()
+        /// <returns>Elevator value (between -32768 and 32767)</returns>
+        private Int16 GetElevatorValue()
         {
-            int forwardBackwardValue = -32768;
+            int elevatorValue = -32768;
             if (m_YPosition > m_CenterY + DISPLACEMENT_RADIUS)
             {
-                return (Int16)forwardBackwardValue;
+                return (Int16)elevatorValue;
             }
-            forwardBackwardValue = (int)(65536 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER) - 32768;
-            forwardBackwardValue = Math.Max(-32768, forwardBackwardValue);
-            forwardBackwardValue = Math.Min(32767, forwardBackwardValue);
-            m_ForwardBackwardValue = (Int16)forwardBackwardValue;
-            return m_ForwardBackwardValue;
+            elevatorValue = (int)(65536 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER) - 32768;
+            elevatorValue = Math.Max(-32768, elevatorValue);
+            elevatorValue = Math.Min(32767, elevatorValue);
+            m_ElevatorValue = (Int16)elevatorValue;
+            return m_ElevatorValue;
         }
 
         /// <summary>
-        /// Calculates the left/right value of the stick
+        /// Calculates the aileron value of the stick
         /// </summary>
-        /// <returns>Left/Right value (between -32768 and 32767)</returns>
-        private Int16 GetLeftRightValue()
+        /// <returns>Aileron value (between -32768 and 32767)</returns>
+        private Int16 GetAileronValue()
         {
-            int leftRightValue = -32768;
+            int aileronValue = -32768;
             if (m_XPosition < m_CenterX - DISPLACEMENT_RADIUS)
             {
-                return (Int16)leftRightValue;
+                return (Int16)aileronValue;
             }
-            leftRightValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
-            leftRightValue = Math.Max(-32768, leftRightValue);
-            leftRightValue = Math.Min(32767, leftRightValue);
-            m_LeftRightValue = (Int16)leftRightValue;
-            return m_LeftRightValue;
+            aileronValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
+            aileronValue = Math.Max(-32768, aileronValue);
+            aileronValue = Math.Min(32767, aileronValue);
+            m_AileronValue = (Int16)aileronValue;
+            return m_AileronValue;
         }
 
         /// <summary>

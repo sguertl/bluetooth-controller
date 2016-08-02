@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Throttle left"
+            android:text="Mode 1: Throttle left, elevator right"
             android:textSize="16dp"
             android:id="@+id/rbThrottleLeft" />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Throttle right"
+            android:text="Mode 2: Elevator left, throttle right"
             android:textSize="16dp"
             android:id="@+id/rbThrottleRight" />
     </RadioGroup>

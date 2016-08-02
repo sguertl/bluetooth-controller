@@ -24,8 +24,8 @@ namespace BluetoothController
 
         private bool m_Inverted = false;
 
-        private readonly String TEXT_LEFT = "The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left.";
-        private readonly String TEXT_RIGHT = "The left joystick will be used to move forward, backwards, to the right and to the left. The right joystick will be used to regulate the throttle and rotation.";
+        private readonly String TEXT_LEFT = "The left joystick will be used to regulate throttle and rudder. The right joystick will be used to regulate elevator and aileron.";
+        private readonly String TEXT_RIGHT = "The left joystick will be used to regulate elevator and rudder. The right joystick will be used to regulate the throttle and aileron.";
 
         private Timer m_ConDispatcherTimer;
 

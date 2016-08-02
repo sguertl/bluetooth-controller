@@ -182,14 +182,14 @@ namespace Controller
                         }
                         else
                         {
-                            UpdateOvals(m_RightJS.CenterX, e.GetY());
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                         }
                     }
                     else
                     {
                         if (e.GetX() <= SCREEN_WIDTH / 2)
                         {
-                            UpdateOvals(m_LeftJS.CenterX, e.GetY());
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                         }
                         else
                         {
@@ -208,7 +208,7 @@ namespace Controller
                             }
                             else
                             {
-                                UpdateOvals(m_RightJS.CenterX, e.GetY(i));
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                             }
                         }
                     }
@@ -218,7 +218,7 @@ namespace Controller
                         {
                             if (e.GetX(i) <= SCREEN_WIDTH / 2)
                             {
-                                UpdateOvals(m_LeftJS.CenterX, e.GetY(i));
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                             }
                             else
                             {
@@ -238,7 +238,7 @@ namespace Controller
                             }
                             else
                             {
-                                UpdateOvals(m_RightJS.CenterX, e.GetY(i));
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                             }
                         }
                     }
@@ -248,7 +248,7 @@ namespace Controller
                         {
                             if (e.GetX(i) <= SCREEN_WIDTH / 2)
                             {
-                                UpdateOvals(m_LeftJS.CenterX, e.GetY(i));
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
                             }
                             else
                             {
@@ -364,27 +364,27 @@ namespace Controller
                 // Draw data text for left joystick
                 canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
                 canvas.DrawText("Throttle: " + m_LeftJS.ThrottleValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Rotation: " + m_LeftJS.RotationValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Rudder: " + m_LeftJS.RudderValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Forward/Backward: " + m_RightJS.ForwardBackwardValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Left/Right: " + m_RightJS.LeftRightValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Elevator: " + m_RightJS.ElevatorValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Aileron: " + m_RightJS.AileronValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
             }
             else if (m_Inverted)
             {
                 // Draw data text for left joystick
                 canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Forward/Backward: " + m_LeftJS.ForwardBackwardValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Left/Right: " + m_LeftJS.LeftRightValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Elevator: " + m_LeftJS.ElevatorValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
+                canvas.DrawText("Rudder: " + m_LeftJS.RudderValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
                 canvas.DrawText("Throttle: " + m_RightJS.ThrottleValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Rotation: " + m_RightJS.RotationValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
+                canvas.DrawText("Aileron: " + m_RightJS.AileronValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
             }
 
@@ -425,13 +425,13 @@ namespace Controller
         {
             if (!m_Inverted)
             {
-                m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RotationValue,
-                    m_RightJS.ForwardBackwardValue, m_RightJS.LeftRightValue);
+                m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RudderValue,
+                                 m_RightJS.ElevatorValue, m_RightJS.AileronValue);
             }
             else
             {
-                m_Transfer.Write(m_RightJS.ThrottleValue, m_RightJS.RotationValue,
-                    m_LeftJS.ForwardBackwardValue, m_LeftJS.LeftRightValue);
+                m_Transfer.Write(m_RightJS.ThrottleValue, m_LeftJS.RudderValue,
+                                 m_LeftJS.ElevatorValue, m_RightJS.AileronValue);
             }
         }
     }
