@@ -265,6 +265,29 @@ namespace Controller
                     break;
             }
 
+            if (m_Inverted)
+            {
+                if (e.PointerCount == 1 && e.GetX() <= SCREEN_WIDTH / 2 && !m_RightJS.IsCentered())
+                {
+                    UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                }
+                else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
+                {
+                    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
+                }
+            }
+            else
+            {
+                if (e.PointerCount == 1 && e.GetX() <= SCREEN_WIDTH / 2 && !m_RightJS.IsCentered())
+                {
+                    UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
+                }
+                else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
+                {
+                    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                }
+            }
+
             this.Invalidate();
             return true;
         }
