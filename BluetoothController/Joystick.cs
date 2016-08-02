@@ -31,6 +31,8 @@ namespace Controller
 
         private float m_XPosition; // Current x of joystick
         private float m_YPosition; // Current y of joystick
+        private bool m_LeftStick;
+        private bool m_Inverted;
 
         // Center x of joystick
         private float m_CenterX; 
@@ -109,6 +111,8 @@ namespace Controller
                     SetPosition(m_CenterX, m_CenterY + DISPLACEMENT_RADIUS);                   
                 }
             }
+            m_LeftStick = isLeftStick;
+            m_Inverted = invertedControl;
         }
 
         /// <summary>
@@ -346,7 +350,28 @@ namespace Controller
         /// <returns>True if stick is centered, false if not</returns>
         public bool IsCentered()
         {
-            return m_XPosition == m_CenterX && m_YPosition == m_CenterY;
+            if (m_Inverted)
+            {
+                if (m_LeftStick)
+                {
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)m_CenterY;
+                }
+                else
+                {
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DISPLACEMENT_RADIUS);
+                }
+            }
+            else
+            { 
+                if (m_LeftStick)
+                {
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DISPLACEMENT_RADIUS);
+                }
+                else
+                {
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)m_CenterY;
+                }
+            }
         }
     }
 }

@@ -366,12 +366,14 @@ namespace Controller
                 canvas.DrawText("Throttle: " + m_LeftJS.ThrottleValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
                 canvas.DrawText("Rudder: " + m_LeftJS.RudderValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
                 canvas.DrawText("Elevator: " + m_RightJS.ElevatorValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
                 canvas.DrawText("Aileron: " + m_RightJS.AileronValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
             }
             else if (m_Inverted)
             {
@@ -380,12 +382,14 @@ namespace Controller
                 canvas.DrawText("Elevator: " + m_LeftJS.ElevatorValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
                 canvas.DrawText("Rudder: " + m_LeftJS.RudderValue, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
 
                 // Draw data text for right joystick
                 canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
                 canvas.DrawText("Throttle: " + m_RightJS.ThrottleValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
                 canvas.DrawText("Aileron: " + m_RightJS.AileronValue, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
             }
 
             // TO BE ADDED: Displaying received data
