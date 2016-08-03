@@ -31,8 +31,8 @@ namespace Controller
 
         private float m_XPosition; // Current x of joystick
         private float m_YPosition; // Current y of joystick
-        private bool m_LeftStick;
-        private bool m_Inverted;
+        private readonly bool m_LeftStick; // Side of stick
+        private readonly bool m_Inverted; // Control mode
 
         // Center x of joystick
         private float m_CenterX; 
@@ -206,11 +206,11 @@ namespace Controller
         /// <returns>Direction of the joystick</returns>
         private int GetDirection()
         {
-            if(m_CenterX == m_XPosition && m_CenterY == m_YPosition)
+            if((int)m_CenterX == (int)m_XPosition && (int)m_CenterY == (int)m_YPosition)
             {
                 return m_Direction = 0;
             }
-            if (m_Power == 0 && m_Angle == 0)
+            if (m_Power == 0 && (int)m_Angle == 0)
             {
                 return m_Direction = 0;
             }
@@ -231,7 +231,7 @@ namespace Controller
                 }
             }
 
-            m_Direction = (int)(((a + 22) / 45) + 1);
+            m_Direction = ((a + 22) / 45) + 1;
 
             if (m_Direction > 8)
             {

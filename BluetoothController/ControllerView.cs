@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Graphics.Drawables;
-using Android.Graphics;
-using Android.Graphics.Drawables.Shapes;
 using System.Threading;
+using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Graphics.Drawables.Shapes;
+using Android.Views;
 
 namespace Controller
 {
@@ -43,13 +35,13 @@ namespace Controller
         private Joystick m_RightJS;
 
         // Controller position
-        private bool m_Inverted = false;
+        private readonly bool m_Inverted;
 
         // Transfer data via bluetooth
-        private BluetoothController.DataTransfer m_Transfer;
+        private readonly BluetoothController.DataTransfer m_Transfer;
 
         // Interrupter
-        private BluetoothController.BluetoothInterrupt m_Interrupt;
+        private readonly BluetoothController.BluetoothInterrupt m_Interrupt;
 
         // Timer for sending data and checking BT connection
         private readonly Timer m_WriteDispatcherTimer;
@@ -173,7 +165,6 @@ namespace Controller
             switch (e.Action)
             {
                 case MotionEventActions.Up:
-                    Console.WriteLine("UP: " + e.PointerCount);
                     if (m_Inverted)
                     {
                         if (e.GetX() <= SCREEN_WIDTH / 2)
@@ -288,7 +279,7 @@ namespace Controller
                 }
             }
 
-            this.Invalidate();
+            Invalidate();
             return true;
         }
 
@@ -299,7 +290,7 @@ namespace Controller
         /// <param name="yPosition">Y-Position of the touch</param>
         private void UpdateOvals(float xPosition, float yPosition)
         {
-            // Check if touch is in left or right of the screen
+            // Check if touch is in left or right half of the screen
             if (xPosition <= SCREEN_WIDTH / 2)
             {
                 // Handle touch in the left half
@@ -322,6 +313,8 @@ namespace Controller
                     (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) - (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterY,
                     (int)(Joystick.DISPLACEMENT_RADIUS * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterX,
                     (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterY);
+
+                    // OPTION: Set position
                     //m_LeftJS.SetPosition((int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_X, 
                     //    (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_Y);
 
@@ -373,7 +366,7 @@ namespace Controller
             m_ShapeStickRight.Draw(canvas);
 
             // Set paint for data text
-            Paint paint = new Paint();
+            var paint = new Paint();
             paint.SetARGB(255, 0, 0, 0);
             paint.TextSize = 20;
             paint.TextAlign = Paint.Align.Center;
