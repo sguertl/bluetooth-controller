@@ -44,7 +44,7 @@ namespace Controller
         private readonly BluetoothController.BluetoothInterrupt m_Interrupt;
 
         // Timer for sending data and checking BT connection
-        private readonly Timer m_WriteDispatcherTimer;
+        private readonly System.Timers.Timer m_WriteDispatcherTimer;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -61,8 +61,10 @@ namespace Controller
             InitShapes();
             InitJoysticks();
 
-            var sendTimerDelegate = new TimerCallback(Write);
-            m_WriteDispatcherTimer = new Timer(sendTimerDelegate, null, 0, 10);
+            m_WriteDispatcherTimer = new System.Timers.Timer();
+            m_WriteDispatcherTimer.Interval = 10;
+            m_WriteDispatcherTimer.AutoReset = true;
+            m_WriteDispatcherTimer.Elapsed += (sender, e) => Write(sender, e);
         }
 
         /// <summary>
@@ -440,8 +442,7 @@ namespace Controller
         /// <summary>
         /// Helper method for sending data via bluetooth to the device
         /// </summary>
-        /// <param name="state">State.</param>
-        public void Write(object state)
+        public void Write(object sender, System.Timers.ElapsedEventArgs e)
         {
             if (!m_Inverted)
             {
