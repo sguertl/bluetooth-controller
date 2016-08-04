@@ -45,6 +45,7 @@ namespace Controller
 
         // Timer for sending data and checking BT connection
         private readonly System.Timers.Timer m_WriteDispatcherTimer;
+        private long oldtime;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -60,11 +61,12 @@ namespace Controller
 
             InitShapes();
             InitJoysticks();
-
+            oldtime = DateTime.Now.Millisecond;
             m_WriteDispatcherTimer = new System.Timers.Timer();
-            m_WriteDispatcherTimer.Interval = 10;
+            m_WriteDispatcherTimer.Interval = 20;
             m_WriteDispatcherTimer.AutoReset = true;
             m_WriteDispatcherTimer.Elapsed += (sender, e) => Write(sender, e);
+            m_WriteDispatcherTimer.Start();
         }
 
         /// <summary>
@@ -444,6 +446,10 @@ namespace Controller
         /// </summary>
         public void Write(object sender, System.Timers.ElapsedEventArgs e)
         {
+            long newtime = DateTime.Now.Millisecond;
+            int timesincelastsend = (int) (newtime - oldtime);
+            oldtime = newtime;
+            Console.WriteLine("Time: " + timesincelastsend);
             if (!m_Inverted)
             {
                 m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RudderValue,
