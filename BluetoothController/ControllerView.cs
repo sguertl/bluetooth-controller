@@ -40,9 +40,6 @@ namespace Controller
         // Transfer data via bluetooth
         private readonly BluetoothController.DataTransfer m_Transfer;
 
-        // Interrupter
-        private readonly BluetoothController.BluetoothInterrupt m_Interrupt;
-
         // Timer for sending data and checking BT connection
         private readonly System.Timers.Timer m_WriteDispatcherTimer;
         private long oldtime;
@@ -446,10 +443,6 @@ namespace Controller
         /// </summary>
         public void Write(object sender, System.Timers.ElapsedEventArgs e)
         {
-            long newtime = DateTime.Now.Millisecond;
-            int timesincelastsend = (int) (newtime - oldtime);
-            oldtime = newtime;
-            Console.WriteLine("Time: " + timesincelastsend);
             if (!m_Inverted)
             {
                 m_Transfer.Write(m_LeftJS.ThrottleValue, m_LeftJS.RudderValue,
