@@ -59,20 +59,20 @@ namespace Controller
         public float Abs { get { return GetAbs(); } private set { m_Abs = value; } }
 
         // Throttle value of the stick
-        private Int16 m_ThrottleValue;
-        public Int16 ThrottleValue { get { return GetThrottleValue(); } private set { m_ThrottleValue = value; } }
+        private Int16 m_Throttle;
+        public Int16 Throttle { get { return GetThrottleValue(); } private set { m_Throttle = value; } }
 
         // Rudder value of the stick
-        private Int16 m_RudderValue;
-        public Int16 RudderValue { get { return GetRudderValue(); } private set { m_RudderValue = value; } }
+        private Int16 m_Rudder;
+        public Int16 Rudder { get { return GetRudderValue(); } private set { m_Rudder = value; } }
 
         // Elevator value of the stick
-        private Int16 m_ElevatorValue;
-        public Int16 ElevatorValue { get { return GetElevatorValue(); } private set { m_ElevatorValue = value; } }
+        private Int16 m_Elevator;
+        public Int16 Elevator { get { return GetElevatorValue(); } private set { m_Elevator = value; } }
 
         // Aileron value of the stick
-        private Int16 m_AileronValue;
-        public Int16 AileronValue { get { return GetAileronValue(); } private set { m_AileronValue = value; } }
+        private Int16 m_Aileron;
+        public Int16 Aileron { get { return GetAileronValue(); } private set { m_Aileron = value; } }
 
 
         // ----------------------------- CTOR ----------------------------------
@@ -276,8 +276,8 @@ namespace Controller
             throttleValue = (int)(32767 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER);
             throttleValue = Math.Max((Int16)0, throttleValue);
             throttleValue = Math.Min((Int16)32767, throttleValue);
-            m_ThrottleValue = (Int16)throttleValue;
-            return m_ThrottleValue;
+            m_Throttle = (Int16)throttleValue;
+            return m_Throttle;
         }
 
         /// <summary>
@@ -294,8 +294,8 @@ namespace Controller
             rudderValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
             rudderValue = Math.Max(-32768, rudderValue);
             rudderValue = Math.Min(32767, rudderValue);
-            m_RudderValue = (Int16)rudderValue;
-            return m_RudderValue;
+            m_Rudder = (Int16)rudderValue;
+            return m_Rudder;
         }
 
         /// <summary>
@@ -312,8 +312,8 @@ namespace Controller
             elevatorValue = (int)(65536 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER) - 32768;
             elevatorValue = Math.Max(-32768, elevatorValue);
             elevatorValue = Math.Min(32767, elevatorValue);
-            m_ElevatorValue = (Int16)elevatorValue;
-            return m_ElevatorValue;
+            m_Elevator = (Int16)elevatorValue;
+            return m_Elevator;
         }
 
         /// <summary>
@@ -330,8 +330,8 @@ namespace Controller
             aileronValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
             aileronValue = Math.Max(-32768, aileronValue);
             aileronValue = Math.Min(32767, aileronValue);
-            m_AileronValue = (Int16)aileronValue;
-            return m_AileronValue;
+            m_Aileron = (Int16)aileronValue;
+            return m_Aileron;
         }
 
         /// <summary>
