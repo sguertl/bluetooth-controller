@@ -41,8 +41,7 @@ namespace Controller
         private readonly BluetoothController.DataTransfer m_Transfer;
 
         // Timer for sending data and checking BT connection
-        private readonly System.Timers.Timer m_WriteDispatcherTimer;
-        private long oldtime;
+        private readonly System.Timers.Timer m_WriteTimer;
 
         public ControllerView(Context context, bool inverted) : base(context)
         {
@@ -58,12 +57,12 @@ namespace Controller
 
             InitShapes();
             InitJoysticks();
-            oldtime = DateTime.Now.Millisecond;
-            m_WriteDispatcherTimer = new System.Timers.Timer();
-            m_WriteDispatcherTimer.Interval = 20;
-            m_WriteDispatcherTimer.AutoReset = true;
-            m_WriteDispatcherTimer.Elapsed += (sender, e) => Write(sender, e);
-            m_WriteDispatcherTimer.Start();
+
+            m_WriteTimer = new System.Timers.Timer();
+            m_WriteTimer.Interval = 10;
+            m_WriteTimer.AutoReset = true;
+            m_WriteTimer.Elapsed += (sender, e) => Write(sender, e);
+            m_WriteTimer.Start();
         }
 
         /// <summary>
