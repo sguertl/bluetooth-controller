@@ -11,8 +11,8 @@ namespace Controller
     public class ControllerView : View, View.IOnTouchListener
     {
         // Screen metrics in px
-        public readonly float SCREEN_WIDTH;
-        public readonly float SCREEN_HEIGHT;
+        public readonly float ScreenWidth;
+        public readonly float ScreenHeight;
 
         // Joystick ovals
         private ShapeDrawable m_ShapeStickLeft;
@@ -50,8 +50,8 @@ namespace Controller
             SetOnTouchListener(this);
             SetBackgroundColor(Color.White);
 
-            SCREEN_WIDTH = Resources.DisplayMetrics.WidthPixels;
-            SCREEN_HEIGHT = Resources.DisplayMetrics.HeightPixels;
+            ScreenWidth = Resources.DisplayMetrics.WidthPixels;
+            ScreenHeight = Resources.DisplayMetrics.HeightPixels;
 
             m_Transfer = new BluetoothController.DataTransfer(this);
 
@@ -117,8 +117,8 @@ namespace Controller
         /// </summary>
         private void InitJoysticks()
         {
-            m_LeftJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, true, m_Inverted);
-            m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false, m_Inverted);
+            m_LeftJS = new Joystick(ScreenWidth, ScreenHeight, true, m_Inverted);
+            m_RightJS = new Joystick(ScreenWidth, ScreenHeight, false, m_Inverted);
 
             SetBoundsForLeftStick(
                 (int)m_LeftJS.CenterX - (int)Joystick.StickRadius,
@@ -167,7 +167,7 @@ namespace Controller
                 case MotionEventActions.Up:
                     if (m_Inverted)
                     {
-                        if (e.GetX() <= SCREEN_WIDTH / 2)
+                        if (e.GetX() <= ScreenWidth / 2)
                         {
                             UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
                         }
@@ -178,7 +178,7 @@ namespace Controller
                     }
                     else
                     {
-                        if (e.GetX() <= SCREEN_WIDTH / 2)
+                        if (e.GetX() <= ScreenWidth / 2)
                         {
                             UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                         }
@@ -193,7 +193,7 @@ namespace Controller
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            if (e.GetX(i) <= ScreenWidth / 2)
                             {
                                 UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
                             }
@@ -207,7 +207,7 @@ namespace Controller
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            if (e.GetX(i) <= ScreenWidth / 2)
                             {
                                 UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                             }
@@ -223,7 +223,7 @@ namespace Controller
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            if (e.GetX(i) <= ScreenWidth / 2)
                             {
                                 UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
                             }
@@ -237,7 +237,7 @@ namespace Controller
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
-                            if (e.GetX(i) <= SCREEN_WIDTH / 2)
+                            if (e.GetX(i) <= ScreenWidth / 2)
                             {
                                 UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                             }
@@ -258,22 +258,22 @@ namespace Controller
 
             if (m_Inverted)
             {
-                if (e.PointerCount == 1 && e.GetX() <= SCREEN_WIDTH / 2 && !m_RightJS.IsCentered())
+                if (e.PointerCount == 1 && e.GetX() <= ScreenWidth / 2 && !m_RightJS.IsCentered())
                 {
                     UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DisplacementRadius);
                 }
-                else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
+                else if (e.PointerCount == 1 && e.GetX() > ScreenWidth / 2 && !m_LeftJS.IsCentered())
                 {
                     UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY);
                 }
             }
             else
             {
-                if (e.PointerCount == 1 && e.GetX() <= SCREEN_WIDTH / 2 && !m_RightJS.IsCentered())
+                if (e.PointerCount == 1 && e.GetX() <= ScreenWidth / 2 && !m_RightJS.IsCentered())
                 {
                     UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY);
                 }
-                else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
+                else if (e.PointerCount == 1 && e.GetX() > ScreenWidth / 2 && !m_LeftJS.IsCentered())
                 {
                     UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                 }
@@ -291,7 +291,7 @@ namespace Controller
         private void UpdateOvals(float xPosition, float yPosition)
         {
             // Check if touch is in left or right half of the screen
-            if (xPosition <= SCREEN_WIDTH / 2)
+            if (xPosition <= ScreenWidth / 2)
             {
                 // Handle touch in the left half
                 m_LeftJS.SetPosition(xPosition, yPosition);
@@ -314,7 +314,7 @@ namespace Controller
                     (int)(Joystick.DisplacementRadius * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_LeftJS.CenterX,
                     (int)(Joystick.DisplacementRadius * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_LeftJS.CenterY);
 
-                    // OPTION: Set position
+                    // OPTION: Set radius as position
                     //m_LeftJS.SetPosition((int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_X, 
                     //    (int)(m_LeftJS.m_DisplacementRadius * Math.Sin(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_Y);
 
@@ -343,7 +343,7 @@ namespace Controller
                     (int)(Joystick.DisplacementRadius * Math.Cos(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_RightJS.CenterX,
                     (int)(Joystick.DisplacementRadius * Math.Sin(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_RightJS.CenterY);
 
-                    // OPTION: Set position 
+                    // OPTION: Set radius as position 
                     //m_RightJS.SetPosition((int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.CENTER_X,
                     //    (int)(m_RightJS.m_DisplacementRadius * Math.Sin(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.CENTER_Y);
                 }
@@ -378,34 +378,34 @@ namespace Controller
             if (!m_Inverted)
             {
                 // Draw data text for left joystick
-                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Throttle: " + m_LeftJS.Throttle, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Rudder: " + m_LeftJS.Rudder, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
-                canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
-                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
+                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 - 30, paint);
+                canvas.DrawText("Throttle: " + m_LeftJS.Throttle, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2, paint);
+                canvas.DrawText("Rudder: " + m_LeftJS.Rudder, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 90, paint);
 
                 // Draw data text for right joystick
-                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Elevator: " + m_RightJS.Elevator, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Aileron: " + m_RightJS.Aileron, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
-                canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
-                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
+                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 - 30, paint);
+                canvas.DrawText("Elevator: " + m_RightJS.Elevator, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2, paint);
+                canvas.DrawText("Aileron: " + m_RightJS.Aileron, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 90, paint);
             }
             else if (m_Inverted)
             {
                 // Draw data text for left joystick
-                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Elevator: " + m_LeftJS.Elevator, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Rudder: " + m_LeftJS.Rudder, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
-                canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
-                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
+                canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 - 30, paint);
+                canvas.DrawText("Elevator: " + m_LeftJS.Elevator, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2, paint);
+                canvas.DrawText("Rudder: " + m_LeftJS.Rudder, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_LeftJS.Direction, m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_LeftJS.IsCentered(), m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 + 90, paint);
 
                 // Draw data text for right joystick
-                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 - 30, paint);
-                canvas.DrawText("Throttle: " + m_RightJS.Throttle, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2, paint);
-                canvas.DrawText("Aileron: " + m_RightJS.Aileron, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 30, paint);
-                canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 60, paint);
-                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - SCREEN_HEIGHT / 2 + 90, paint);
+                canvas.DrawText("DATA RIGHT JOYSTICK", m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 - 30, paint);
+                canvas.DrawText("Throttle: " + m_RightJS.Throttle, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2, paint);
+                canvas.DrawText("Aileron: " + m_RightJS.Aileron, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 30, paint);
+                canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 60, paint);
+                canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 90, paint);
             }
 
             // TO BE ADDED: Displaying received data
