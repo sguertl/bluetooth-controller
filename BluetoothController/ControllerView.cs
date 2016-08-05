@@ -121,40 +121,40 @@ namespace Controller
             m_RightJS = new Joystick(SCREEN_WIDTH, SCREEN_HEIGHT, false, m_Inverted);
 
             SetBoundsForLeftStick(
-                (int)m_LeftJS.CenterX - (int)Joystick.STICK_RADIUS,
-                m_Inverted ? (int)m_LeftJS.CenterY - (int)Joystick.STICK_RADIUS : (int)m_LeftJS.CenterY + (int)Joystick.STICK_RADIUS,
-                (int)m_LeftJS.CenterX + (int)Joystick.STICK_RADIUS,
-                m_Inverted ? (int)m_LeftJS.CenterY + (int)Joystick.STICK_RADIUS : (int)m_LeftJS.CenterY + 3 * (int)Joystick.STICK_RADIUS);
+                (int)m_LeftJS.CenterX - (int)Joystick.StickRadius,
+                m_Inverted ? (int)m_LeftJS.CenterY - (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + (int)Joystick.StickRadius,
+                (int)m_LeftJS.CenterX + (int)Joystick.StickRadius,
+                m_Inverted ? (int)m_LeftJS.CenterY + (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + 3 * (int)Joystick.StickRadius);
 
             SetBoundsForRightStick(
-                (int)m_RightJS.CenterX - (int)Joystick.STICK_RADIUS,
-                m_Inverted ? (int)m_RightJS.CenterY + (int)Joystick.STICK_RADIUS : (int)m_RightJS.CenterY - (int)Joystick.STICK_RADIUS,
-                (int)m_RightJS.CenterX + (int)Joystick.STICK_RADIUS,
-                m_Inverted ? (int)m_RightJS.CenterY + 3 * (int)Joystick.STICK_RADIUS : (int)m_RightJS.CenterY + (int)Joystick.STICK_RADIUS);
+                (int)m_RightJS.CenterX - (int)Joystick.StickRadius,
+                m_Inverted ? (int)m_RightJS.CenterY + (int)Joystick.StickRadius : (int)m_RightJS.CenterY - (int)Joystick.StickRadius,
+                (int)m_RightJS.CenterX + (int)Joystick.StickRadius,
+                m_Inverted ? (int)m_RightJS.CenterY + 3 * (int)Joystick.StickRadius : (int)m_RightJS.CenterY + (int)Joystick.StickRadius);
 
             m_ShapeRadiusLeft.SetBounds(
-                (int)m_LeftJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_LeftJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_LeftJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_LeftJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS);
+                (int)m_LeftJS.CenterX - (int)Joystick.DisplacementRadius,
+                (int)m_LeftJS.CenterY - (int)Joystick.DisplacementRadius,
+                (int)m_LeftJS.CenterX + (int)Joystick.DisplacementRadius,
+                (int)m_LeftJS.CenterY + (int)Joystick.DisplacementRadius);
 
             m_ShapeRadiusRight.SetBounds(
-                (int)m_RightJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_RightJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS,
-                (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS);
+                (int)m_RightJS.CenterX - (int)Joystick.DisplacementRadius,
+                (int)m_RightJS.CenterY - (int)Joystick.DisplacementRadius,
+                (int)m_RightJS.CenterX + (int)Joystick.DisplacementRadius,
+                (int)m_RightJS.CenterY + (int)Joystick.DisplacementRadius);
 
             m_ShapeBorderRadiusLeft.SetBounds(
-                (int)m_LeftJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
-                (int)m_LeftJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
-                (int)m_LeftJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
-                (int)m_LeftJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 2);
+                (int)m_LeftJS.CenterX - (int)Joystick.DisplacementRadius - 2,
+                (int)m_LeftJS.CenterY - (int)Joystick.DisplacementRadius - 2,
+                (int)m_LeftJS.CenterX + (int)Joystick.DisplacementRadius + 2,
+                (int)m_LeftJS.CenterY + (int)Joystick.DisplacementRadius + 2);
 
             m_ShapeBorderRadiusRight.SetBounds(
-                (int)m_RightJS.CenterX - (int)Joystick.DISPLACEMENT_RADIUS - 2,
-                (int)m_RightJS.CenterY - (int)Joystick.DISPLACEMENT_RADIUS - 2,
-                (int)m_RightJS.CenterX + (int)Joystick.DISPLACEMENT_RADIUS + 2,
-                (int)m_RightJS.CenterY + (int)Joystick.DISPLACEMENT_RADIUS + 2);
+                (int)m_RightJS.CenterX - (int)Joystick.DisplacementRadius - 2,
+                (int)m_RightJS.CenterY - (int)Joystick.DisplacementRadius - 2,
+                (int)m_RightJS.CenterX + (int)Joystick.DisplacementRadius + 2,
+                (int)m_RightJS.CenterY + (int)Joystick.DisplacementRadius + 2);
         }
 
         /// <summary>
@@ -173,14 +173,14 @@ namespace Controller
                         }
                         else
                         {
-                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DisplacementRadius);
                         }
                     }
                     else
                     {
                         if (e.GetX() <= SCREEN_WIDTH / 2)
                         {
-                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                            UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                         }
                         else
                         {
@@ -199,7 +199,7 @@ namespace Controller
                             }
                             else
                             {
-                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DisplacementRadius);
                             }
                         }
                     }
@@ -209,7 +209,7 @@ namespace Controller
                         {
                             if (e.GetX(i) <= SCREEN_WIDTH / 2)
                             {
-                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                             }
                             else
                             {
@@ -229,7 +229,7 @@ namespace Controller
                             }
                             else
                             {
-                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                                UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DisplacementRadius);
                             }
                         }
                     }
@@ -239,7 +239,7 @@ namespace Controller
                         {
                             if (e.GetX(i) <= SCREEN_WIDTH / 2)
                             {
-                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                                UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                             }
                             else
                             {
@@ -260,7 +260,7 @@ namespace Controller
             {
                 if (e.PointerCount == 1 && e.GetX() <= SCREEN_WIDTH / 2 && !m_RightJS.IsCentered())
                 {
-                    UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                    UpdateOvals(m_RightJS.CenterX, m_RightJS.CenterY + Joystick.DisplacementRadius);
                 }
                 else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
                 {
@@ -275,7 +275,7 @@ namespace Controller
                 }
                 else if (e.PointerCount == 1 && e.GetX() > SCREEN_WIDTH / 2 && !m_LeftJS.IsCentered())
                 {
-                    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DISPLACEMENT_RADIUS);
+                    UpdateOvals(m_LeftJS.CenterX, m_LeftJS.CenterY + Joystick.DisplacementRadius);
                 }
             }
 
@@ -296,23 +296,23 @@ namespace Controller
                 // Handle touch in the left half
                 m_LeftJS.SetPosition(xPosition, yPosition);
                 // Check if touch was inside the displacement radius
-                if ((m_LeftJS.Abs) <= Joystick.DISPLACEMENT_RADIUS)
+                if ((m_LeftJS.Abs) <= Joystick.DisplacementRadius)
                 {
                     // Draw left joystick with original coordinates
                     SetBoundsForLeftStick(
-                    (int)xPosition - (int)Joystick.STICK_RADIUS,
-                    (int)yPosition - (int)Joystick.STICK_RADIUS,
-                    (int)xPosition + (int)Joystick.STICK_RADIUS,
-                    (int)yPosition + (int)Joystick.STICK_RADIUS);
+                    (int)xPosition - (int)Joystick.StickRadius,
+                    (int)yPosition - (int)Joystick.StickRadius,
+                    (int)xPosition + (int)Joystick.StickRadius,
+                    (int)yPosition + (int)Joystick.StickRadius);
                 }
                 else
                 {
                     // Draw left joystick with maximum coordinates
                     SetBoundsForLeftStick(
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) - (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterX,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) - (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterY,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterX,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_LeftJS.CenterY);
+                    (int)(Joystick.DisplacementRadius * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) - (int)Joystick.StickRadius + (int)m_LeftJS.CenterX,
+                    (int)(Joystick.DisplacementRadius * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) - (int)Joystick.StickRadius + (int)m_LeftJS.CenterY,
+                    (int)(Joystick.DisplacementRadius * Math.Cos(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_LeftJS.CenterX,
+                    (int)(Joystick.DisplacementRadius * Math.Sin(m_LeftJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_LeftJS.CenterY);
 
                     // OPTION: Set position
                     //m_LeftJS.SetPosition((int)(m_LeftJS.m_DisplacementRadius * Math.Cos(m_LeftJS.GetAngle() * Math.PI / 180)) + (int)m_LeftJS.CENTER_X, 
@@ -325,23 +325,23 @@ namespace Controller
                 // Handle touch in the right half
                 m_RightJS.SetPosition(xPosition, yPosition);
                 // Check if touch was inside the displacement radius
-                if ((m_RightJS.Abs) <= Joystick.DISPLACEMENT_RADIUS)
+                if ((m_RightJS.Abs) <= Joystick.DisplacementRadius)
                 {
                     // Draw right joystick with original coordinates
                     SetBoundsForRightStick(
-                     (int)xPosition - (int)Joystick.STICK_RADIUS,
-                     (int)yPosition - (int)Joystick.STICK_RADIUS,
-                     (int)xPosition + (int)Joystick.STICK_RADIUS,
-                     (int)yPosition + (int)Joystick.STICK_RADIUS);
+                     (int)xPosition - (int)Joystick.StickRadius,
+                     (int)yPosition - (int)Joystick.StickRadius,
+                     (int)xPosition + (int)Joystick.StickRadius,
+                     (int)yPosition + (int)Joystick.StickRadius);
                 }
                 else
                 {
                     // Draw left joystick with maximum coordinates
                     SetBoundsForRightStick(
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Cos(m_RightJS.Angle * Math.PI / 180)) - (int)Joystick.STICK_RADIUS + (int)m_RightJS.CenterX,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_RightJS.Angle * Math.PI / 180)) - (int)Joystick.STICK_RADIUS + (int)m_RightJS.CenterY,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Cos(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_RightJS.CenterX,
-                    (int)(Joystick.DISPLACEMENT_RADIUS * Math.Sin(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.STICK_RADIUS + (int)m_RightJS.CenterY);
+                    (int)(Joystick.DisplacementRadius * Math.Cos(m_RightJS.Angle * Math.PI / 180)) - (int)Joystick.StickRadius + (int)m_RightJS.CenterX,
+                    (int)(Joystick.DisplacementRadius * Math.Sin(m_RightJS.Angle * Math.PI / 180)) - (int)Joystick.StickRadius + (int)m_RightJS.CenterY,
+                    (int)(Joystick.DisplacementRadius * Math.Cos(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_RightJS.CenterX,
+                    (int)(Joystick.DisplacementRadius * Math.Sin(m_RightJS.Angle * Math.PI / 180)) + (int)Joystick.StickRadius + (int)m_RightJS.CenterY);
 
                     // OPTION: Set position 
                     //m_RightJS.SetPosition((int)(m_RightJS.m_DisplacementRadius * Math.Cos(m_RightJS.GetAngle() * Math.PI / 180)) + (int)m_RightJS.CENTER_X,

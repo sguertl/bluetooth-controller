@@ -8,6 +8,7 @@ namespace Controller
 
         private const double RAD = 1 / (2 * Math.PI) * 360; // 1 rad in degrees
 
+        // Constant direction values
         public static readonly int CENTER = 0;
         public static readonly int BOTTOM = 1;
         public static readonly int BOTTOM_RIGHT = 2;
@@ -20,11 +21,11 @@ namespace Controller
         public static readonly int LEFT_STICK = 0;
         public static readonly int RIGHT_STICK = 1;
 
-        public readonly float STICK_DIAMETER; // Diameter of the joystick
-        public readonly float DISPLACEMENT_DIAMETER; // Diameter of the displacement
+        public readonly float StickDiameter; // Diameter of the joystick
+        public readonly float DisplacementDiameter; // Diameter of the displacement
 
-        public static float STICK_RADIUS; // Radius of the joystick
-        public static float DISPLACEMENT_RADIUS; // Radius of the displacement
+        public static float StickRadius; // Radius of the joystick
+        public static float DisplacementRadius; // Radius of the displacement
 
 
         // --------------------------- VARIABLES ------------------------------
@@ -78,23 +79,23 @@ namespace Controller
         // ----------------------------- CTOR ----------------------------------
         public Joystick(float width, float height, bool isLeftStick, bool invertedControl)
         {
-            STICK_DIAMETER = (width / 8 + width / 2) / 2 - width / 5;
-            DISPLACEMENT_DIAMETER = STICK_DIAMETER * 2.25f;
+            StickDiameter = (width / 8 + width / 2) / 2 - width / 5;
+            DisplacementDiameter = StickDiameter * 2.25f;
 
-            STICK_RADIUS = STICK_DIAMETER / 2;
-            DISPLACEMENT_RADIUS = DISPLACEMENT_DIAMETER / 2;
+            StickRadius = StickDiameter / 2;
+            DisplacementRadius = DisplacementDiameter / 2;
 
-            m_CenterY = height / 16 + height / 2 + STICK_RADIUS / 2;
+            m_CenterY = height / 16 + height / 2 + StickRadius / 2;
             if(!invertedControl)
             {
                 if (isLeftStick)
                 {
-                    m_CenterX = width / 5 + STICK_RADIUS / 2;
-                    SetPosition(m_CenterX, m_CenterY + DISPLACEMENT_RADIUS);
+                    m_CenterX = width / 5 + StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY + DisplacementRadius);
                 }
                 else
                 {
-                    m_CenterX = width - width / 5 - STICK_RADIUS / 2;
+                    m_CenterX = width - width / 5 - StickRadius / 2;
                     SetPosition(m_CenterX, m_CenterY);
                 }
             }
@@ -102,13 +103,13 @@ namespace Controller
             {
                 if (isLeftStick)
                 {
-                    m_CenterX = width / 5 + STICK_RADIUS / 2;
+                    m_CenterX = width / 5 + StickRadius / 2;
                     SetPosition(m_CenterX, m_CenterY);
                 }
                 else
                 {
-                    m_CenterX = width - width / 5 - STICK_RADIUS / 2;
-                    SetPosition(m_CenterX, m_CenterY + DISPLACEMENT_RADIUS);                   
+                    m_CenterX = width - width / 5 - StickRadius / 2;
+                    SetPosition(m_CenterX, m_CenterY + DisplacementRadius);                   
                 }
             }
             m_LeftStick = isLeftStick;
@@ -248,7 +249,7 @@ namespace Controller
         {
             m_Power = (int)(100 * Math.Sqrt(
                 (m_XPosition - m_CenterX) * (m_XPosition - m_CenterX) + 
-                (m_YPosition - m_CenterY) * (m_YPosition - m_CenterY)) / (DISPLACEMENT_RADIUS));
+                (m_YPosition - m_CenterY) * (m_YPosition - m_CenterY)) / (DisplacementRadius));
             m_Power = Math.Min(m_Power, 100);
             return m_Power;
         }
@@ -269,11 +270,11 @@ namespace Controller
         private Int16 GetThrottleValue()
         {
             int throttleValue = 0;
-            if (m_YPosition > m_CenterY + DISPLACEMENT_RADIUS)
+            if (m_YPosition > m_CenterY + DisplacementRadius)
             {
                 return (Int16)throttleValue;
             }
-            throttleValue = (int)(32767 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER);
+            throttleValue = (int)(32767 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
             throttleValue = Math.Max((Int16)0, throttleValue);
             throttleValue = Math.Min((Int16)32767, throttleValue);
             m_Throttle = (Int16)throttleValue;
@@ -287,11 +288,11 @@ namespace Controller
         private Int16 GetRudderValue()
         {
             int rudderValue = -32768;
-            if (m_XPosition < m_CenterX - DISPLACEMENT_RADIUS)
+            if (m_XPosition < m_CenterX - DisplacementRadius)
             {
                 return (Int16)rudderValue;
             }
-            rudderValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
+            rudderValue = (int)((65536 * (m_CenterX + DisplacementRadius - m_XPosition) / DisplacementDiameter) - 32768) * (-1);
             rudderValue = Math.Max(-32768, rudderValue);
             rudderValue = Math.Min(32767, rudderValue);
             m_Rudder = (Int16)rudderValue;
@@ -305,11 +306,11 @@ namespace Controller
         private Int16 GetElevatorValue()
         {
             int elevatorValue = -32768;
-            if (m_YPosition > m_CenterY + DISPLACEMENT_RADIUS)
+            if (m_YPosition > m_CenterY + DisplacementRadius)
             {
                 return (Int16)elevatorValue;
             }
-            elevatorValue = (int)(65536 * (m_CenterY + DISPLACEMENT_RADIUS - m_YPosition) / DISPLACEMENT_DIAMETER) - 32768;
+            elevatorValue = (int)(65536 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) - 32768;
             elevatorValue = Math.Max(-32768, elevatorValue);
             elevatorValue = Math.Min(32767, elevatorValue);
             m_Elevator = (Int16)elevatorValue;
@@ -323,11 +324,11 @@ namespace Controller
         private Int16 GetAileronValue()
         {
             int aileronValue = -32768;
-            if (m_XPosition < m_CenterX - DISPLACEMENT_RADIUS)
+            if (m_XPosition < m_CenterX - DisplacementRadius)
             {
                 return (Int16)aileronValue;
             }
-            aileronValue = (int)((65536 * (m_CenterX + DISPLACEMENT_RADIUS - m_XPosition) / DISPLACEMENT_DIAMETER) - 32768) * (-1);
+            aileronValue = (int)((65536 * (m_CenterX + DisplacementRadius - m_XPosition) / DisplacementDiameter) - 32768) * (-1);
             aileronValue = Math.Max(-32768, aileronValue);
             aileronValue = Math.Min(32767, aileronValue);
             m_Aileron = (Int16)aileronValue;
@@ -358,14 +359,14 @@ namespace Controller
                 }
                 else
                 {
-                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DISPLACEMENT_RADIUS);
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DisplacementRadius);
                 }
             }
             else
             { 
                 if (m_LeftStick)
                 {
-                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DISPLACEMENT_RADIUS);
+                    return (int)m_XPosition == (int)m_CenterX && (int)m_YPosition == (int)(m_CenterY + DisplacementRadius);
                 }
                 else
                 {
