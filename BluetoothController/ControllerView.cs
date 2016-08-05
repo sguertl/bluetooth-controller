@@ -61,7 +61,7 @@ namespace Controller
             m_WriteTimer = new System.Timers.Timer();
             m_WriteTimer.Interval = 10;
             m_WriteTimer.AutoReset = true;
-            m_WriteTimer.Elapsed += (sender, e) => Write(sender, e);
+            m_WriteTimer.Elapsed += Write;
             m_WriteTimer.Start();
         }
 
