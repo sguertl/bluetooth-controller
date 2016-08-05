@@ -16,6 +16,7 @@ namespace BluetoothController
     {
         public static readonly byte STARTBYTE = 10;
         private static readonly byte FCS_BYTES = 2;
+        private static int count = 0;
 
         /// <summary>
         /// Converts byte array to 16 bit integers
@@ -82,7 +83,19 @@ namespace BluetoothController
             fcs += 1;
             bytes[9] = (byte)fcs;
             bytes[10] = (byte)(fcs >> 8);
-
+            Console.Write(count + ")");
+            for (int i = 0; i < args.Length; i++)
+            {
+                Console.Write(args[i] + " ");
+            }
+            Console.WriteLine("\n");
+            Console.Write(count + ")");
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                Console.Write(bytes[i] + " ");
+            }
+            Console.WriteLine("\n");
+            count++;
             return bytes;
         }
 
