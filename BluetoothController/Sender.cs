@@ -121,6 +121,7 @@ namespace BluetoothController
                     m_OutputStream.WriteByte(bytes[i]);
                 }*/
                 m_OutputStream.Write(bytes, 0, bytes.Length);
+                m_OutputStream.Flush();
                 //TEST
                 /*for (int i = 0; i < bytes.Length; i++)
                 {
