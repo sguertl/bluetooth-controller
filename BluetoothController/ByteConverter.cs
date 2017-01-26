@@ -14,8 +14,9 @@ namespace BluetoothController
 {
     public class ByteConverter
     {
-        public static readonly byte STARTBYTE = 10;
+        public static readonly byte STARTBYTE = 0x00;
         private static readonly byte FCS_BYTES = 2;
+        private static readonly byte PACKET_SIZE = 19;
         private static int count = 0;
 
         /// <summary>
@@ -61,42 +62,47 @@ namespace BluetoothController
         /// </summary>
         public static byte[] ConvertToByte(params Int16[] args)
         {
-            byte[] bytes = new byte[11];
-            // Set the start byte
-            bytes[0] = STARTBYTE;
+            byte[] b = new byte[PACKET_SIZE];
+            byte speed = (byte) args[2];
+            byte heightcontrol = 0;
+            int azimuth = 0;
+            int pitch = 0;
+            int roll = 0;
+            string str = string.Format("Speed: {0} HeightControl: {1} Azimuth: {2} Pitch: {3} Roll: {4}", speed,
+                    heightcontrol, azimuth, pitch, roll);
+            Console.WriteLine(str);
+            int checksum = STARTBYTE;
+            checksum ^= (heightcontrol << 8 | speed) & 0xFFFF;
+            checksum ^= azimuth;
+            checksum ^= pitch;
+            checksum ^= roll;
 
-            // Convert joystick data to bytes
-            int posi = 1;
-            for (int i = 0; i < args.Length; i++)
-            {
-                short s = args[i];
-                byte x = (byte)s;
-                bytes[posi++] = x;
+            b[0] = STARTBYTE;
 
-                short s2 = (short)(s >> 8);
-                byte x2 = (byte)s2;
-                bytes[posi++] = x2;
-            }
+            b[1] = (byte)(heightcontrol & 0xFF);
+            b[2] = (byte)(speed & 0xFF);
 
-            // Calculate Frame Check Sequence (2 Bytes)
-            UInt16 fcs = GetCheckSequence(bytes);
-            fcs += 1;
-            bytes[9] = (byte)fcs;
-            bytes[10] = (byte)(fcs >> 8);
-            Console.Write(count + ")");
-            for (int i = 0; i < args.Length; i++)
-            {
-                Console.Write(args[i] + " ");
-            }
-            Console.WriteLine("\n");
-            Console.Write(count + ")");
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                Console.Write(bytes[i] + " ");
-            }
-            Console.WriteLine("\n");
-            count++;
-            return bytes;
+            b[3] = (byte)((azimuth >> 24) & 0xFF);
+            b[4] = (byte)((azimuth >> 16) & 0xFF);
+            b[5] = (byte)((azimuth >> 8) & 0xFF);
+            b[6] = (byte)(azimuth & 0xFF);
+
+            b[7] = (byte)((pitch >> 24) & 0xFF);
+            b[8] = (byte)((pitch >> 16) & 0xFF);
+            b[9] = (byte)((pitch >> 8) & 0xFF);
+            b[10] = (byte)(pitch & 0xFF);
+
+            b[11] = (byte)((roll >> 24) & 0xFF);
+            b[12] = (byte)((roll >> 16) & 0xFF);
+            b[13] = (byte)((roll >> 8) & 0xFF);
+            b[14] = (byte)(roll & 0xFF);
+
+            b[15] = (byte)((checksum >> 24) & 0xFF);
+            b[16] = (byte)((checksum >> 16) & 0xFF);
+            b[17] = (byte)((checksum >> 8) & 0xFF);
+            b[18] = (byte)(checksum & 0xFF);
+
+            return b;
         }
 
         /// <summary>

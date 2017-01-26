@@ -274,9 +274,9 @@ namespace Controller
             {
                 return (Int16)throttleValue;
             }
-            throttleValue = (int)(32767 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
+            throttleValue = (int)(40 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
             throttleValue = Math.Max((Int16)0, throttleValue);
-            throttleValue = Math.Min((Int16)32767, throttleValue);
+            throttleValue = Math.Min((Int16)40, throttleValue);
             m_Throttle = (Int16)throttleValue;
             return m_Throttle;
         }
@@ -310,9 +310,9 @@ namespace Controller
             {
                 return (Int16)elevatorValue;
             }
-            elevatorValue = (int)(65536 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) - 32768;
-            elevatorValue = Math.Max(-32768, elevatorValue);
-            elevatorValue = Math.Min(32767, elevatorValue);
+            elevatorValue = (int)(40 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) -20;
+            elevatorValue = Math.Max(0, elevatorValue);
+            elevatorValue = Math.Min(40, elevatorValue);
             m_Elevator = (Int16)elevatorValue;
             return m_Elevator;
         }
