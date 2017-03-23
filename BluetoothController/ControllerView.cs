@@ -59,7 +59,7 @@ namespace Controller
             InitJoysticks();
 
             m_WriteTimer = new System.Timers.Timer();
-            m_WriteTimer.Interval = 10;
+            m_WriteTimer.Interval = 50;//10
             m_WriteTimer.AutoReset = true;
             m_WriteTimer.Elapsed += Write;
             m_WriteTimer.Start();
@@ -439,6 +439,10 @@ namespace Controller
 
         /// <summary>
         /// Helper method for sending data via bluetooth to the device
+        /// Throttle = speed
+        /// Rudder = rotation
+        /// Elevator = north south
+        /// Aileron = east west
         /// </summary>
         public void Write(object sender, System.Timers.ElapsedEventArgs e)
         {

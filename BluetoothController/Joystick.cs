@@ -274,19 +274,16 @@ namespace Controller
             {
                 return (Int16)throttleValue;
             }
-<<<<<<< Updated upstream
-            throttleValue = (int)(40 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
-            throttleValue = Math.Max((Int16)0, throttleValue);
-            throttleValue = Math.Min((Int16)40, throttleValue);
-=======
+            //throttleValue = (int)(40 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
+            //throttleValue = Math.Max((Int16)0, throttleValue);
+            //throttleValue = Math.Min((Int16)40, throttleValue);
             //throttleValue = (int)(32767 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
             throttleValue = (int)(90 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter);
             throttleValue = Math.Max((Int16)0, throttleValue);
             //throttleValue = Math.Min((Int16)32767, throttleValue);
             throttleValue = Math.Min((Int16)255, throttleValue);
->>>>>>> Stashed changes
             m_Throttle = (Int16)throttleValue;
-            return m_Throttle;
+            return (Int16)(m_Throttle *0.5f);
         }
 
         /// <summary>
@@ -308,7 +305,7 @@ namespace Controller
             //rudderValue = Math.Min(32767, rudderValue);
             rudderValue = Math.Min(90, rudderValue);
             m_Rudder = (Int16)rudderValue;
-            return m_Rudder;
+            return (Int16)(m_Rudder * -1);
         }
 
         /// <summary>
@@ -323,20 +320,17 @@ namespace Controller
             {
                 return (Int16)elevatorValue;
             }
-<<<<<<< Updated upstream
             elevatorValue = (int)(40 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) -20;
             elevatorValue = Math.Max(0, elevatorValue);
             elevatorValue = Math.Min(40, elevatorValue);
-=======
             //elevatorValue = (int)(65536 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) - 32768;
             elevatorValue = (int)(200 * (m_CenterY + DisplacementRadius - m_YPosition) / DisplacementDiameter) - 100;
             //elevatorValue = Math.Max(-32768, elevatorValue);
             elevatorValue = Math.Max(-100, elevatorValue);
             //elevatorValue = Math.Min(32767, elevatorValue);
             elevatorValue = Math.Min(100, elevatorValue);
->>>>>>> Stashed changes
             m_Elevator = (Int16)elevatorValue;
-            return m_Elevator;
+            return (Int16) (m_Elevator * -1);
         }
 
         /// <summary>
@@ -349,6 +343,8 @@ namespace Controller
             int aileronValue = -100;
             if (m_XPosition < m_CenterX - DisplacementRadius)
             {
+                //Fehler -100
+                return; 
                 return (Int16)aileronValue;
             }
             //aileronValue = (int)((65536 * (m_CenterX + DisplacementRadius - m_XPosition) / DisplacementDiameter) - 32768) * (-1);
@@ -358,7 +354,7 @@ namespace Controller
             //aileronValue = Math.Min(32767, aileronValue);
             aileronValue = Math.Min(100, aileronValue);
             m_Aileron = (Int16)aileronValue;
-            return m_Aileron;
+            return (Int16) (m_Aileron * -1);
         }
 
         /// <summary>

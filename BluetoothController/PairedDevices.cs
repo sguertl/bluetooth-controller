@@ -51,7 +51,11 @@ namespace BluetoothController
         private void GetPairedDevices()
         {
             // Displaying all paired devices on a ListView
-            foreach (BluetoothDevice device in m_PairedDevice) { m_List.Add(device.Name + "\n" + device.Address);}
+            foreach (BluetoothDevice device in m_PairedDevice)
+            {
+                m_List.Add(device.Name + "\n" + device.Address);
+            }
+
             m_Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, m_List);
             m_ListView.Adapter = m_Adapter;
         }
