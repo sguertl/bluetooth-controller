@@ -68,6 +68,7 @@ namespace BluetoothController
             int azimuth = Java.Lang.Float.FloatToIntBits(args[1]);
             int pitch = Java.Lang.Float.FloatToIntBits(args[2]);
             int roll = Java.Lang.Float.FloatToIntBits(args[3]);
+           
             string str = string.Format("Speed: {0} HeightControl: {1} Azimuth: {2} Pitch: {3} Roll: {4}", speed,
                     heightcontrol, azimuth, pitch, roll);
             Console.WriteLine(str);

@@ -448,13 +448,14 @@ namespace Controller
         {
             if (!m_Inverted)
             {
+                
                 m_Transfer.Write((Int16)m_LeftJS.Throttle, (Int16)m_LeftJS.Rudder,
-                                 (Int16)m_RightJS.Elevator, (Int16)m_RightJS.Aileron);
+                                 (Int16)m_RightJS.Aileron, (Int16)m_RightJS.Elevator);
             }
             else
             {
                 m_Transfer.Write((Int16)m_RightJS.Throttle, (Int16)m_LeftJS.Rudder,
-                                 (Int16)m_LeftJS.Elevator, (Int16)m_RightJS.Aileron);
+                                 (Int16)m_LeftJS.Aileron, (Int16)m_RightJS.Elevator);
             }
         }
     }
