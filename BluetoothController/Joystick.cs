@@ -31,6 +31,8 @@ namespace Controller
         // --------------------------- VARIABLES ------------------------------
 
         private float m_Mult = 0.3f;
+        private float m_MultRudder = 0.4f;
+        private float m_MultThrottle = 0.7f;
 
         private float m_XPosition; // Current x of joystick
         private float m_YPosition; // Current y of joystick
@@ -286,7 +288,7 @@ namespace Controller
             throttleValue = Math.Min((Int16)255, throttleValue);
             m_Throttle = (Int16)throttleValue;
             Console.WriteLine("****************"+m_Throttle);
-            return (Int16)((m_Throttle) * 0.7f);
+            return (Int16)((m_Throttle) * m_MultThrottle);
         }
 
         /// <summary>
@@ -308,7 +310,7 @@ namespace Controller
             //rudderValue = Math.Min(32767, rudderValue);
             rudderValue = Math.Min(90, rudderValue);
             m_Rudder = (Int16)rudderValue;
-            return (Int16)((m_Rudder * -1) * 0.4f);
+            return (Int16)((m_Rudder * -1) * m_MultRudder);
         }
 
         /// <summary>
