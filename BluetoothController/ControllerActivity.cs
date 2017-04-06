@@ -49,11 +49,11 @@ namespace BluetoothController
             m_BtStart.Click += OnStartController;
 
             m_Filter = new IntentFilter();
-            m_Receiver = new CallReciver();
+            //m_Receiver = new CallReciver();
 
-            m_Filter.AddAction("android.intent.action.PHONE_STATE");
+            //m_Filter.AddAction("android.intent.action.PHONE_STATE");
             // Registering events and forwarding them to the broadcast object
-            RegisterReceiver(m_Receiver, m_Filter);
+            //RegisterReceiver(m_Receiver, m_Filter);
         }
 
         private void OnThrottleRightClick(object sender, EventArgs e)
