@@ -4,23 +4,30 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
+using Android.Telephony;
+using Android.Runtime;
+using Android.Net.Sip;
 
 namespace BluetoothController
 {
     [Activity(Label = "ControllerActivity", Theme = "@android:style/Theme.Light.NoTitleBar.Fullscreen",
         ScreenOrientation = Android.Content.PM.ScreenOrientation.SensorLandscape)]
-    public class ControllerActivity : Activity
-    {
+    public class ControllerActivity : Activity {
         private RadioGroup m_RgControlMethod;
         private RadioButton m_RbThrottleLeft;
         private RadioButton m_RbThrottleRight;
         private TextView m_TvDescription;
         private Button m_BtStart;
 
+        private IntentFilter m_Filter; // Used to filter events when searching
+        private CallReciver m_Receiver;
+
         private bool m_Inverted;
 
         private readonly String TEXT_LEFT = "The left joystick will be used to regulate throttle and rudder. The right joystick will be used to regulate elevator and aileron.";
         private readonly String TEXT_RIGHT = "The left joystick will be used to regulate elevator and rudder. The right joystick will be used to regulate the throttle and aileron.";
+
+  
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,6 +47,13 @@ namespace BluetoothController
             m_BtStart.SetTextColor(Android.Graphics.Color.White);
 
             m_BtStart.Click += OnStartController;
+
+            m_Filter = new IntentFilter();
+            m_Receiver = new CallReciver();
+
+            m_Filter.AddAction("android.intent.action.PHONE_STATE");
+            // Registering events and forwarding them to the broadcast object
+            RegisterReceiver(m_Receiver, m_Filter);
         }
 
         private void OnThrottleRightClick(object sender, EventArgs e)
