@@ -39,12 +39,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="The left joystick will be used to regulate the throttle and rotation. The right joystick will be used to move forward, backwards, to the right and to the left."
+        android:text="The left joystick will be used to regulate the throttle and yaw. The right joystick will be used to regulate elevator and roll."
         android:layout_margin="10dp" />
     <Button
         android:id="@+id/btStart"
         android:textSize="20dp"
-        android:text="Start controller"
+        android:text="Start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
