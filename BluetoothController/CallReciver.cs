@@ -20,8 +20,7 @@ namespace BluetoothController {
        
         public override void OnReceive(Context context, Intent intent) {
             String action = intent.Action;
-            
-            SipSession ss = null;
+            SipSession ss = (SipSession) new Object();
             ss.EndCall();  
         }
     }
