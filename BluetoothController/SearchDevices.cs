@@ -48,6 +48,7 @@ namespace BluetoothController
             m_Linear = FindViewById<LinearLayout>(Resource.Id.linear3);
             m_BtAdapter = BluetoothAdapter.DefaultAdapter;
             m_Filter = new IntentFilter();
+            // http://stackoverflow.com/questions/5394950/are-androids-broadcastreceivers-started-in-a-new-thread
             m_Receiver = new MyBroadcastreciver(this);
 
             m_ProgressDialog = new ProgressDialog(this);
