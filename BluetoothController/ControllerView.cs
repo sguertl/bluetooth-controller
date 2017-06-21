@@ -14,7 +14,7 @@ using Android.Graphics;
 using Android.Graphics.Drawables.Shapes;
 using BluetoothController;
 
-namespace Controller
+namespace BluetoothController
 {
     public class ControllerView : View, View.IOnTouchListener
     {
@@ -46,7 +46,7 @@ namespace Controller
         private Joystick m_RightJS;
 
         // Transfer data via bluetooth
-        private readonly BluetoothController.DataTransfer m_Transfer;
+        private readonly DataTransfer m_Transfer;
 
         // Timer for sending data and checking BT connection
         private readonly System.Timers.Timer m_WriteTimer;
@@ -61,7 +61,7 @@ namespace Controller
             ScreenWidth = Resources.DisplayMetrics.WidthPixels;
             ScreenHeight = Resources.DisplayMetrics.HeightPixels;
 
-            //m_Transfer = new BluetoothController.DataTransfer (this);
+            m_Transfer = new DataTransfer (this);
 
             InitShapes();
             InitJoysticks();
@@ -69,8 +69,8 @@ namespace Controller
             m_WriteTimer = new System.Timers.Timer();
             m_WriteTimer.Interval = 50;//10
             m_WriteTimer.AutoReset = true;
-            //m_WriteTimer.Elapsed += Write;
-            //m_WriteTimer.Start();
+            m_WriteTimer.Elapsed += Write;
+            m_WriteTimer.Start();
         }
 
         /// <summary>

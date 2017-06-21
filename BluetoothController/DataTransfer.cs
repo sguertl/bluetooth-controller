@@ -18,7 +18,7 @@ namespace BluetoothController
 {
     public class DataTransfer
     {
-        private Controller.ControllerView m_CV;
+        private ControllerView m_CV;
         private Sender m_Sender;
         private byte[] m_Bytes;
 
@@ -29,7 +29,7 @@ namespace BluetoothController
         /// <summary>
         /// starts reading bytes
         /// </summary>
-        public DataTransfer(Controller.ControllerView CV)
+        public DataTransfer(ControllerView CV)
         {
             m_CV = CV;
             Init();
@@ -55,7 +55,7 @@ namespace BluetoothController
             data = data.Remove(data.Length - 1);
             time++;
             DEBUG += (time + ";" + data + "-");
-            m_Bytes = BluetoothController.ByteConverter.ConvertToByte(args);
+            m_Bytes = ByteConverter.ConvertToByte(args);
             m_Sender.Write(m_Bytes);
         }
     }

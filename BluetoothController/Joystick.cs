@@ -1,6 +1,6 @@
 using System;
 
-namespace Controller
+namespace BluetoothController
 {
     public class Joystick
     {
