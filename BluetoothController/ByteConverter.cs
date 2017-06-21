@@ -63,15 +63,19 @@ namespace BluetoothController
         public static byte[] ConvertToByte(params Int16[] args)
         {
             byte[] b = new byte[PACKET_SIZE];
-            byte speed = (byte) args[0];
+            //byte speed = (byte) args[0];
             byte heightcontrol = 0;
-            int azimuth = Java.Lang.Float.FloatToIntBits(args[1]);
-            int pitch = Java.Lang.Float.FloatToIntBits(args[2]);
-            int roll = Java.Lang.Float.FloatToIntBits(args[3]);
+            //int azimuth = Java.Lang.Float.FloatToIntBits(args[1]);
+            //int pitch = Java.Lang.Float.FloatToIntBits(args[2]);
+            //int roll = Java.Lang.Float.FloatToIntBits(args[3]);
+            byte speed = (byte) args[0];
+            int azimuth = 0;
+            int pitch = 0;
+            int roll = 0;
            
-            string str = string.Format("Speed: {0} HeightControl: {1} Azimuth: {2} Pitch: {3} Roll: {4}", speed,
-                    heightcontrol, azimuth, pitch, roll);
-            Console.WriteLine(str);
+            //string str = string.Format("Speed: {0} HeightControl: {1} Azimuth: {2} Pitch: {3} Roll: {4}", speed,
+            //        heightcontrol, azimuth, pitch, roll);
+            //Console.WriteLine(str);
             int checksum = STARTBYTE;
             checksum ^= (heightcontrol << 8 | speed) & 0xFFFF;
             checksum ^= azimuth;

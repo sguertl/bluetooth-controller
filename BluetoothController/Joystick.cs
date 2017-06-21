@@ -287,7 +287,7 @@ namespace Controller
             //throttleValue = Math.Min((Int16)32767, throttleValue);
             throttleValue = Math.Min((Int16)255, throttleValue);
             m_Throttle = (Int16)throttleValue;
-            Console.WriteLine("****************"+m_Throttle);
+            //Console.WriteLine("****************"+m_Throttle);
             return (Int16)((m_Throttle) * m_MultThrottle);
         }
 

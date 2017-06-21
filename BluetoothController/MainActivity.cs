@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Bluetooth;
 using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
+using Android.Util;
 
 namespace BluetoothController
 {
@@ -25,7 +26,7 @@ namespace BluetoothController
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-            //ಠ_ಠ
+            //h
             Init();
 
             // Checking if bluetooth is supported

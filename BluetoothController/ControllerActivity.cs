@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
+using Android.Util;
 
 namespace BluetoothController
 {
@@ -40,6 +41,12 @@ namespace BluetoothController
             m_BtStart.SetTextColor(Android.Graphics.Color.White);
 
             m_BtStart.Click += OnStartController;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Log.Debug("!!!", DataTransfer.DEBUG);
         }
 
         private void OnThrottleRightClick(object sender, EventArgs e)
