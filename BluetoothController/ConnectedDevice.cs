@@ -67,7 +67,7 @@ namespace BluetoothController
            m_BtControl.Click += delegate
            {
                if (ConnectedThread.m_Socket.IsConnected)
-               {
+               { 
                    StartActivity(typeof(ControllerActivity));
                }
            };

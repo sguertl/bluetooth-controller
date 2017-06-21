@@ -45,7 +45,7 @@ namespace Controller
 		private Joystick m_RightJS;
 
 		// Transfer data via bluetooth
-		private readonly BluetoothController.DataTransfer m_Transfer;
+		//private readonly BluetoothController.DataTransfer m_Transfer;
 
 		// Timer for sending data and checking BT connection
 		private readonly System.Timers.Timer m_WriteTimer;
@@ -399,7 +399,7 @@ namespace Controller
 		/// </summary>
 		public void Write (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			if (!m_Settings.Inverted) {
+			/*if (!m_Settings.Inverted) {
 
                 m_Transfer.Write ((Int16)m_LeftJS.Throttle, 
                                   (Int16)m_LeftJS.Rudder + m_Settings.TrimYaw,
@@ -410,7 +410,7 @@ namespace Controller
                                   (Int16)m_LeftJS.Rudder + m_Settings.TrimYaw,
                                   (Int16)m_LeftJS.Aileron + m_Settings.TrimPitch, 
                                   (Int16)m_RightJS.Elevator + m_Settings.TrimRoll);
-			}
+			}*/
 		}
 	}
 }

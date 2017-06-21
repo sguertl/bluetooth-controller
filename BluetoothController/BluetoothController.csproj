@@ -53,6 +53,7 @@
     <Compile Include="ConnectedDevice.cs" />
     <Compile Include="ConnectedThread.cs" />
     <Compile Include="ControllerActivity.cs" />
+    <Compile Include="ControllerSettings.cs" />
     <Compile Include="ControllerView.cs" />
     <Compile Include="IEstablishConnection.cs" />
     <Compile Include="Joystick.cs" />
@@ -92,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\MySeekBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
