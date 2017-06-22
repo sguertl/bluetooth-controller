@@ -23,7 +23,6 @@ namespace BluetoothController
         private byte[] m_Bytes;
 
         //DEBUG
-        private int time;
         public static string DEBUG;
 
         /// <summary>
@@ -53,8 +52,8 @@ namespace BluetoothController
                 data += args[i] + ";";
             }
             data = data.Remove(data.Length - 1);
-            time++;
-            DEBUG += (time + ";" + data + "-");
+            
+            DEBUG += (data + '\n');
             m_Bytes = ByteConverter.ConvertToByte(args);
             m_Sender.Write(m_Bytes);
         }

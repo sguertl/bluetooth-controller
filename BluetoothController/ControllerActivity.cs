@@ -43,7 +43,7 @@ namespace BluetoothController
         private readonly String TEXT_LEFT = "The left joystick will be used to regulate throttle and rudder. The right joystick will be used to regulate elevator and aileron.";
         private readonly String TEXT_RIGHT = "The left joystick will be used to regulate elevator and rudder. The right joystick will be used to regulate the throttle and aileron.";
 
-        private string storageDirPath;
+        private string mStorageDirPath;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -99,8 +99,8 @@ namespace BluetoothController
             // Registering events and forwarding them to the broadcast object
             // RegisterReceiver(m_Receiver, m_Filter);
 
-            storageDirPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), "Airything");
-            var storageDir = new Java.IO.File(storageDirPath);
+            mStorageDirPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), "Airything");
+            var storageDir = new Java.IO.File(mStorageDirPath);
             storageDir.Mkdirs();
         }
 
@@ -109,7 +109,7 @@ namespace BluetoothController
             base.OnDestroy();
             DateTime time = DateTime.Now;
             string logName = string.Format("{0}{1:D2}{2:D2}_{3:D2}{4:D2}{5:D2}_log", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
-            var writer = new Java.IO.FileWriter(new Java.IO.File(storageDirPath, logName + ".csv"));
+            var writer = new Java.IO.FileWriter(new Java.IO.File(mStorageDirPath, logName + ".csv"));
             writer.Write(DataTransfer.DEBUG);
             writer.Close();
         }
