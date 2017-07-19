@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Util;
 
 namespace BluetoothController
 {
@@ -63,15 +64,11 @@ namespace BluetoothController
         public static byte[] ConvertToByte(params Int16[] args)
         {
             byte[] b = new byte[PACKET_SIZE];
-            //byte speed = (byte) args[0];
-            byte heightcontrol = 0;
-            //int azimuth = Java.Lang.Float.FloatToIntBits(args[1]);
-            //int pitch = Java.Lang.Float.FloatToIntBits(args[2]);
-            //int roll = Java.Lang.Float.FloatToIntBits(args[3]);
             byte speed = (byte) args[0];
-            int azimuth = 0;
-            int pitch = 0;
-            int roll = 0;
+            byte heightcontrol = 0;
+            int azimuth = Java.Lang.Float.FloatToIntBits(args[1]);
+            int pitch = Java.Lang.Float.FloatToIntBits(args[2]);
+            int roll = Java.Lang.Float.FloatToIntBits(args[3]);
            
             //string str = string.Format("Speed: {0} HeightControl: {1} Azimuth: {2} Pitch: {3} Roll: {4}", speed,
             //        heightcontrol, azimuth, pitch, roll);
@@ -106,7 +103,6 @@ namespace BluetoothController
             b[16] = (byte)((checksum >> 16) & 0xFF);
             b[17] = (byte)((checksum >> 8) & 0xFF);
             b[18] = (byte)(checksum & 0xFF);
-
             return b;
         }
 

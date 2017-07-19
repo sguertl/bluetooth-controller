@@ -177,12 +177,13 @@ namespace BluetoothController
             while (!ConnectedThread.m_Socket.IsConnected) { if (ConnectedThread.m_FailedCon) break; }
             if (!ConnectedThread.m_FailedCon)
             {
-                var activity2 = new Intent(this, typeof(ConnectedDevices));
+                /*var activity2 = new Intent(this, typeof(ConnectedDevices));
                 IList<String> ll = new List<string>();
                 ll.Add(bluetoothDevice.Name);
                 ll.Add(bluetoothDevice.Address);
                 activity2.PutStringArrayListExtra("MyData", ll);
-                StartActivity(activity2);
+                StartActivity(activity2);*/
+                StartActivity(typeof(ControllerActivity));
             }
         }
     }
