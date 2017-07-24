@@ -89,7 +89,7 @@ namespace BluetoothController
             StickRadius = StickDiameter / 2;
             DisplacementRadius = DisplacementDiameter / 2;
 
-            m_CenterY = height / 16 + height / 2 + StickRadius / 2;
+            m_CenterY = height / 2; // / 16 + height / 2 + StickRadius / 2;
             if(!invertedControl)
             {
                 if (isLeftStick)

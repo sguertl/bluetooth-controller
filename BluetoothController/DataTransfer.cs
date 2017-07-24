@@ -18,7 +18,6 @@ namespace BluetoothController
 {
     public class DataTransfer
     {
-        private ControllerView m_CV;
         private Sender m_Sender;
         private byte[] m_Bytes;
 
@@ -28,9 +27,8 @@ namespace BluetoothController
         /// <summary>
         /// starts reading bytes
         /// </summary>
-        public DataTransfer(ControllerView CV)
+        public DataTransfer()
         {
-            m_CV = CV;
             Init();
         }
 

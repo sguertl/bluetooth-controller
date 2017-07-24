@@ -13,17 +13,18 @@ using Android.Graphics.Drawables;
 using Android.Graphics;
 using Android.Graphics.Drawables.Shapes;
 using BluetoothController;
+using Android.Util;
 
 namespace BluetoothController
 {
     public class ControllerView : View, View.IOnTouchListener
     {
         // Controller Settings
-        ControllerSettings m_Settings;
+        //ControllerSettings m_Settings;
 
         // Screen metrics in px
-        public readonly float ScreenWidth;
-        public readonly float ScreenHeight;
+        public float ScreenWidth;
+        public float ScreenHeight;
 
         // Joystick ovals
         private ShapeDrawable m_ShapeStickLeft;
@@ -46,14 +47,38 @@ namespace BluetoothController
         private Joystick m_RightJS;
 
         // Transfer data via bluetooth
-        private readonly DataTransfer m_Transfer;
+        private DataTransfer m_Transfer;
 
         // Timer for sending data and checking BT connection
-        private readonly System.Timers.Timer m_WriteTimer;
+        private System.Timers.Timer m_WriteTimer;
 
-        public ControllerView(Context context, ControllerSettings settings) : base(context)
+        public static ControllerSettings Settings { get; set; }
+
+        public ControllerView(Context context) : base(context)
         {
-            m_Settings = settings;
+            Init();
+        }
+
+        public ControllerView(Context context, IAttributeSet attrs) : base(context, attrs)
+        {
+            Init();
+        }
+
+        public ControllerView(Context context, IAttributeSet attrs, int defStyle) : base(context, attrs, defStyle)
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            Settings = new ControllerSettings
+            {
+                HeightControlActivated = false,
+                Inverted = false,
+                TrimPitch = 50,
+                TrimRoll = 50,
+                TrimYaw = 50
+            };
 
             SetOnTouchListener(this);
             SetBackgroundColor(Color.White);
@@ -61,7 +86,7 @@ namespace BluetoothController
             ScreenWidth = Resources.DisplayMetrics.WidthPixels;
             ScreenHeight = Resources.DisplayMetrics.HeightPixels;
 
-            m_Transfer = new DataTransfer (this);
+            m_Transfer = new DataTransfer();
 
             InitShapes();
             InitJoysticks();
@@ -125,20 +150,20 @@ namespace BluetoothController
         /// </summary>
         private void InitJoysticks()
         {
-            m_LeftJS = new Joystick(ScreenWidth, ScreenHeight, true, m_Settings.Inverted);
-            m_RightJS = new Joystick(ScreenWidth, ScreenHeight, false, m_Settings.Inverted);
+            m_LeftJS = new Joystick(ScreenWidth, ScreenHeight, true, Settings.Inverted);
+            m_RightJS = new Joystick(ScreenWidth, ScreenHeight, false, Settings.Inverted);
 
             SetBoundsForLeftStick(
                 (int)m_LeftJS.CenterX - (int)Joystick.StickRadius,
-                m_Settings.Inverted ? (int)m_LeftJS.CenterY - (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + (int)Joystick.StickRadius,
+                Settings.Inverted ? (int)m_LeftJS.CenterY - (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + (int)Joystick.StickRadius,
                 (int)m_LeftJS.CenterX + (int)Joystick.StickRadius,
-                m_Settings.Inverted ? (int)m_LeftJS.CenterY + (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + 3 * (int)Joystick.StickRadius);
+                Settings.Inverted ? (int)m_LeftJS.CenterY + (int)Joystick.StickRadius : (int)m_LeftJS.CenterY + 3 * (int)Joystick.StickRadius);
 
             SetBoundsForRightStick(
                 (int)m_RightJS.CenterX - (int)Joystick.StickRadius,
-                m_Settings.Inverted ? (int)m_RightJS.CenterY + (int)Joystick.StickRadius : (int)m_RightJS.CenterY - (int)Joystick.StickRadius,
+                Settings.Inverted ? (int)m_RightJS.CenterY + (int)Joystick.StickRadius : (int)m_RightJS.CenterY - (int)Joystick.StickRadius,
                 (int)m_RightJS.CenterX + (int)Joystick.StickRadius,
-                m_Settings.Inverted ? (int)m_RightJS.CenterY + 3 * (int)Joystick.StickRadius : (int)m_RightJS.CenterY + (int)Joystick.StickRadius);
+                Settings.Inverted ? (int)m_RightJS.CenterY + 3 * (int)Joystick.StickRadius : (int)m_RightJS.CenterY + (int)Joystick.StickRadius);
 
             m_ShapeRadiusLeft.SetBounds(
                 (int)m_LeftJS.CenterX - (int)Joystick.DisplacementRadius,
@@ -173,7 +198,7 @@ namespace BluetoothController
             switch (e.Action)
             {
                 case MotionEventActions.Up:
-                    if (m_Settings.Inverted)
+                    if (Settings.Inverted)
                     {
                         if (e.GetX() <= ScreenWidth / 2)
                         {
@@ -194,7 +219,7 @@ namespace BluetoothController
                     }
                     break;
                 case MotionEventActions.Pointer1Up:
-                    if (m_Settings.Inverted)
+                    if (Settings.Inverted)
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
@@ -221,7 +246,7 @@ namespace BluetoothController
                     }
                     break;
                 case MotionEventActions.Pointer2Up:
-                    if (m_Settings.Inverted)
+                    if (Settings.Inverted)
                     {
                         for (int i = 0; i < Math.Min(2, e.PointerCount); i++)
                         {
@@ -255,7 +280,7 @@ namespace BluetoothController
                     break;
             }
 
-            if (m_Settings.Inverted)
+            if (Settings.Inverted)
             {
                 if (e.PointerCount == 1 && e.GetX() <= ScreenWidth / 2 && !m_RightJS.IsCentered())
                 {
@@ -370,7 +395,7 @@ namespace BluetoothController
             m_LeftJS.CalculateValues();
             m_RightJS.CalculateValues();
 
-            if (!m_Settings.Inverted)
+            /*if (!m_Settings.Inverted)
             {
                 // Draw data text for left joystick
                 canvas.DrawText("DATA LEFT JOYSTICK", m_LeftJS.CenterX, m_LeftJS.CenterY - ScreenHeight / 2 - 30, paint);
@@ -401,7 +426,7 @@ namespace BluetoothController
                 canvas.DrawText("Aileron: " + m_RightJS.Aileron, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 30, paint);
                 canvas.DrawText("Direction: " + m_RightJS.Direction, m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 60, paint);
                 canvas.DrawText("Centered: " + m_RightJS.IsCentered(), m_RightJS.CenterX, m_RightJS.CenterY - ScreenHeight / 2 + 90, paint);
-            }
+            }*/
 
             // TO BE ADDED: Displaying received data
         }
@@ -441,19 +466,19 @@ namespace BluetoothController
         /// </summary>
         public void Write(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (!m_Settings.Inverted)
+            if (!Settings.Inverted)
             {
 
                 m_Transfer.Write((Int16)m_LeftJS.Throttle,
-                                  (Int16)(m_LeftJS.Rudder + m_Settings.TrimYaw),
-                                  (Int16)(m_RightJS.Aileron + m_Settings.TrimPitch),
-                                  (Int16)(m_RightJS.Elevator + m_Settings.TrimRoll));
+                                  (Int16)(m_LeftJS.Rudder + Settings.TrimYaw),
+                                  (Int16)(m_RightJS.Aileron + Settings.TrimPitch),
+                                  (Int16)(m_RightJS.Elevator + Settings.TrimRoll));
             }
             else {
                 m_Transfer.Write((Int16)m_RightJS.Throttle,
-                                  (Int16)(m_LeftJS.Rudder + m_Settings.TrimYaw),
-                                  (Int16)(m_LeftJS.Aileron + m_Settings.TrimPitch),
-                                  (Int16)(m_RightJS.Elevator + m_Settings.TrimRoll));
+                                  (Int16)(m_LeftJS.Rudder + Settings.TrimYaw),
+                                  (Int16)(m_LeftJS.Aileron + Settings.TrimPitch),
+                                  (Int16)(m_RightJS.Elevator + Settings.TrimRoll));
             }
         }
     }
